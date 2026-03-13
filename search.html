@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Study Materials - Notes, Books, Papers | Academic Halt</title>
+  <meta name="description" content="Search 10,000+ free study materials on Academic Halt. Find notes, books, question papers, mock tests for any exam or subject instantly.">
+  <link rel="canonical" href="https://www.academichalt.com/search.html">
+  <meta name="robots" content="noindex, follow">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/components.css">
+</head>
+<body>
+<div class="announce-bar">📚 10,000+ Free Resources! <a href="/study-material/">Browse All →</a></div>
+<header class="site-header">
+  <div class="container"><div class="header-inner">
+    <a href="/" class="site-logo">
+      <svg class="site-logo__icon" viewBox="0 0 36 36" fill="none"><rect width="36" height="36" rx="8" fill="#2563eb"/><path d="M18 8L28 13.5V22.5L18 28L8 22.5V13.5L18 8Z" fill="white" fill-opacity="0.2"/><path d="M18 8L28 13.5M18 8L8 13.5M18 8V18M28 13.5V22.5L18 28M8 13.5V22.5L18 28M18 18V28" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="site-logo__text">Academic<span>Halt</span></span>
+    </a>
+    <div class="header-search" style="flex:1;max-width:600px">
+      <svg class="header-search__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="mainSearchInput" placeholder="Search notes, books, papers..." autocomplete="off">
+    </div>
+    <nav class="main-nav">
+      <a href="/" class="nav-link">Home</a>
+      <a href="/study-material/" class="nav-link">Materials</a>
+      <a href="/blog/" class="nav-link">Blog</a>
+    </nav>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div></div>
+  <nav class="mobile-nav" id="mobileNav"><div class="mobile-nav-section"><a href="/">🏠 Home</a><a href="/study-material/">📖 Materials</a></div></nav>
+</header>
+
+<main>
+<section style="background:var(--surface);padding:40px 0;border-bottom:1px solid var(--border)">
+  <div class="container">
+    <div style="max-width:700px;margin:0 auto">
+      <h1 style="font-size:24px;margin-bottom:16px">Search Study Materials</h1>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <div style="position:relative;flex:1;min-width:260px">
+          <svg style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text-muted)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="text" class="form-control" id="searchInput" placeholder="e.g. UPSC polity notes, JEE physics..." style="padding-left:44px;font-size:16px;height:48px">
+        </div>
+        <button class="btn btn-primary" style="height:48px;padding:0 24px" onclick="doSearch()">Search</button>
+      </div>
+
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:16px">
+        <span style="font-size:13px;color:var(--text-muted)">Popular:</span>
+        <button class="tag" onclick="quickSearch('UPSC notes')">UPSC notes</button>
+        <button class="tag" onclick="quickSearch('JEE physics')">JEE physics</button>
+        <button class="tag" onclick="quickSearch('NEET biology')">NEET biology</button>
+        <button class="tag" onclick="quickSearch('SSC CGL')">SSC CGL</button>
+        <button class="tag" onclick="quickSearch('class 12 chemistry')">Class 12 chemistry</button>
+        <button class="tag" onclick="quickSearch('GATE CS')">GATE CS</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <!-- Filters -->
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px;align-items:center">
+      <select class="form-control" id="catFilter" style="width:auto" onchange="doSearch()">
+        <option value="">All Types</option>
+        <option value="Notes">Notes</option>
+        <option value="Books">Books</option>
+        <option value="Question Papers">Papers</option>
+        <option value="Mock Tests">Mock Tests</option>
+        <option value="Videos">Videos</option>
+        <option value="Study Guides">Study Guides</option>
+      </select>
+      <select class="form-control" id="examFilter" style="width:auto" onchange="doSearch()">
+        <option value="">All Exams</option>
+        <option>UPSC</option><option>JEE Main</option><option>JEE Advanced</option>
+        <option>NEET</option><option>SSC CGL</option><option>SSC CHSL</option>
+        <option>IBPS PO</option><option>SBI PO</option><option>GATE CS</option>
+        <option>Class 12</option><option>Class 10</option><option>CAT</option>
+      </select>
+      <span id="searchResultCount" style="font-size:13px;color:var(--text-muted);margin-left:auto"></span>
+    </div>
+
+    <!-- Results -->
+    <div class="grid-4" id="searchResults">
+      <div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--text-muted)">
+        <div style="font-size:48px;margin-bottom:12px">🔍</div>
+        <p style="font-size:16px">Enter a search term above to find study materials</p>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:32px;display:none" id="loadMoreSearch">
+      <button class="btn btn-outline" onclick="loadMoreResults()">Load More Results</button>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-main"><div class="container"><div class="footer-grid">
+    <div class="footer-brand"><div class="footer-brand__logo">Academic<span>Halt</span></div><p>Free study materials for all exams.</p></div>
+    <div class="footer-col"><h4>Browse</h4><ul><li><a href="/notes/">Notes</a></li><li><a href="/books/">Books</a></li><li><a href="/question-papers/">Papers</a></li><li><a href="/mock-tests/">Mock Tests</a></li></ul></div>
+    <div class="footer-col"><h4>Top Exams</h4><ul><li><a href="/upsc-notes/">UPSC</a></li><li><a href="/jee-notes/">JEE</a></li><li><a href="/neet-notes/">NEET</a></li><li><a href="/ssc-notes/">SSC</a></li></ul></div>
+    <div class="footer-col"><h4>Company</h4><ul><li><a href="/about.html">About</a></li><li><a href="/contact.html">Contact</a></li><li><a href="/privacy-policy.html">Privacy</a></li></ul></div>
+  </div></div></div>
+  <div class="footer-bottom"><div class="container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px"><p style="margin:0;font-size:13px;color:#475569">© <span id="footerYear">2024</span> Academic Halt.</p></div></div>
+</footer>
+<button class="back-to-top" id="backToTop"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg></button>
+
+<script src="/js/script.js"></script>
+<script src="/js/search.js"></script>
+<script>
+let searchData = [];
+let searchResults = [];
+let searchDisplayed = 0;
+const SEARCH_PAGE = 20;
+
+// Load from URL param on page load
+async function initSearchPage() {
+  try {
+    const res = await fetch('/data/resources.json');
+    const data = await res.json();
+    searchData = data.resources;
+  } catch(e) {
+    document.getElementById('searchResults').innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-muted)">Run build scripts to populate resources. See README.md</div>';
+    return;
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  const q = params.get('q') || '';
+  if (q) {
+    document.getElementById('searchInput').value = q;
+    document.getElementById('mainSearchInput').value = q;
+    doSearch();
+  }
+}
+
+function doSearch() {
+  const q = (document.getElementById('searchInput').value || document.getElementById('mainSearchInput').value).trim().toLowerCase();
+  const cat = document.getElementById('catFilter').value;
+  const exam = document.getElementById('examFilter').value;
+
+  if (!q && !cat && !exam) {
+    document.getElementById('searchResults').innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--text-muted)"><div style="font-size:48px;margin-bottom:12px">🔍</div><p>Enter a search term above to find study materials</p></div>';
+    document.getElementById('searchResultCount').textContent = '';
+    return;
+  }
+
+  const terms = q.split(/\s+/).filter(Boolean);
+  searchResults = searchData.filter(r => {
+    const text = `${r.title} ${r.subject} ${r.exam} ${r.category} ${r.description}`.toLowerCase();
+    const matchesQuery = !q || terms.every(t => text.includes(t));
+    const matchesCat = !cat || r.category === cat;
+    const matchesExam = !exam || r.exam === exam;
+    return matchesQuery && matchesCat && matchesExam;
+  });
+
+  searchDisplayed = 0;
+  document.getElementById('searchResultCount').textContent = `${searchResults.length.toLocaleString()} results found`;
+  renderSearchBatch(true);
+
+  // Update URL
+  if (q) history.replaceState(null, '', `?q=${encodeURIComponent(q)}`);
+}
+
+function renderSearchBatch(reset = false) {
+  const grid = document.getElementById('searchResults');
+  const batch = searchResults.slice(searchDisplayed, searchDisplayed + SEARCH_PAGE);
+  if (reset) grid.innerHTML = '';
+  if (!batch.length && reset) {
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--text-muted)"><div style="font-size:48px;margin-bottom:12px">😔</div><p>No results found. Try different keywords.</p><a href="/study-material/" class="btn btn-primary" style="margin-top:16px">Browse All Materials</a></div>';
+    document.getElementById('loadMoreSearch').style.display = 'none';
+    return;
+  }
+  grid.innerHTML += batch.map(r => createResourceCard(r)).join('');
+  searchDisplayed += batch.length;
+  document.getElementById('loadMoreSearch').style.display = searchDisplayed < searchResults.length ? 'block' : 'none';
+}
+
+function loadMoreResults() { renderSearchBatch(false); }
+function quickSearch(q) { document.getElementById('searchInput').value = q; doSearch(); }
+
+document.getElementById('searchInput').addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
+document.getElementById('mainSearchInput').addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
+document.getElementById('mainSearchInput').addEventListener('input', e => { document.getElementById('searchInput').value = e.target.value; });
+
+document.addEventListener('DOMContentLoaded', initSearchPage);
+</script>
+</body>
+</html>

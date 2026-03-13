@@ -1,0 +1,225 @@
+{
+  "categories": [
+    {
+      "id": "notes",
+      "name": "Study Notes",
+      "slug": "notes",
+      "description": "Free PDF study notes for all competitive exams, board exams, and university courses. Download chapter-wise, subject-wise, and topic-wise notes.",
+      "icon": "📝",
+      "color": "#2563eb",
+      "count": 4000,
+      "subcategories": [
+        { "name": "Class Notes", "slug": "class-notes" },
+        { "name": "Handwritten Notes", "slug": "handwritten-notes" },
+        { "name": "Short Notes", "slug": "short-notes" },
+        { "name": "Revision Notes", "slug": "revision-notes" },
+        { "name": "Formula Sheets", "slug": "formula-sheets" }
+      ]
+    },
+    {
+      "id": "books",
+      "name": "PDF Books",
+      "slug": "books",
+      "description": "Free PDF textbooks, reference books, and study guides for all subjects and exams. Download NCERT books, standard textbooks and competitive exam books.",
+      "icon": "📚",
+      "color": "#16a34a",
+      "count": 1500,
+      "subcategories": [
+        { "name": "NCERT Books", "slug": "ncert-books" },
+        { "name": "Reference Books", "slug": "reference-books" },
+        { "name": "Competitive Exam Books", "slug": "competitive-exam-books" },
+        { "name": "Standard Textbooks", "slug": "standard-textbooks" }
+      ]
+    },
+    {
+      "id": "question-papers",
+      "name": "Question Papers",
+      "slug": "question-papers",
+      "description": "Previous year question papers, sample papers, and practice papers for all competitive exams and board examinations with detailed solutions.",
+      "icon": "📄",
+      "color": "#d97706",
+      "count": 2000,
+      "subcategories": [
+        { "name": "Previous Year Papers", "slug": "previous-year-papers" },
+        { "name": "Sample Papers", "slug": "sample-papers" },
+        { "name": "Practice Papers", "slug": "practice-papers" },
+        { "name": "Solved Papers", "slug": "solved-papers" }
+      ]
+    },
+    {
+      "id": "mock-tests",
+      "name": "Mock Tests",
+      "slug": "mock-tests",
+      "description": "Free online mock tests, full-length tests, sectional tests, and chapter-wise tests for exam preparation with instant results and detailed analysis.",
+      "icon": "✅",
+      "color": "#9333ea",
+      "count": 1200,
+      "subcategories": [
+        { "name": "Full Length Tests", "slug": "full-length-tests" },
+        { "name": "Sectional Tests", "slug": "sectional-tests" },
+        { "name": "Chapter Tests", "slug": "chapter-tests" },
+        { "name": "Speed Tests", "slug": "speed-tests" }
+      ]
+    },
+    {
+      "id": "videos",
+      "name": "Lecture Videos",
+      "slug": "videos",
+      "description": "Free educational lecture videos for all subjects and competitive exams. Video lectures by expert faculty for comprehensive understanding.",
+      "icon": "🎥",
+      "color": "#dc2626",
+      "count": 700,
+      "subcategories": [
+        { "name": "Video Lectures", "slug": "video-lectures" },
+        { "name": "Concept Videos", "slug": "concept-videos" },
+        { "name": "Problem Solving Videos", "slug": "problem-solving-videos" },
+        { "name": "Revision Videos", "slug": "revision-videos" }
+      ]
+    },
+    {
+      "id": "study-guides",
+      "name": "Study Guides",
+      "slug": "study-guides",
+      "description": "Comprehensive study guides, preparation strategies, topper tips, and exam plans for cracking competitive exams and board examinations.",
+      "icon": "📖",
+      "color": "#0891b2",
+      "count": 600,
+      "subcategories": [
+        { "name": "Preparation Strategies", "slug": "preparation-strategies" },
+        { "name": "Syllabus Guides", "slug": "syllabus-guides" },
+        { "name": "Topper Tips", "slug": "topper-tips" },
+        { "name": "Time Management", "slug": "time-management" }
+      ]
+    }
+  ],
+  "examCategories": [
+    {
+      "id": "upsc",
+      "name": "UPSC / Civil Services",
+      "slug": "upsc-notes",
+      "description": "Complete study material for UPSC Civil Services Examination (IAS, IPS, IFS). Covers GS Papers 1-4, CSAT, Optional subjects and Interview preparation.",
+      "icon": "🏛️",
+      "color": "#1d4ed8",
+      "exams": ["UPSC CSE", "UPSC CAPF", "IES", "IFS"],
+      "subjects": ["History", "Geography", "Polity", "Economics", "Science & Technology", "Environment", "Current Affairs", "Ethics"],
+      "count": 850
+    },
+    {
+      "id": "jee",
+      "name": "JEE Main & Advanced",
+      "slug": "jee-notes",
+      "description": "Free JEE study materials including Physics, Chemistry, Mathematics notes, formula sheets, and previous year papers for JEE Main and Advanced.",
+      "icon": "⚛️",
+      "color": "#0891b2",
+      "exams": ["JEE Main", "JEE Advanced", "BITSAT", "VITEEE", "WBJEE"],
+      "subjects": ["Physics", "Chemistry", "Mathematics"],
+      "count": 720
+    },
+    {
+      "id": "neet",
+      "name": "NEET / AIIMS",
+      "slug": "neet-notes",
+      "description": "Free NEET study materials including Biology, Physics, Chemistry notes, NCERT summaries, and previous year papers for NEET UG and PG.",
+      "icon": "🧬",
+      "color": "#16a34a",
+      "exams": ["NEET UG", "NEET PG", "AIIMS", "JIPMER"],
+      "subjects": ["Biology", "Physics", "Chemistry", "Zoology", "Botany"],
+      "count": 680
+    },
+    {
+      "id": "ssc",
+      "name": "SSC Exams",
+      "slug": "ssc-notes",
+      "description": "Free SSC study materials for CGL, CHSL, MTS, JE, GD Constable and other SSC exams. Notes, previous papers and mock tests.",
+      "icon": "📝",
+      "color": "#d97706",
+      "exams": ["SSC CGL", "SSC CHSL", "SSC MTS", "SSC JE", "SSC GD"],
+      "subjects": ["Quantitative Aptitude", "Reasoning", "English", "General Awareness"],
+      "count": 540
+    },
+    {
+      "id": "banking",
+      "name": "Banking Exams",
+      "slug": "banking-notes",
+      "description": "Free banking exam study materials for IBPS PO, IBPS Clerk, SBI PO, SBI Clerk, RBI Grade B and other banking examinations.",
+      "icon": "🏦",
+      "color": "#7c3aed",
+      "exams": ["IBPS PO", "IBPS Clerk", "SBI PO", "SBI Clerk", "RBI Grade B", "NABARD"],
+      "subjects": ["Quantitative Aptitude", "Reasoning", "English", "Banking Awareness", "Computer"],
+      "count": 510
+    },
+    {
+      "id": "gate",
+      "name": "GATE / ESE",
+      "slug": "gate-notes",
+      "description": "Free GATE study materials for all engineering branches. Notes, previous papers, and mock tests for GATE and Engineering Services Exam.",
+      "icon": "💻",
+      "color": "#059669",
+      "exams": ["GATE CS", "GATE EE", "GATE ME", "GATE CE", "GATE ECE", "ESE"],
+      "subjects": ["Data Structures", "Algorithms", "OS", "DBMS", "Computer Networks", "Thermodynamics", "Fluid Mechanics"],
+      "count": 430
+    },
+    {
+      "id": "class12",
+      "name": "Class 12 (CBSE / State)",
+      "slug": "class-12-notes",
+      "description": "Free Class 12 study materials including NCERT solutions, chapter notes, important questions, and board paper preparation resources.",
+      "icon": "📚",
+      "color": "#e11d48",
+      "exams": ["CBSE Class 12", "ISC Class 12", "State Boards"],
+      "subjects": ["Physics", "Chemistry", "Biology", "Mathematics", "Economics", "Accountancy", "Business Studies", "History", "Geography"],
+      "count": 920
+    },
+    {
+      "id": "class10",
+      "name": "Class 10 (CBSE / State)",
+      "slug": "class-10-notes",
+      "description": "Free Class 10 study materials including NCERT solutions, chapter notes, important questions, and board exam preparation resources.",
+      "icon": "📖",
+      "color": "#f59e0b",
+      "exams": ["CBSE Class 10", "ICSE Class 10", "State Boards"],
+      "subjects": ["Science", "Mathematics", "Social Science", "English", "Hindi"],
+      "count": 780
+    },
+    {
+      "id": "cat",
+      "name": "CAT / MBA Exams",
+      "slug": "cat-notes",
+      "description": "Free CAT, XAT, SNAP, MAT study materials. Notes, practice sets, and mock tests for MBA entrance examinations.",
+      "icon": "📊",
+      "color": "#6366f1",
+      "exams": ["CAT", "XAT", "SNAP", "MAT", "IIFT", "NMAT"],
+      "subjects": ["Quantitative Aptitude", "VARC", "DILR", "General Awareness"],
+      "count": 380
+    },
+    {
+      "id": "defence",
+      "name": "Defence Exams",
+      "slug": "defence-notes",
+      "description": "Free study materials for NDA, CDS, AFCAT, Coast Guard, SSB and other defence examination preparation.",
+      "icon": "⚔️",
+      "color": "#b45309",
+      "exams": ["NDA", "CDS", "AFCAT", "Coast Guard", "SSB"],
+      "subjects": ["Mathematics", "English", "General Knowledge", "Physics", "Chemistry"],
+      "count": 290
+    }
+  ],
+  "subjectCategories": [
+    { "name": "Physics", "slug": "physics-notes", "icon": "⚛️", "color": "#0891b2" },
+    { "name": "Chemistry", "slug": "chemistry-notes", "icon": "🧪", "color": "#16a34a" },
+    { "name": "Biology", "slug": "biology-notes", "icon": "🧬", "color": "#059669" },
+    { "name": "Mathematics", "slug": "mathematics-notes", "icon": "📐", "color": "#2563eb" },
+    { "name": "History", "slug": "history-notes", "icon": "📜", "color": "#d97706" },
+    { "name": "Geography", "slug": "geography-notes", "icon": "🌍", "color": "#0891b2" },
+    { "name": "Polity", "slug": "polity-notes", "icon": "🏛️", "color": "#7c3aed" },
+    { "name": "Economics", "slug": "economics-notes", "icon": "💹", "color": "#059669" },
+    { "name": "English", "slug": "english-notes", "icon": "📝", "color": "#2563eb" },
+    { "name": "Computer Science", "slug": "computer-science-notes", "icon": "💻", "color": "#6366f1" },
+    { "name": "General Knowledge", "slug": "general-knowledge-notes", "icon": "🌐", "color": "#d97706" },
+    { "name": "Current Affairs", "slug": "current-affairs-notes", "icon": "📰", "color": "#dc2626" },
+    { "name": "Reasoning", "slug": "reasoning-notes", "icon": "🧠", "color": "#7c3aed" },
+    { "name": "Quantitative Aptitude", "slug": "aptitude-notes", "icon": "🔢", "color": "#0891b2" },
+    { "name": "Accountancy", "slug": "accountancy-notes", "icon": "📊", "color": "#d97706" },
+    { "name": "Business Studies", "slug": "business-studies-notes", "icon": "💼", "color": "#6366f1" }
+  ]
+}
