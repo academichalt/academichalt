@@ -1,27 +1,7 @@
 User-agent: *
 Allow: /
 
-# Disallow admin and private paths
+# Disallow admin panel from indexing
 Disallow: /admin/
-Disallow: /private/
-Disallow: /scripts/
-Disallow: /data/
 
-# Allow important pages
-Allow: /study-material/
-Allow: /notes/
-Allow: /books/
-Allow: /question-papers/
-Allow: /mock-tests/
-Allow: /blog/
-Allow: /tools/
-Allow: /upsc-notes/
-Allow: /jee-notes/
-Allow: /neet-notes/
-Allow: /ssc-notes/
-
-# Crawl delay for polite crawling
-Crawl-delay: 1
-
-# Sitemap
 Sitemap: https://www.academichalt.com/sitemap.xml

@@ -1,58 +1,13 @@
-# Academic Halt 🎓
+# Academic Halt
 
-> India's largest free study materials platform — 10,000+ resources, 50,000+ blog posts, 300,000 SEO pages
+> **Free Books & Study Materials for Students**  
+> https://www.academichalt.com
 
-[![Deploy to Cloudflare Pages](https://img.shields.io/badge/Deploy-Cloudflare%20Pages-orange)](https://pages.cloudflare.com/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-
----
-
-## 📋 Table of Contents
-
-1. [Project Overview](#project-overview)
-2. [Tech Stack](#tech-stack)
-3. [Project Structure](#project-structure)
-4. [Quick Start](#quick-start)
-5. [Build Scripts](#build-scripts)
-6. [Deployment](#deployment)
-7. [SEO Architecture](#seo-architecture)
-8. [Adding Content](#adding-content)
-9. [Customization](#customization)
-10. [Performance](#performance)
+Academic Halt is a free educational platform providing PDF books and study materials for students preparing for Class 9–12 board exams, JEE Main, JEE Advanced, NEET, and UPSC.
 
 ---
 
-## Project Overview
-
-Academic Halt is a **100% static website** targeting 10M+ monthly visitors. It provides free study materials for Indian competitive exams (UPSC, JEE, NEET, SSC, Banking, GATE, etc.) and board examinations.
-
-**Scale targets:**
-- 10,000+ individual resource pages
-- 50,000+ blog posts
-- 300,000 programmatic SEO pages
-- 500+ exam categories
-- 10M+ monthly pageviews
-
-**Tech approach:** Pure static HTML/CSS/JS — no server, no database, no backend. All content is pre-generated at build time. Deployed on Cloudflare Pages for global CDN and near-zero cost at any traffic scale.
-
----
-
-## Tech Stack
-
-| Layer | Technology |
-|-------|-----------|
-| Frontend | HTML5, CSS3, Vanilla JavaScript |
-| Build Scripts | Node.js (v18+) |
-| Hosting | Cloudflare Pages |
-| Version Control | GitHub |
-| CDN | Cloudflare (automatic) |
-| Forms | Formspree / Netlify Forms |
-| Analytics | Google Analytics 4 |
-| Search | Client-side (resources.json) |
-
----
-
-## Project Structure
+## 📁 Repository Structure
 
 ```
 academic-halt/
@@ -61,418 +16,304 @@ academic-halt/
 ├── about.html                    # About page
 ├── contact.html                  # Contact page
 ├── privacy-policy.html           # Privacy policy
-├── terms.html                    # Terms of service
-├── disclaimer.html               # Disclaimer
-├── search.html                   # Search page
+├── terms.html                    # Terms of use
 ├── robots.txt                    # SEO robots file
-├── sitemap.xml                   # Generated sitemap
+├── sitemap.xml                   # XML sitemap
+├── _redirects                    # Cloudflare/Netlify redirects
 │
-├── /css/
-│   ├── style.css                 # Global styles & design system
-│   └── components.css            # Component styles
+├── /class-9/                     # Class 9 category page
+│   └── index.html
+├── /class-10/
+│   └── index.html
+├── /class-11/
+│   └── index.html
+├── /class-12/
+│   └── index.html
+├── /jee-main/
+│   └── index.html
+├── /jee-advanced/
+│   ├── index.html
+│   └── hc-verma-concepts-of-physics.html  # Sample book page
+├── /neet/
+│   └── index.html
+├── /upsc/
+│   └── index.html
 │
-├── /js/
-│   ├── script.js                 # Core JS (nav, FAQ, utilities)
-│   ├── search.js                 # Search functionality
-│   ├── resource-loader.js        # Resource grid loader
-│   ├── interlinking.js           # Internal linking engine
-│   └── breadcrumbs.js            # Auto breadcrumb generator
+├── /blog/
+│   ├── index.html
+│   ├── best-books-for-jee-main.html
+│   ├── best-books-for-neet.html
+│   ├── best-books-for-upsc.html
+│   └── study-tips-for-board-exams.html
 │
-├── /data/
-│   ├── resources.json            # 10,000 resource records
-│   ├── categories.json           # Category taxonomy
-│   ├── keywords.json             # 75,000+ SEO keywords
-│   ├── clusters.json             # 20 keyword clusters
-│   └── blog-index.json           # Blog post index (generated)
+├── /admin/
+│   ├── index.html                # Decap CMS admin panel
+│   └── config.yml                # CMS configuration
 │
-├── /templates/
-│   ├── resource-template.html    # Individual resource page template
-│   ├── blog-template.html        # Blog post template
-│   └── seo-template.html         # Keyword landing page template
-│
-├── /scripts/                     # Build scripts (Node.js)
-│   ├── generate-resources.js     # Generates resources.json
-│   ├── generate-seo-pages.js     # Generates SEO landing pages
-│   ├── generate-blog-posts.js    # Generates 50,000 blog posts
-│   ├── generate-thumbnails.js    # Generates SVG thumbnails
-│   ├── generate-sitemap.js       # Generates sitemap.xml
-│   └── generate-keyword-clusters.js  # Generates keywords.json
+├── /content/
+│   ├── /books/                   # Book markdown files (managed by CMS)
+│   │   ├── ncert-mathematics-class-10.md
+│   │   └── hc-verma-concepts-of-physics.md
+│   └── /blog/                    # Blog post markdown files
+│       └── best-books-for-jee-main.md
 │
 ├── /assets/
-│   ├── logo.svg                  # Site logo
-│   └── /thumbnails/              # 10,000+ SVG thumbnails
+│   ├── logo.svg
+│   └── /book-covers/             # Uploaded book cover images
 │
-├── /components/
-│   ├── header.html               # Reusable header HTML
-│   └── footer.html               # Reusable footer HTML
+├── /css/
+│   └── style.css                 # Complete stylesheet
 │
-├── /study-material/index.html    # All materials listing page
-├── /notes/index.html             # Notes category page
-├── /books/index.html             # Books category page
-├── /question-papers/index.html   # Papers category page
-├── /mock-tests/index.html        # Mock tests page
-├── /videos/index.html            # Videos page
-├── /blog/index.html              # Blog index
-│   └── /blog/[slug]/index.html   # Generated blog posts (50,000)
+├── /js/
+│   ├── books-data.js             # Static books database
+│   ├── script.js                 # Main JavaScript
+│   └── search.js                 # Live search system
 │
-├── /tools/
-│   ├── index.html                # Tools index
-│   ├── /pomodoro-timer/          # Pomodoro study timer
-│   ├── /gpa-calculator/          # GPA & grade calculator
-│   ├── /exam-countdown/          # Countdown + word counter
-│   └── /quiz-generator/          # Quiz + flashcard generator
-│
-├── /upsc-notes/index.html        # UPSC SEO page
-├── /jee-notes/index.html         # JEE SEO page
-├── /neet-notes/index.html        # NEET SEO page
-├── /[200+ more SEO pages]/       # Generated keyword pages
-│
-└── /[slug]/index.html            # Individual resource pages (10,000)
+└── /components/
+    ├── header.html               # Reusable header snippet
+    └── footer.html               # Reusable footer snippet
 ```
 
 ---
 
-## Quick Start
+## 🚀 Deployment
 
-### Prerequisites
-- Node.js v18 or higher
-- Git
-- A GitHub account
-- A Cloudflare account (free tier works)
+### Option 1 — GitHub Pages
 
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/yourusername/academic-halt.git
-cd academic-halt
-```
-
-### 2. Run All Build Scripts
-
-```bash
-# Step 1: Generate 10,000 resources
-node scripts/generate-resources.js
-
-# Step 2: Generate keyword dataset
-node scripts/generate-keyword-clusters.js
-
-# Step 3: Generate SEO landing pages (35 pages)
-node scripts/generate-seo-pages.js
-
-# Step 4: Generate 100 sample blog posts (use 50000 for production)
-node scripts/generate-blog-posts.js 100
-
-# Step 5: Generate SVG thumbnails (use 10000 for all)
-node scripts/generate-thumbnails.js 500
-
-# Step 6: Generate sitemap
-node scripts/generate-sitemap.js
-```
-
-### 3. Preview Locally
-
-Since this is a static site, you can preview it with any local server:
-
-```bash
-# Option 1: Python (built-in)
-python3 -m http.server 8080
-
-# Option 2: Node.js live-server
-npx live-server --port=8080
-
-# Option 3: VSCode Live Server extension
-# Right-click index.html → "Open with Live Server"
-```
-
-Open http://localhost:8080 in your browser.
-
----
-
-## Build Scripts
-
-### generate-resources.js
-Generates `data/resources.json` with 10,000 educational resources.
-
-```bash
-node scripts/generate-resources.js
-```
-
-**Output:** `/data/resources.json` (~8MB, 10,000 records)
-
-Each resource has: id, title, slug, category, type, subject, exam, description, download_link, thumbnail, color, downloads, rating, pages, dateAdded, tags, featured.
-
-### generate-seo-pages.js
-Generates HTML pages for all keyword clusters and high-value keywords.
-
-```bash
-node scripts/generate-seo-pages.js
-```
-
-**Output:** 35+ landing pages (e.g., `/upsc-notes/`, `/jee-physics-notes-pdf/`)
-
-To expand to 300,000 pages, extend the `topKeywordPages` array and `clusters` data.
-
-### generate-blog-posts.js
-Generates blog posts from templates.
-
-```bash
-# Generate 100 posts (testing)
-node scripts/generate-blog-posts.js 100
-
-# Generate all 50,000 posts (production — takes ~10-15 minutes)
-node scripts/generate-blog-posts.js 50000
-```
-
-**Output:** `/blog/[slug]/index.html` for each post + `data/blog-index.json`
-
-### generate-thumbnails.js
-Generates SVG thumbnails for resource cards.
-
-```bash
-# Generate 500 thumbnails (fast)
-node scripts/generate-thumbnails.js 500
-
-# Generate all 10,000 thumbnails
-node scripts/generate-thumbnails.js 10000
-```
-
-**Output:** `/assets/thumbnails/[slug].svg`
-
-### generate-sitemap.js
-Generates `sitemap.xml` with all pages.
-
-```bash
-node scripts/generate-sitemap.js
-```
-
-**Output:** `/sitemap.xml` (submit to Google Search Console)
-
----
-
-## Deployment
-
-### Deploy to Cloudflare Pages (Recommended)
-
-Cloudflare Pages is the ideal host for this project — free tier handles unlimited traffic, global CDN, automatic HTTPS.
-
-#### Method 1: GitHub Integration (Recommended)
-
-1. **Push to GitHub:**
+1. **Fork or push this repository to GitHub**
    ```bash
    git init
    git add .
-   git commit -m "Initial Academic Halt build"
-   git remote add origin https://github.com/yourusername/academic-halt.git
+   git commit -m "Initial commit — Academic Halt"
+   git remote add origin https://github.com/YOUR-USERNAME/academic-halt.git
    git push -u origin main
    ```
 
-2. **Connect to Cloudflare Pages:**
-   - Log in to [Cloudflare Dashboard](https://dash.cloudflare.com)
-   - Go to **Workers & Pages** → **Create application** → **Pages**
-   - Click **Connect to Git** → Select your GitHub repo
-   - **Build settings:**
-     - Framework preset: `None`
-     - Build command: `node scripts/generate-resources.js && node scripts/generate-seo-pages.js && node scripts/generate-blog-posts.js 50000 && node scripts/generate-thumbnails.js 10000 && node scripts/generate-sitemap.js`
-     - Build output directory: `/` (root)
-   - Click **Save and Deploy**
+2. **Enable GitHub Pages**
+   - Go to your repository → **Settings** → **Pages**
+   - Source: **Deploy from a branch**
+   - Branch: `main` → Folder: `/ (root)`
+   - Click **Save**
 
-3. **Add your custom domain:**
-   - Go to your Pages project → **Custom domains** → **Set up a custom domain**
-   - Enter `www.academichalt.com` and `academichalt.com`
-   - Add the CNAME records in your domain registrar DNS settings
+3. **Your site will be live at:**
+   ```
+   https://YOUR-USERNAME.github.io/academic-halt/
+   ```
 
-#### Method 2: Direct Upload (Quick Deploy)
-
-```bash
-# Install Wrangler CLI
-npm install -g wrangler
-
-# Authenticate
-wrangler login
-
-# Deploy
-wrangler pages deploy . --project-name=academic-halt
-```
-
-### Deploy to GitHub Pages (Alternative)
-
-1. Go to repository **Settings** → **Pages**
-2. Source: **Deploy from a branch** → `main` → `/ (root)`
-3. Click Save — site will be at `https://yourusername.github.io/academic-halt/`
-
-### Environment Variables
-
-For the contact form to work in production, integrate with a form handler:
-
-**Formspree (easiest):**
-```html
-<!-- In contact.html, replace the submitContact() function with: -->
-<form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-```
-
-**Or use Cloudflare Pages Functions** for server-side form handling.
+4. **Custom Domain (optional)**
+   - Add `CNAME` file with your domain: `www.academichalt.com`
+   - Configure DNS: Add a CNAME record pointing `www` to `YOUR-USERNAME.github.io`
 
 ---
 
-## SEO Architecture
+### Option 2 — Cloudflare Pages (Recommended)
 
-### URL Structure
-```
-/ (homepage)
-/study-material/          ← All materials hub
-/notes/                   ← Notes category
-/books/                   ← Books category
-/upsc-notes/              ← Exam cluster page (generated)
-/jee-physics-notes-pdf/   ← High-value keyword page (generated)
-/[resource-slug]/         ← Individual resource page (10,000)
-/blog/                    ← Blog index
-/blog/[post-slug]/        ← Blog post (50,000)
-/tools/                   ← Tools hub
-/tools/pomodoro-timer/    ← Individual tool
-```
+Cloudflare Pages is faster than GitHub Pages and offers better edge caching.
 
-### Scaling to 300,000 Pages
+1. **Push your repository to GitHub** (see step 1 above)
 
-To generate 300,000 programmatic SEO pages:
+2. **Connect to Cloudflare Pages**
+   - Go to [Cloudflare Dashboard](https://dash.cloudflare.com)
+   - Navigate to **Pages** → **Create a project** → **Connect to Git**
+   - Select your repository
 
-1. **Expand keywords.json** — run `generate-keyword-clusters.js` with larger datasets
-2. **Add keyword patterns** to the generator script
-3. **Run generate-seo-pages.js** — it reads from `data/clusters.json` and creates pages
-4. **For Cloudflare Pages**, split into multiple deploys or use Workers KV for dynamic content
+3. **Build Settings**
+   ```
+   Framework preset:   None
+   Build command:      (leave empty)
+   Build output dir:   /
+   Root directory:     /
+   ```
 
-### Key SEO Elements per Page
-- Unique `<title>` and `<meta description>`
-- Canonical URL
-- Open Graph tags
-- Breadcrumb Schema (JSON-LD)
-- Article/Product Schema
-- FAQ Schema
-- Internal linking via `interlinking.js`
-- H1-H3 hierarchy
-- 800-1500 word SEO article per page
+4. **Deploy** — Cloudflare will deploy your site automatically.
+
+5. **Custom Domain**
+   - In Cloudflare Pages project → **Custom domains** → Add `www.academichalt.com`
+   - Cloudflare handles DNS automatically if your domain is on Cloudflare
 
 ---
 
-## Adding Content
+## 🔑 CMS Setup (Decap CMS)
 
-### Adding Real Resources
+The admin dashboard is available at `/admin/` after deployment.
 
-Edit `data/resources.json` or modify `scripts/generate-resources.js`:
+### Step 1 — Configure the Backend
+
+Open `admin/config.yml` and replace the placeholder with your details:
+
+```yaml
+backend:
+  name: github
+  repo: YOUR-GITHUB-USERNAME/academic-halt   # ← Replace this
+  branch: main
+```
+
+### Step 2 — Enable GitHub OAuth
+
+Decap CMS requires GitHub OAuth to authenticate. You have two options:
+
+#### Option A — Netlify Identity (Easiest)
+If you deploy via Netlify:
+1. Enable **Netlify Identity** in your site settings
+2. Enable **Git Gateway** under Identity settings
+3. Change the backend in `config.yml`:
+   ```yaml
+   backend:
+     name: git-gateway
+     branch: main
+   ```
+
+#### Option B — GitHub OAuth App (For GitHub Pages / Cloudflare)
+
+1. Go to [GitHub Developer Settings](https://github.com/settings/developers) → **OAuth Apps** → **New OAuth App**
+2. Fill in:
+   ```
+   Application name:     Academic Halt CMS
+   Homepage URL:         https://www.academichalt.com
+   Authorization callback URL: https://api.netlify.com/auth/done
+   ```
+3. Note your **Client ID** and generate a **Client Secret**
+4. Use a proxy authentication server (e.g. `netlify/netlify-cms-oauth-provider-node`) or use [Decap CMS's external OAuth guide](https://decapcms.org/docs/external-oauth-clients/)
+
+### Step 3 — Access the CMS
+
+Navigate to: `https://www.academichalt.com/admin/`
+
+Log in with your GitHub account. The CMS will let you:
+- ✅ Add new books
+- ✅ Edit existing books
+- ✅ Delete books
+- ✅ Upload PDF links
+- ✅ Upload cover images
+- ✅ Set category (Class 9–12, JEE, NEET, UPSC)
+- ✅ Mark books as Featured
+- ✅ Write and manage blog posts
+
+Every save in the CMS automatically commits to your GitHub repository.
+
+### Local Development (CMS)
+
+For local testing of the CMS without authentication:
+
+1. Enable local backend in `admin/config.yml`:
+   ```yaml
+   local_backend: true
+   ```
+
+2. Run the local proxy server:
+   ```bash
+   npx decap-server
+   ```
+
+3. Open `http://localhost:8080/admin/` in your browser
+
+---
+
+## ✏️ Adding Books Manually
+
+If you prefer not to use the CMS, you can add books directly to `js/books-data.js`:
 
 ```javascript
-// Add a real resource to resources.json
 {
-  "id": 10001,
-  "title": "UPSC Polity Notes by Vision IAS PDF",
-  "slug": "upsc-polity-notes-vision-ias-pdf",
-  "category": "Notes",
-  "type": "PDF",
-  "subject": "Polity",
-  "exam": "UPSC",
-  "description": "Comprehensive UPSC polity notes by Vision IAS covering all constitutional provisions...",
-  "download_link": "https://drive.google.com/file/d/YOUR_FILE_ID/view",
-  "thumbnail": "/assets/thumbnails/upsc-polity-notes-vision-ias-pdf.svg",
-  "color": "#2563eb",
-  "downloads": 25000,
-  "rating": "4.8",
-  "pages": 180,
-  "dateAdded": "2024-12-01",
-  "tags": ["UPSC", "Polity", "Notes", "Vision IAS", "free"],
-  "featured": true
+  id: "unique-id",
+  title: "Book Title",
+  slug: "book-slug",
+  category: "class-10",           // class-9, class-10, class-11, class-12,
+                                   // jee-main, jee-advanced, neet, upsc
+  categoryLabel: "Class 10",
+  subject: "Mathematics",
+  description: "Short description of the book.",
+  pdfLink: "https://example.com/book.pdf",
+  coverImage: "",                  // URL to cover image, or leave empty
+  emoji: "📐",                    // shown when no cover image
+  featured: true                   // show in homepage "Popular Books"
 }
 ```
 
-### Adding Blog Posts
-
-Create a new file at `/blog/[your-slug]/index.html` using `templates/blog-template.html` as the base. Or add the post to the blog generator:
-
-```bash
-node scripts/generate-blog-posts.js 1  # generates 1 new post
-```
-
-### Adding SEO Pages
-
-Add new keyword clusters to `data/clusters.json`, then run:
-
-```bash
-node scripts/generate-seo-pages.js
-```
+Then create a corresponding book detail HTML page in the relevant category folder (use `jee-advanced/hc-verma-concepts-of-physics.html` as a template).
 
 ---
 
-## Customization
+## 🔍 Search System
 
-### Branding
+The search system (`js/search.js`) works automatically — it searches all books in `js/books-data.js` by:
+- Book title
+- Subject
+- Category
+- Description
 
-Edit CSS variables in `css/style.css`:
-
-```css
-:root {
-  --primary: #2563eb;        /* Change primary color */
-  --secondary: #1e293b;      /* Dark background color */
-  --accent: #22c55e;         /* Green accent */
-  /* ... */
-}
-```
-
-### Google Analytics
-
-Add your GA4 tracking ID to each HTML file's `<head>`:
-
-```html
-<!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-XXXXXXXXXX');
-</script>
-```
-
-### Google AdSense
-
-Add to `<head>` after GA:
-
-```html
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
-```
+The search appears in the homepage hero section and shows instant results as you type.
 
 ---
 
-## Performance
+## 📊 SEO
 
-### Page Speed Targets
-- **LCP (Largest Contentful Paint):** < 2.5s
-- **FID (First Input Delay):** < 100ms
-- **CLS (Cumulative Layout Shift):** < 0.1
+Each page includes:
+- Meta title and description
+- Canonical URL
+- Open Graph tags
+- Schema.org structured data (Organization, BreadcrumbList, Article, Book)
+- Proper H1/H2/H3 heading hierarchy
+- Internal linking between pages
+- `robots.txt` allowing all crawlers
+- `sitemap.xml` listing all pages
 
-### Optimizations Built In
-- ✅ Lazy loading images (`loading="lazy"`)
-- ✅ SVG thumbnails (tiny file size vs PNG/JPEG)
-- ✅ CSS variables for consistent theming without redundancy
-- ✅ Async/deferred JS where possible
-- ✅ No heavy JS frameworks (vanilla JS only)
-- ✅ Google Fonts preconnect
-- ✅ Cloudflare CDN caching
-- ✅ resources.json cached in memory after first load
-- ✅ IntersectionObserver for scroll animations
-
-### Additional Optimizations for Production
-1. Minify CSS/JS: `npx minify-all`
-2. Compress images: All thumbnails are SVG (already optimal)
-3. Enable Cloudflare Auto Minify in dashboard settings
-4. Enable Cloudflare Rocket Loader for JS
-5. Set Cache-Control headers in `_headers` file
+After deployment, submit your sitemap to:
+- [Google Search Console](https://search.google.com/search-console)
+- [Bing Webmaster Tools](https://www.bing.com/webmasters)
 
 ---
 
-## Support
+## 🎨 Design System
 
-For questions or issues, contact us at:
-- **Email:** contact@academichalt.com
-- **Website:** https://www.academichalt.com/contact.html
+| Token | Value |
+|-------|-------|
+| Primary Color | `#2563eb` |
+| Secondary Color | `#1e293b` |
+| Accent Color | `#22c55e` |
+| Background | `#ffffff` |
+| Surface | `#f8fafc` |
+| Border | `#e2e8f0` |
+| Text | `#0f172a` |
+| Font (Headings) | Sora |
+| Font (Body) | Lora |
+| Border Radius | `8px` |
 
 ---
 
-*Built with ❤️ for students across India — Academic Halt Team*
+## 📱 Responsive Breakpoints
+
+| Screen | Grid |
+|--------|------|
+| Desktop (> 1024px) | 3–4 columns |
+| Tablet (768–1024px) | 2 columns |
+| Mobile (< 768px) | 1 column |
+
+---
+
+## 🛠️ Technology Stack
+
+- **HTML5** — Semantic markup
+- **CSS3** — Custom properties, Grid, Flexbox, animations
+- **Vanilla JavaScript** — No frameworks or build tools required
+- **Decap CMS** — Git-based headless CMS
+- **Google Fonts** — Sora + Lora typography
+
+---
+
+## 📄 License
+
+The website code is open source for educational use. All book PDFs remain the intellectual property of their respective authors and publishers.
+
+---
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Add new books to `js/books-data.js`
+3. Add corresponding book detail pages
+4. Submit a pull request
+
+---
+
+**Academic Halt** — Free Books for Every Student 📚

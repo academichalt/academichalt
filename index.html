@@ -3,738 +3,340 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Academic Halt - Free Study Materials, Notes, Books, PDFs & Exam Preparation Resources</title>
-  <meta name="description" content="Academic Halt provides free study materials, notes, PDF books, lecture videos, question papers, mock tests and exam preparation resources for UPSC, JEE, NEET, SSC, Class 10, 12 and more.">
-  <meta name="keywords" content="study materials, notes pdf, free study material, exam preparation, upsc notes, jee notes, neet notes, ssc notes, class 12 notes, class 10 notes">
-  <link rel="canonical" href="https://www.academichalt.com/">
+  <title>Academic Halt — Free Books & Study Materials for Class 9–12, JEE, NEET & UPSC</title>
+  <meta name="description" content="Academic Halt provides free PDF books and study materials for students of Class 9, 10, 11, 12, JEE Main, JEE Advanced, NEET and UPSC. Download NCERT books and reference books for free.">
+  <meta name="keywords" content="free pdf books, NCERT books, JEE books, NEET books, UPSC books, class 9 books, class 10 books, study materials, academic halt">
   <meta name="robots" content="index, follow">
-  <meta property="og:title" content="Academic Halt - Free Study Materials & Exam Preparation Resources">
-  <meta property="og:description" content="Free notes, PDFs, books, question papers and mock tests for UPSC, JEE, NEET, SSC and all competitive exams.">
+  <link rel="canonical" href="https://www.academichalt.com/">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Academic Halt — Free Books & Study Materials">
+  <meta property="og:description" content="Free PDF books for Class 9–12, JEE, NEET and UPSC students.">
   <meta property="og:url" content="https://www.academichalt.com/">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="https://www.academichalt.com/assets/og-image.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="/css/components.css">
 
+  <!-- Schema.org Organization -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Academic Halt",
+    "url": "https://www.academichalt.com",
+    "description": "Free PDF books and study materials for Indian students",
+    "email": "hello@academichalt.com",
+    "sameAs": []
+  }
+  </script>
+
+  <!-- Schema.org WebSite with SearchAction -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "Academic Halt",
-    "url": "https://www.academichalt.com/",
-    "description": "Free Study Materials, Notes, Books, PDFs & Exam Preparation Resources",
+    "url": "https://www.academichalt.com",
     "potentialAction": {
       "@type": "SearchAction",
-      "target": "https://www.academichalt.com/search.html?q={search_term_string}",
+      "target": "https://www.academichalt.com/?q={search_term_string}",
       "query-input": "required name=search_term_string"
     }
   }
   </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "EducationalOrganization",
-    "name": "Academic Halt",
-    "url": "https://www.academichalt.com/",
-    "logo": "https://www.academichalt.com/assets/logo.svg",
-    "description": "India's largest free online education platform for exam preparation",
-    "sameAs": []
-  }
-  </script>
+
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 <body>
 
-<!-- HEADER -->
-<div class="announce-bar">
-  🎉 10,000+ Free Study Materials Available! <a href="/study-material/">Explore Now →</a>
-</div>
-<header class="site-header">
-  <div class="container">
-    <div class="header-inner">
-      <a href="/" class="site-logo">
-        <svg class="site-logo__icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect width="36" height="36" rx="8" fill="#2563eb"/>
-          <path d="M18 8L28 13.5V22.5L18 28L8 22.5V13.5L18 8Z" fill="white" fill-opacity="0.2"/>
-          <path d="M18 8L28 13.5M18 8L8 13.5M18 8V18M28 13.5V22.5L18 28M8 13.5V22.5L18 28M18 18L28 13.5M18 18L8 13.5M18 18V28" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <span class="site-logo__text">Academic<span>Halt</span></span>
-      </a>
-      <div class="header-search">
-        <svg class="header-search__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-        </svg>
-        <input type="text" id="headerSearch" placeholder="Search notes, PDFs, books..." autocomplete="off">
-        <div class="search-dropdown" id="headerSearchDropdown"></div>
-      </div>
-      <nav class="main-nav">
-        <a href="/" class="nav-link active">Home</a>
-        <div class="nav-dropdown">
-          <a href="/study-material/" class="nav-link">Materials ▾</a>
-          <div class="dropdown-menu">
-            <a href="/notes/" class="dropdown-item">📝 Notes</a>
-            <a href="/books/" class="dropdown-item">📚 Books</a>
-            <a href="/videos/" class="dropdown-item">🎥 Videos</a>
-            <a href="/question-papers/" class="dropdown-item">📄 Question Papers</a>
-            <a href="/mock-tests/" class="dropdown-item">✅ Mock Tests</a>
-          </div>
-        </div>
-        <a href="/notes/" class="nav-link">Notes</a>
-        <a href="/books/" class="nav-link">Books</a>
-        <a href="/question-papers/" class="nav-link">Papers</a>
-        <a href="/mock-tests/" class="nav-link">Mock Tests</a>
-        <a href="/blog/" class="nav-link">Blog</a>
-        <a href="/about.html" class="nav-link">About</a>
-      </nav>
-      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </div>
-  <nav class="mobile-nav" id="mobileNav">
-    <div class="mobile-nav-section">
-      <a href="/">🏠 Home</a>
-      <a href="/study-material/">📖 Study Materials</a>
-      <a href="/notes/">📝 Notes</a>
-      <a href="/books/">📚 Books</a>
-      <a href="/videos/">🎥 Videos</a>
-      <a href="/question-papers/">📄 Question Papers</a>
-      <a href="/mock-tests/">✅ Mock Tests</a>
-    </div>
-    <div class="mobile-nav-section">
-      <a href="/blog/">✍️ Blog</a>
-      <a href="/about.html">ℹ️ About</a>
-      <a href="/contact.html">📬 Contact</a>
-    </div>
-  </nav>
-</header>
-
-<main>
-<!-- ============ HERO ============ -->
-<section class="hero">
-  <div class="container">
-    <div class="hero__inner">
-      <div class="hero__tag">India's #1 Free Education Platform</div>
-      <h1>Free Study Materials, Notes, Books & <span>Exam Preparation</span> Resources</h1>
-      <p>Download free PDF notes, books, question papers, and mock tests for UPSC, JEE, NEET, SSC, Class 10, 12, and 500+ competitive exams.</p>
-
-      <div class="hero-search">
-        <input type="text" id="heroSearch" placeholder="Search study materials, PDFs, notes, books, videos..." autocomplete="off">
-        <button class="btn btn-primary" id="heroSearchBtn">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-          </svg>
-          Search
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="/" class="logo" aria-label="Academic Halt Home">
+          <div class="logo-mark">A</div>
+          <span class="logo-text">Academic<span>Halt</span></span>
+        </a>
+        <nav aria-label="Primary navigation">
+          <ul class="nav-links">
+            <li><a href="/" class="active">Home</a></li>
+            <li><a href="/class-9/">Class 9</a></li>
+            <li><a href="/class-10/">Class 10</a></li>
+            <li><a href="/class-11/">Class 11</a></li>
+            <li><a href="/class-12/">Class 12</a></li>
+            <li><a href="/jee-main/">JEE Main</a></li>
+            <li><a href="/jee-advanced/">JEE Advanced</a></li>
+            <li><a href="/neet/">NEET</a></li>
+            <li><a href="/upsc/">UPSC</a></li>
+            <li><a href="/blog/">Blog</a></li>
+            <li><a href="/about.html">About</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+          </ul>
+        </nav>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
       </div>
+    </div>
+  </header>
 
-      <div class="hero-quick-links">
-        <a href="/upsc-notes/">📋 UPSC Notes</a>
-        <a href="/jee-notes/">⚛️ JEE Notes</a>
-        <a href="/neet-notes/">🧬 NEET Notes</a>
-        <a href="/ssc-notes/">📝 SSC Notes</a>
-        <a href="/class-12-notes/">📚 Class 12</a>
-        <a href="/class-10-notes/">📖 Class 10</a>
-        <a href="/gate-notes/">💻 GATE</a>
-        <a href="/question-papers/">📄 Papers</a>
-      </div>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
+    <ul class="mobile-nav-links">
+      <li><a href="/">🏠 Home</a></li>
+      <li><a href="/class-9/">📗 Class 9 Books</a></li>
+      <li><a href="/class-10/">📘 Class 10 Books</a></li>
+      <li><a href="/class-11/">📙 Class 11 Books</a></li>
+      <li><a href="/class-12/">📕 Class 12 Books</a></li>
+      <li><a href="/jee-main/">🎯 JEE Main Books</a></li>
+      <li><a href="/jee-advanced/">🏆 JEE Advanced Books</a></li>
+      <li><a href="/neet/">🩺 NEET Books</a></li>
+      <li><a href="/upsc/">🏛️ UPSC Books</a></li>
+      <li><a href="/blog/">✍️ Blog</a></li>
+      <li><a href="/about.html">ℹ️ About</a></li>
+      <li><a href="/contact.html">📬 Contact</a></li>
+    </ul>
+  </nav>
 
-      <div class="hero-stats">
-        <div class="hero-stat">
-          <div class="hero-stat__num" data-count="10000" data-suffix="+">10,000+</div>
-          <div class="hero-stat__label">Study Resources</div>
+  <main>
+    <!-- ── HERO ────────────────────────────────────────────── -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-badge">Free Educational Resources for Every Student</div>
+        <h1>Free Books &amp; Study Materials for<br><span class="accent">Class 9–12, JEE, NEET &amp; UPSC</span></h1>
+        <p class="hero-sub">Download NCERT books, reference books, and study guides — completely free. No registration required.</p>
+
+        <!-- Search -->
+        <div class="search-wrap">
+          <span class="search-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          </span>
+          <input type="search" id="search-input" class="search-input" placeholder="Search books by title, subject or category…" autocomplete="off">
+          <div id="search-results"></div>
         </div>
-        <div class="hero-stat">
-          <div class="hero-stat__num" data-count="500" data-suffix="+">500+</div>
-          <div class="hero-stat__label">Exams Covered</div>
+
+        <div class="hero-cta">
+          <a href="/class-12/" class="btn btn-primary btn-lg">Browse Class 12 Books</a>
+          <a href="/jee-main/" class="btn btn-outline btn-lg">JEE Main Books</a>
         </div>
-        <div class="hero-stat">
-          <div class="hero-stat__num" data-count="2000000" data-suffix="+">2M+</div>
-          <div class="hero-stat__label">Happy Students</div>
+
+        <div class="hero-stats">
+          <div class="stat"><span class="stat-num">500+</span><span class="stat-label">Free Books</span></div>
+          <div class="stat"><span class="stat-num">8</span><span class="stat-label">Categories</span></div>
+          <div class="stat"><span class="stat-num">100%</span><span class="stat-label">Free &amp; No Signup</span></div>
+          <div class="stat"><span class="stat-num">2M+</span><span class="stat-label">Students Helped</span></div>
         </div>
-        <div class="hero-stat">
-          <div class="hero-stat__num" data-count="100" data-suffix="% Free">100% Free</div>
-          <div class="hero-stat__label">Always Free</div>
+      </div>
+    </section>
+
+    <!-- ── CATEGORIES ──────────────────────────────────────── -->
+    <section class="section-sm" style="background:var(--bg);border-bottom:1px solid var(--border);">
+      <div class="container">
+        <h2 class="section-title">Browse by Category</h2>
+        <p class="section-subtitle">Select your exam or class to find the right books</p>
+        <div class="cat-grid">
+          <a href="/class-9/" class="cat-card">
+            <div class="cat-icon">📗</div>
+            <div class="cat-name">Class 9</div>
+            <div class="cat-count" data-cat-count="class-9">3 books</div>
+          </a>
+          <a href="/class-10/" class="cat-card">
+            <div class="cat-icon">📘</div>
+            <div class="cat-name">Class 10</div>
+            <div class="cat-count" data-cat-count="class-10">3 books</div>
+          </a>
+          <a href="/class-11/" class="cat-card">
+            <div class="cat-icon">📙</div>
+            <div class="cat-name">Class 11</div>
+            <div class="cat-count" data-cat-count="class-11">4 books</div>
+          </a>
+          <a href="/class-12/" class="cat-card">
+            <div class="cat-icon">📕</div>
+            <div class="cat-name">Class 12</div>
+            <div class="cat-count" data-cat-count="class-12">4 books</div>
+          </a>
+          <a href="/jee-main/" class="cat-card">
+            <div class="cat-icon">🎯</div>
+            <div class="cat-name">JEE Main</div>
+            <div class="cat-count" data-cat-count="jee-main">4 books</div>
+          </a>
+          <a href="/jee-advanced/" class="cat-card">
+            <div class="cat-icon">🏆</div>
+            <div class="cat-name">JEE Advanced</div>
+            <div class="cat-count" data-cat-count="jee-advanced">3 books</div>
+          </a>
+          <a href="/neet/" class="cat-card">
+            <div class="cat-icon">🩺</div>
+            <div class="cat-name">NEET</div>
+            <div class="cat-count" data-cat-count="neet">4 books</div>
+          </a>
+          <a href="/upsc/" class="cat-card">
+            <div class="cat-icon">🏛️</div>
+            <div class="cat-name">UPSC</div>
+            <div class="cat-count" data-cat-count="upsc">4 books</div>
+          </a>
         </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- ============ EXAM CATEGORIES ============ -->
-<section class="section-sm" style="background:var(--surface);">
-  <div class="container">
-    <div class="section-header section-header--center" style="margin-bottom:32px">
-      <span class="section-header__label">Browse by Exam</span>
-      <h2>Popular Exam Categories</h2>
-    </div>
-    <div class="grid-4" id="examCategories">
-      <a href="/upsc-notes/" class="cat-card" data-animate>
-        <div class="cat-card__icon" style="background:#dbeafe">🏛️</div>
-        <div class="cat-card__name">UPSC / IAS</div>
-        <div class="cat-card__count">850+ Resources</div>
-      </a>
-      <a href="/jee-notes/" class="cat-card" data-animate>
-        <div class="cat-card__icon" style="background:#dcfce7">⚛️</div>
-        <div class="cat-card__name">JEE Main & Advanced</div>
-        <div class="cat-card__count">720+ Resources</div>
-      </a>
-      <a href="/neet-notes/" class="cat-card" data-animate>
-        <div class="cat-card__icon" style="background:#fce7f3">🧬</div>
-        <div class="cat-card__name">NEET / AIIMS</div>
-        <div class="cat-card__count">680+ Resources</div>
-      </a>
-      <a href="/ssc-notes/" class="cat-card" data-animate>
-        <div class="cat-card__icon" style="background:#fef9c3">📝</div>
-        <div class="cat-card__name">SSC CGL / CHSL</div>
-        <div class="cat-card__count">540+ Resources</div>
-      </a>
-      <a href="/class-12-notes/" class="cat-card" data-animate>
-        <div class="cat-card__icon" style="background:#f3e8ff">📚</div>
-        <div class="cat-card__name">Class 12 (CBSE)</div>
-        <div class="cat-card__count">920+ Resources</div>
-      </a>
-      <a href="/class-10-notes/" class="cat-card" data-animate>
-        <div class="cat-card__icon" style="background:#ffedd5">📖</div>
-        <div class="cat-card__name">Class 10 (CBSE)</div>
-        <div class="cat-card__count">780+ Resources</div>
-      </a>
-      <a href="/gate-notes/" class="cat-card" data-animate>
-        <div class="cat-card__icon" style="background:#dcfce7">💻</div>
-        <div class="cat-card__name">GATE / ESE</div>
-        <div class="cat-card__count">430+ Resources</div>
-      </a>
-      <a href="/banking-notes/" class="cat-card" data-animate>
-        <div class="cat-card__icon" style="background:#dbeafe">🏦</div>
-        <div class="cat-card__name">Banking / IBPS / SBI</div>
-        <div class="cat-card__count">510+ Resources</div>
-      </a>
-    </div>
-    <div style="text-align:center;margin-top:32px">
-      <a href="/study-material/" class="btn btn-outline">View All Exam Categories →</a>
-    </div>
-  </div>
-</section>
-
-<!-- ============ TRENDING RESOURCES ============ -->
-<section class="section">
-  <div class="container">
-    <div class="section-header" style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:32px">
-      <div>
-        <span class="section-header__label">🔥 Trending This Week</span>
-        <h2>Most Downloaded Study Materials</h2>
+    <!-- ── POPULAR BOOKS ───────────────────────────────────── -->
+    <section class="section" style="background:var(--surface);">
+      <div class="container">
+        <div class="divider-line"></div>
+        <h2 class="section-title">Popular Books</h2>
+        <p class="section-subtitle">Most downloaded books by students across India</p>
+        <div class="grid-3" id="featured-books-grid">
+          <!-- Populated by script.js -->
+        </div>
+        <div class="text-center mt-40">
+          <a href="/class-12/" class="btn btn-outline">View All Books →</a>
+        </div>
       </div>
-      <a href="/study-material/" class="btn btn-secondary btn-sm">View All →</a>
-    </div>
+    </section>
 
-    <div class="tabs" data-tabs>
-      <button class="tab-btn active" data-tab="all">All</button>
-      <button class="tab-btn" data-tab="notes">Notes</button>
-      <button class="tab-btn" data-tab="books">Books</button>
-      <button class="tab-btn" data-tab="papers">Question Papers</button>
-      <button class="tab-btn" data-tab="mock">Mock Tests</button>
-    </div>
-
-    <div class="grid-4" id="trendingResources">
-      <!-- Generated by JS -->
-    </div>
-  </div>
-</section>
-
-<!-- ============ SUBJECTS SECTION ============ -->
-<section class="section-sm" style="background:var(--surface);">
-  <div class="container">
-    <div class="section-header section-header--center" style="margin-bottom:32px">
-      <span class="section-header__label">Browse by Subject</span>
-      <h2>Popular Subjects</h2>
-    </div>
-    <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center" id="subjectTags">
-      <a href="/physics-notes/" class="tag">⚛️ Physics</a>
-      <a href="/chemistry-notes/" class="tag">🧪 Chemistry</a>
-      <a href="/biology-notes/" class="tag">🧬 Biology</a>
-      <a href="/mathematics-notes/" class="tag">📐 Mathematics</a>
-      <a href="/history-notes/" class="tag">📜 History</a>
-      <a href="/geography-notes/" class="tag">🌍 Geography</a>
-      <a href="/polity-notes/" class="tag">🏛️ Polity</a>
-      <a href="/economics-notes/" class="tag">💹 Economics</a>
-      <a href="/english-notes/" class="tag">📝 English</a>
-      <a href="/computer-science-notes/" class="tag">💻 Computer Science</a>
-      <a href="/general-knowledge-notes/" class="tag">🌐 General Knowledge</a>
-      <a href="/current-affairs-notes/" class="tag">📰 Current Affairs</a>
-      <a href="/reasoning-notes/" class="tag">🧠 Reasoning</a>
-      <a href="/aptitude-notes/" class="tag">🔢 Quantitative Aptitude</a>
-      <a href="/accountancy-notes/" class="tag">📊 Accountancy</a>
-      <a href="/business-studies-notes/" class="tag">💼 Business Studies</a>
-    </div>
-  </div>
-</section>
-
-<!-- ============ STUDY TOOLS ============ -->
-<section class="section">
-  <div class="container">
-    <div class="section-header section-header--center" style="margin-bottom:40px">
-      <span class="section-header__label">Free Tools</span>
-      <h2>Student Study Tools</h2>
-      <p>Interactive tools to boost your exam preparation efficiency</p>
-    </div>
-    <div class="grid-4">
-      <a href="/tools/pomodoro-timer/" class="card" style="text-align:center;text-decoration:none" data-animate>
-        <div style="font-size:40px;margin-bottom:12px">⏱️</div>
-        <h3 style="font-size:16px;margin-bottom:8px">Pomodoro Timer</h3>
-        <p style="font-size:13px;margin:0">Study with focused 25-minute sessions</p>
-      </a>
-      <a href="/tools/gpa-calculator/" class="card" style="text-align:center;text-decoration:none" data-animate>
-        <div style="font-size:40px;margin-bottom:12px">🎓</div>
-        <h3 style="font-size:16px;margin-bottom:8px">GPA Calculator</h3>
-        <p style="font-size:13px;margin:0">Calculate your semester GPA easily</p>
-      </a>
-      <a href="/tools/exam-countdown/" class="card" style="text-align:center;text-decoration:none" data-animate>
-        <div style="font-size:40px;margin-bottom:12px">📅</div>
-        <h3 style="font-size:16px;margin-bottom:8px">Exam Countdown</h3>
-        <p style="font-size:13px;margin:0">Track days left until your exam</p>
-      </a>
-      <a href="/tools/quiz-generator/" class="card" style="text-align:center;text-decoration:none" data-animate>
-        <div style="font-size:40px;margin-bottom:12px">❓</div>
-        <h3 style="font-size:16px;margin-bottom:8px">Random Quiz</h3>
-        <p style="font-size:13px;margin:0">Test your knowledge with instant quizzes</p>
-      </a>
-      <a href="/tools/flashcard-generator/" class="card" style="text-align:center;text-decoration:none" data-animate>
-        <div style="font-size:40px;margin-bottom:12px">🃏</div>
-        <h3 style="font-size:16px;margin-bottom:8px">Flashcard Generator</h3>
-        <p style="font-size:13px;margin:0">Create and review flashcards</p>
-      </a>
-      <a href="/tools/percentage-calculator/" class="card" style="text-align:center;text-decoration:none" data-animate>
-        <div style="font-size:40px;margin-bottom:12px">📊</div>
-        <h3 style="font-size:16px;margin-bottom:8px">Percentage Calculator</h3>
-        <p style="font-size:13px;margin:0">Calculate exam percentages instantly</p>
-      </a>
-      <a href="/tools/word-counter/" class="card" style="text-align:center;text-decoration:none" data-animate>
-        <div style="font-size:40px;margin-bottom:12px">📝</div>
-        <h3 style="font-size:16px;margin-bottom:8px">Word Counter</h3>
-        <p style="font-size:13px;margin:0">Count words for essays and assignments</p>
-      </a>
-      <a href="/tools/" class="card" style="text-align:center;text-decoration:none;background:var(--primary);border-color:var(--primary)" data-animate>
-        <div style="font-size:40px;margin-bottom:12px">🛠️</div>
-        <h3 style="font-size:16px;margin-bottom:8px;color:#fff">All Tools</h3>
-        <p style="font-size:13px;margin:0;color:rgba(255,255,255,0.8)">View all student tools →</p>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ============ LATEST NOTES ============ -->
-<section class="section" style="background:var(--surface);">
-  <div class="container">
-    <div class="section-header" style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:32px">
-      <div>
-        <span class="section-header__label">📝 Latest Notes</span>
-        <h2>Recently Added Study Notes</h2>
+    <!-- ── LATEST BOOKS ────────────────────────────────────── -->
+    <section class="section">
+      <div class="container">
+        <div class="divider-line"></div>
+        <h2 class="section-title">Latest Additions</h2>
+        <p class="section-subtitle">Freshly added books and study materials</p>
+        <div class="grid-3" id="latest-books-grid">
+          <!-- Populated by script.js -->
+        </div>
       </div>
-      <a href="/notes/" class="btn btn-secondary btn-sm">All Notes →</a>
-    </div>
-    <div class="grid-4" id="latestNotes">
-      <!-- JS rendered -->
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- ============ WHY US ============ -->
-<section class="section">
-  <div class="container">
-    <div class="section-header section-header--center" style="margin-bottom:48px">
-      <span class="section-header__label">Why Choose Us</span>
-      <h2>Why Students Love Academic Halt</h2>
-    </div>
-    <div class="grid-4">
-      <div class="card" style="text-align:center" data-animate>
-        <div style="font-size:36px;margin-bottom:16px">🆓</div>
-        <h3 style="font-size:18px;margin-bottom:8px">100% Free Forever</h3>
-        <p style="font-size:14px">All study materials, notes, PDFs, and resources are completely free. No registration required.</p>
-      </div>
-      <div class="card" style="text-align:center" data-animate>
-        <div style="font-size:36px;margin-bottom:16px">⚡</div>
-        <h3 style="font-size:18px;margin-bottom:8px">Fast Downloads</h3>
-        <p style="font-size:14px">Download PDF notes and books instantly. No waiting, no redirects, just direct downloads.</p>
-      </div>
-      <div class="card" style="text-align:center" data-animate>
-        <div style="font-size:36px;margin-bottom:16px">✅</div>
-        <h3 style="font-size:18px;margin-bottom:8px">Expert Curated</h3>
-        <p style="font-size:14px">All resources are verified by subject experts and top exam toppers for accuracy.</p>
-      </div>
-      <div class="card" style="text-align:center" data-animate>
-        <div style="font-size:36px;margin-bottom:16px">🔄</div>
-        <h3 style="font-size:18px;margin-bottom:8px">Always Updated</h3>
-        <p style="font-size:14px">Content updated regularly with latest exam patterns, syllabus changes, and new materials.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ STATS ============ -->
-<section style="background:var(--secondary);padding:56px 0">
-  <div class="container">
-    <div class="grid-4">
-      <div class="stat-card" data-animate>
-        <div class="stat-card__number" data-count="10000" data-suffix="+" style="color:#60a5fa">0</div>
-        <div class="stat-card__label" style="color:#94a3b8">Study Resources</div>
-      </div>
-      <div class="stat-card" data-animate>
-        <div class="stat-card__number" data-count="2000000" data-suffix="+" style="color:#4ade80">0</div>
-        <div class="stat-card__label" style="color:#94a3b8">Students Helped</div>
-      </div>
-      <div class="stat-card" data-animate>
-        <div class="stat-card__number" data-count="500" data-suffix="+" style="color:#fb923c">0</div>
-        <div class="stat-card__label" style="color:#94a3b8">Exams Covered</div>
-      </div>
-      <div class="stat-card" data-animate>
-        <div class="stat-card__number" data-count="50" data-suffix="K+ Posts" style="color:#e879f9">0</div>
-        <div class="stat-card__label" style="color:#94a3b8">Blog Articles</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ LATEST BLOG ============ -->
-<section class="section">
-  <div class="container">
-    <div class="section-header" style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:32px">
-      <div>
-        <span class="section-header__label">✍️ Latest Articles</span>
-        <h2>From Our Education Blog</h2>
-      </div>
-      <a href="/blog/" class="btn btn-secondary btn-sm">All Articles →</a>
-    </div>
-    <div class="grid-3" id="latestBlog">
-      <!-- JS rendered -->
-    </div>
-  </div>
-</section>
-
-<!-- ============ SEO ARTICLE SECTION ============ -->
-<section class="section" style="background:var(--surface);">
-  <div class="container">
-    <div class="content-sidebar">
-      <article id="articleBody">
-        <h2>Free Study Materials for All Competitive Exams in India</h2>
-        <p>Academic Halt is India's most comprehensive free online education platform, providing high-quality study materials for students preparing for a wide range of competitive exams, board exams, and university courses. Whether you're preparing for UPSC, JEE, NEET, SSC, or your Class 10 and 12 board exams, we have the resources you need to succeed.</p>
-
-        <h3>Why Free Study Materials Matter</h3>
-        <p>Access to quality education should be a right, not a privilege. Millions of students across India struggle to afford coaching classes and expensive study materials. Academic Halt bridges this gap by providing absolutely free, expert-curated study resources that cover every major exam and subject.</p>
-        <p>Our platform hosts over 10,000 study resources including PDF notes, complete textbooks, lecture video links, previous year question papers, mock tests, and comprehensive study guides. All resources are organized by exam, subject, and class level for easy navigation.</p>
-
-        <h3>UPSC / IAS Exam Study Materials</h3>
-        <p>The Union Public Service Commission (UPSC) Civil Services Examination is one of India's most prestigious and competitive exams. Our UPSC section provides comprehensive notes covering all GS papers including History, Geography, Polity, Economics, Science & Technology, Environment, and Current Affairs. We offer curated notes from IAS toppers, NCERT summaries, and previous year question papers going back 15 years.</p>
-
-        <h3>JEE Main and Advanced Study Resources</h3>
-        <p>Joint Entrance Examination (JEE) is the gateway to India's premier engineering institutes including IITs, NITs, and IIITs. Our JEE section includes complete formula sheets for Physics, Chemistry, and Mathematics, topic-wise notes, solved examples, and previous year papers. Resources are aligned with the latest NTA syllabus and exam pattern.</p>
-
-        <h3>NEET Biology, Physics & Chemistry Notes</h3>
-        <p>National Eligibility cum Entrance Test (NEET) is the single medical entrance exam for MBBS and BDS admissions. Our NEET resources include chapter-wise notes for all three subjects, NCERT-based summaries, high-yield fact sheets, and topic-wise MCQ banks. Special focus on Botany, Zoology, Organic Chemistry, and Modern Physics chapters that frequently appear in NEET.</p>
-
-        <h3>SSC CGL, CHSL, MTS Study Materials</h3>
-        <p>Staff Selection Commission (SSC) exams are among the most popular government job examinations in India. We provide comprehensive notes for Quantitative Aptitude, Reasoning, English Language, and General Awareness. Our SSC section includes Tier 1 and Tier 2 preparation materials, previous year papers, and sectional mock tests.</p>
-
-        <h3>Class 10 & 12 CBSE Notes and NCERT Solutions</h3>
-        <p>Board examination preparation is crucial for every student's academic journey. Academic Halt provides complete NCERT solutions for all subjects, chapter summaries, important questions, and previous year board papers for both Class 10 and Class 12. Subject coverage includes Physics, Chemistry, Biology, Mathematics, Economics, Accountancy, Business Studies, History, Geography, Political Science, and English.</p>
-
-        <h3>Banking Exams - IBPS PO, SBI PO, RBI Grade B</h3>
-        <p>Bank job examinations conducted by IBPS and SBI attract millions of applicants every year. Our banking section provides study materials for all banking exams including IBPS PO, IBPS Clerk, SBI PO, SBI Clerk, RBI Grade B, and NABARD. Special focus on Quantitative Aptitude shortcuts, English language preparation, and Banking Awareness.</p>
-
-        <h3>GATE Study Materials for Engineering Students</h3>
-        <p>Graduate Aptitude Test in Engineering (GATE) is essential for engineering graduates seeking M.Tech admissions or PSU jobs. We provide subject-wise notes for all GATE streams including Computer Science, Electronics, Mechanical, Civil, Chemical, and Electrical Engineering. Resources include topic-wise question banks and previous year solved papers.</p>
-
-        <h3>State PCS Exams Study Materials</h3>
-        <p>State Public Service Commission exams including UPPSC, BPSC, MPPSC, RPSC, WBPSC, and TNPSC require state-specific preparation. Our state PCS section covers state-specific GK, geography, culture, economy, and governance alongside standard general studies content.</p>
-
-        <h3>How to Download Free Study Materials from Academic Halt</h3>
-        <p>Downloading study materials from Academic Halt is simple and completely free. Browse to your desired exam category or use the search bar to find specific topics. Click on any resource to view its details page, then click the Download button to access the PDF or study material. No registration, no login, and no payment required.</p>
-
-        <h3>Study Tips for Competitive Exam Success</h3>
-        <p>Beyond providing resources, Academic Halt helps students develop effective study strategies. Our blog features thousands of articles on time management, revision techniques, mock test strategies, and subject-specific tips from exam toppers. Use our Pomodoro Timer tool to study in focused intervals, and track your progress with our exam countdown timer.</p>
-
-        <h2>Frequently Asked Questions</h2>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            Is Academic Halt really free?
-            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    <!-- ── BLOG PREVIEW ───────────────────────────────────── -->
+    <section class="section" style="background:var(--surface);">
+      <div class="container">
+        <div class="divider-line"></div>
+        <h2 class="section-title">Study Tips &amp; Guides</h2>
+        <p class="section-subtitle">Expert advice to help you crack your exams</p>
+        <div class="grid-3">
+          <div class="blog-card">
+            <div class="blog-thumb">📚</div>
+            <div class="blog-body">
+              <div class="blog-meta"><span>✍️ Editorial Team</span><span>•</span><span>Jan 2025</span></div>
+              <a href="/blog/best-books-for-jee-main.html"><h3 class="blog-title">Best Books for JEE Main 2025 Preparation</h3></a>
+              <p class="blog-excerpt">A complete list of books recommended by IIT toppers and expert teachers for cracking JEE Main with high scores.</p>
+              <a href="/blog/best-books-for-jee-main.html" class="btn btn-outline btn-sm">Read More →</a>
+            </div>
           </div>
-          <div class="faq-answer">Yes, Academic Halt is 100% free. All study materials, PDF notes, books, question papers, and mock tests are available to download without any payment, registration, or subscription.</div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            Which exams does Academic Halt cover?
-            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <div class="blog-card">
+            <div class="blog-thumb">🩺</div>
+            <div class="blog-body">
+              <div class="blog-meta"><span>✍️ Editorial Team</span><span>•</span><span>Jan 2025</span></div>
+              <a href="/blog/best-books-for-neet.html"><h3 class="blog-title">Best Books for NEET 2025 Biology, Physics & Chemistry</h3></a>
+              <p class="blog-excerpt">Discover the must-have books for NEET aspirants that are consistently recommended by top medical students and faculty.</p>
+              <a href="/blog/best-books-for-neet.html" class="btn btn-outline btn-sm">Read More →</a>
+            </div>
           </div>
-          <div class="faq-answer">We cover 500+ exams including UPSC, JEE, NEET, SSC, IBPS, SBI, RBI, GATE, CAT, MAT, State PCS exams, CBSE Class 10 & 12, and most state board exams.</div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            How often are new materials added?
-            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </div>
-          <div class="faq-answer">We add new study materials daily. After each exam, we update our question paper section. Syllabus changes are incorporated within days of official notification.</div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            Are the notes accurate and up to date?
-            <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </div>
-          <div class="faq-answer">All study materials are reviewed by subject matter experts and regularly updated to reflect the latest exam patterns, syllabus revisions, and official notifications.</div>
-        </div>
-      </article>
-
-      <aside class="sidebar">
-        <div class="sidebar-widget">
-          <div class="sidebar-widget__title">Popular Exams</div>
-          <ul class="sidebar-list">
-            <li><a href="/upsc-notes/">🏛️ UPSC IAS Notes</a></li>
-            <li><a href="/jee-notes/">⚛️ JEE Notes & Papers</a></li>
-            <li><a href="/neet-notes/">🧬 NEET Study Material</a></li>
-            <li><a href="/ssc-notes/">📝 SSC CGL Notes</a></li>
-            <li><a href="/gate-notes/">💻 GATE Notes</a></li>
-            <li><a href="/banking-notes/">🏦 Banking Exams</a></li>
-            <li><a href="/cat-notes/">📊 CAT Preparation</a></li>
-            <li><a href="/class-12-notes/">📚 Class 12 Notes</a></li>
-          </ul>
-        </div>
-
-        <div class="sidebar-widget">
-          <div class="sidebar-widget__title">Quick Downloads</div>
-          <ul class="sidebar-list">
-            <li><a href="/class-12-chemistry-notes-pdf/">Class 12 Chemistry PDF</a></li>
-            <li><a href="/upsc-polity-notes-pdf/">UPSC Polity Notes</a></li>
-            <li><a href="/jee-physics-formula-sheet/">JEE Physics Formulas</a></li>
-            <li><a href="/neet-biology-notes/">NEET Biology Notes</a></li>
-            <li><a href="/ssc-cgl-previous-papers/">SSC CGL Papers</a></li>
-          </ul>
-        </div>
-
-        <div class="sidebar-widget" style="background:var(--primary);border-color:var(--primary);">
-          <div class="sidebar-widget__title" style="color:rgba(255,255,255,0.7)">Exam Countdown</div>
-          <div id="countdownWidget" style="color:#fff">
-            <p style="font-size:13px;color:rgba(255,255,255,0.8);margin-bottom:12px">Days until UPSC Prelims 2025:</p>
-            <div class="countdown-grid" style="grid-template-columns:repeat(2,1fr);gap:8px;">
-              <div class="countdown-unit"><div class="countdown-unit__num" id="cdDays">--</div><div class="countdown-unit__label">Days</div></div>
-              <div class="countdown-unit"><div class="countdown-unit__num" id="cdHours">--</div><div class="countdown-unit__label">Hours</div></div>
+          <div class="blog-card">
+            <div class="blog-thumb">🏛️</div>
+            <div class="blog-body">
+              <div class="blog-meta"><span>✍️ Editorial Team</span><span>•</span><span>Feb 2025</span></div>
+              <a href="/blog/best-books-for-upsc.html"><h3 class="blog-title">Essential Books for UPSC IAS Prelims & Mains</h3></a>
+              <p class="blog-excerpt">The definitive reading list for UPSC Civil Services aspirants — from standard textbooks to current affairs resources.</p>
+              <a href="/blog/best-books-for-upsc.html" class="btn btn-outline btn-sm">Read More →</a>
             </div>
           </div>
         </div>
-      </aside>
-    </div>
-  </div>
-</section>
-
-</main>
-
-<!-- ============ NEWSLETTER ============ -->
-<section class="newsletter-section">
-  <div class="container">
-    <div class="newsletter-inner">
-      <div class="newsletter-text">
-        <h2>Get Free Study Resources in Your Inbox</h2>
-        <p>Join 500,000+ students. Receive free notes, PDFs & exam updates weekly.</p>
+        <div class="text-center mt-40">
+          <a href="/blog/" class="btn btn-outline">View All Articles →</a>
+        </div>
       </div>
-      <form class="newsletter-form" onsubmit="handleNewsletter(event)">
-        <input type="email" placeholder="Enter your email address" required>
-        <button type="submit" class="btn">Subscribe Free</button>
-      </form>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- ============ FOOTER ============ -->
-<footer class="site-footer">
-  <div class="footer-main">
+    <!-- ── SEO CONTENT ─────────────────────────────────────── -->
+    <section class="section">
+      <div class="container">
+        <div class="seo-content">
+          <h2>About Academic Halt — Your Free Book Platform</h2>
+          <p>Academic Halt is a free educational platform dedicated to providing high-quality PDF books, NCERT textbooks, and study materials to students across India. Whether you are preparing for your Class 9 annual exams, the Class 10 board exams, the competitive atmosphere of the Class 12 boards, or the high-stakes entrance exams like JEE Main, JEE Advanced, NEET, and UPSC, Academic Halt has you covered — completely free of charge.</p>
+
+          <h2>Why Students Choose Academic Halt</h2>
+          <p>Education should never be a privilege. Academic Halt was founded on the belief that every student — regardless of their financial background or geographic location — deserves access to the same quality of study material as those attending the most prestigious coaching institutes. Our platform hosts PDF versions of popular reference books, NCERT textbooks, solved question papers, and more.</p>
+          <ul>
+            <li><strong>100% Free:</strong> No subscription, no registration, no hidden charges. All books are available to download freely.</li>
+            <li><strong>Curated for Each Exam:</strong> Our books are carefully selected and categorised by experienced educators to match what is actually tested in each exam.</li>
+            <li><strong>Mobile Friendly:</strong> Read and download PDFs on any device — phone, tablet, or laptop.</li>
+            <li><strong>Regularly Updated:</strong> New books and editions are added regularly to keep pace with syllabus changes.</li>
+          </ul>
+
+          <h2>Books for Class 9 &amp; Class 10 Board Exams</h2>
+          <p>The NCERT textbooks are the backbone of Class 9 and Class 10 preparation. Every student appearing for the CBSE board exams must have a thorough command of NCERT Mathematics, Science, Social Science, English, and Hindi. Academic Halt hosts PDF versions of all NCERT books for Class 9 and Class 10 along with supplementary reference books that help students go beyond the basics.</p>
+
+          <h2>Class 11 &amp; Class 12 Study Materials</h2>
+          <p>Class 11 and 12 are the most critical years of a student's academic journey. The foundation built in these two years determines both board exam performance and competitive exam outcomes. Academic Halt provides NCERT books for all streams — Science (Physics, Chemistry, Biology, Mathematics), Commerce (Accountancy, Economics, Business Studies), and Arts (History, Political Science, Geography) for Class 11 and 12.</p>
+
+          <h2>JEE Main &amp; JEE Advanced Preparation Books</h2>
+          <p>Joint Entrance Examination (JEE) is one of the most competitive engineering entrance exams in the world. To clear JEE Main and reach the coveted JEE Advanced stage, students need to go well beyond NCERT. Academic Halt provides free access to books like DC Pandey Physics, HC Verma Concepts of Physics, Cengage Mathematics, OP Tandon Chemistry, and many more — the same books used by top rankers at top coaching institutes.</p>
+
+          <h2>NEET Books &amp; Study Materials</h2>
+          <p>The National Eligibility cum Entrance Test (NEET) is the gateway to medical colleges in India. Biology contributes the most marks in NEET, and NCERT Biology Class 11 and 12 form the core of NEET preparation. Alongside NCERT, books like Trueman's Biology, MTG Fingertips, and DC Pandey Physics are essential for a complete NEET preparation strategy. Find all of these on Academic Halt, free to download.</p>
+
+          <h2>UPSC IAS Preparation Books</h2>
+          <p>The UPSC Civil Services Examination is the most prestigious and comprehensive exam in India. Aspirants need to cover a vast syllabus that spans Indian Polity, History, Geography, Economy, Science &amp; Technology, Current Affairs, and more. Academic Halt provides free access to standard UPSC reference books like Laxmikanth's Indian Polity, Spectrum Modern India, GC Leong Geography, Ramesh Singh Economy, and NCERT books across all subjects.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <div class="footer-brand__logo">Academic<span>Halt</span></div>
-          <p>India's largest free online education platform providing study materials, notes, PDFs, books, question papers, and exam preparation resources for students across all levels.</p>
-          <div class="footer-social">
-            <a href="#" class="social-btn" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
-            <a href="#" class="social-btn" aria-label="Twitter"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg></a>
-            <a href="#" class="social-btn" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.4a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#1e293b"/></svg></a>
-          </div>
+          <a href="/" class="logo">
+            <div class="logo-mark">A</div>
+            <span class="logo-text">Academic<span style="color:var(--primary)">Halt</span></span>
+          </a>
+          <p>Free books and study materials for students preparing for board exams and competitive entrance exams across India.</p>
         </div>
         <div class="footer-col">
-          <h4>Study Materials</h4>
-          <ul>
-            <li><a href="/notes/">Study Notes</a></li>
-            <li><a href="/books/">PDF Books</a></li>
-            <li><a href="/videos/">Lecture Videos</a></li>
-            <li><a href="/question-papers/">Question Papers</a></li>
-            <li><a href="/mock-tests/">Mock Tests</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Exam Categories</h4>
-          <ul>
-            <li><a href="/upsc-notes/">UPSC Notes</a></li>
-            <li><a href="/jee-notes/">JEE Notes</a></li>
-            <li><a href="/neet-notes/">NEET Notes</a></li>
-            <li><a href="/ssc-notes/">SSC Notes</a></li>
-            <li><a href="/gate-notes/">GATE Notes</a></li>
-            <li><a href="/class-12-notes/">Class 12</a></li>
+          <h4>Categories</h4>
+          <ul class="footer-links">
+            <li><a href="/class-9/">Class 9 Books</a></li>
+            <li><a href="/class-10/">Class 10 Books</a></li>
+            <li><a href="/class-11/">Class 11 Books</a></li>
+            <li><a href="/class-12/">Class 12 Books</a></li>
+            <li><a href="/jee-main/">JEE Main</a></li>
+            <li><a href="/jee-advanced/">JEE Advanced</a></li>
+            <li><a href="/neet/">NEET</a></li>
+            <li><a href="/upsc/">UPSC</a></li>
           </ul>
         </div>
         <div class="footer-col">
           <h4>Quick Links</h4>
-          <ul>
+          <ul class="footer-links">
+            <li><a href="/">Home</a></li>
             <li><a href="/blog/">Blog</a></li>
-            <li><a href="/tools/">Study Tools</a></li>
             <li><a href="/about.html">About Us</a></li>
             <li><a href="/contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul class="footer-links">
             <li><a href="/privacy-policy.html">Privacy Policy</a></li>
-            <li><a href="/terms.html">Terms of Service</a></li>
+            <li><a href="/terms.html">Terms of Use</a></li>
+            <li><a href="/contact.html">DMCA Notice</a></li>
           </ul>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <div class="container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
-      <p style="margin:0;font-size:13px;color:#475569;">© <span id="footerYear">2024</span> Academic Halt. All rights reserved.</p>
-      <div class="footer-bottom-links">
-        <a href="/privacy-policy.html">Privacy</a>
-        <a href="/terms.html">Terms</a>
-        <a href="/disclaimer.html">Disclaimer</a>
-        <a href="/sitemap.xml">Sitemap</a>
-      </div>
-    </div>
-  </div>
-</footer>
-
-<button class="back-to-top" id="backToTop" aria-label="Back to top">
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
-</button>
-
-<script src="/js/script.js"></script>
-<script src="/js/search.js"></script>
-
-<script>
-// ============ HOMEPAGE DYNAMIC CONTENT ============
-const trendingData = [
-  { title: 'Class 12 Chemistry Notes PDF', category: 'Notes', subject: 'Chemistry', exam: 'Class 12', emoji: '🧪', downloads: '45K' },
-  { title: 'UPSC Polity Complete Notes', category: 'Notes', subject: 'Polity', exam: 'UPSC', emoji: '🏛️', downloads: '38K' },
-  { title: 'JEE Physics Formula Sheet', category: 'Notes', subject: 'Physics', exam: 'JEE', emoji: '⚛️', downloads: '52K' },
-  { title: 'NEET Biology Notes 2024', category: 'Notes', subject: 'Biology', exam: 'NEET', emoji: '🧬', downloads: '41K' },
-  { title: 'SSC CGL Previous Papers', category: 'Question Papers', subject: 'General Studies', exam: 'SSC', emoji: '📄', downloads: '29K' },
-  { title: 'Class 10 Maths NCERT Solutions', category: 'Notes', subject: 'Mathematics', exam: 'Class 10', emoji: '📐', downloads: '36K' },
-  { title: 'GATE CS Notes Complete', category: 'Notes', subject: 'Computer Science', exam: 'GATE', emoji: '💻', downloads: '22K' },
-  { title: 'UPSC History Notes Ancient', category: 'Notes', subject: 'History', exam: 'UPSC', emoji: '📜', downloads: '31K' },
-];
-
-const blogData = [
-  { title: 'How to Crack UPSC in First Attempt: A Complete Guide', category: 'UPSC Tips', date: 'Dec 15, 2024', readTime: '8 min', excerpt: 'Comprehensive strategy guide for UPSC Civil Services preparation covering all aspects from syllabus understanding to interview preparation.' },
-  { title: 'JEE 2025: Best Books and Study Material', category: 'JEE Preparation', date: 'Dec 12, 2024', readTime: '6 min', excerpt: 'Complete list of best books for JEE Main and Advanced preparation with expert recommendations for Physics, Chemistry, and Mathematics.' },
-  { title: 'NEET 2025 Preparation Strategy - Month-wise Plan', category: 'NEET Tips', date: 'Dec 10, 2024', readTime: '10 min', excerpt: 'Detailed month-by-month NEET preparation strategy to help you maximize your score in the medical entrance examination.' },
-];
-
-function renderTrending() {
-  const grid = document.getElementById('trendingResources');
-  if (!grid) return;
-  grid.innerHTML = trendingData.map(r => `
-    <div class="resource-card" data-animate>
-      <div class="resource-card__thumb" style="background:var(--surface-2);display:flex;align-items:center;justify-content:center;">
-        <div style="text-align:center;padding:20px">
-          <div style="font-size:48px;margin-bottom:8px">${r.emoji}</div>
-          <div style="font-size:11px;color:var(--text-muted);font-weight:600">${r.subject}</div>
-        </div>
-      </div>
-      <div class="resource-card__body">
-        <span class="resource-card__category">${r.category}</span>
-        <h3 class="resource-card__title"><a href="/${r.title.toLowerCase().replace(/\s+/g,'-')}/" style="color:inherit;text-decoration:none">${r.title}</a></h3>
-        <div class="resource-card__meta">
-          <span>🎯 ${r.exam}</span>
-          <span>⬇️ ${r.downloads} downloads</span>
-        </div>
-        <div class="resource-card__footer">
-          <a href="/${r.title.toLowerCase().replace(/\s+/g,'-')}/" class="btn btn-primary btn-sm">View</a>
-          <button class="btn btn-secondary btn-sm" onclick="AH.handleDownload('#','${r.title}')">⬇ Download</button>
+      <div class="footer-bottom">
+        <p>© <span id="footer-year"></span> Academic Halt. All rights reserved.</p>
+        <div class="footer-legal">
+          <a href="/privacy-policy.html">Privacy</a>
+          <a href="/terms.html">Terms</a>
+          <a href="/contact.html">Contact</a>
         </div>
       </div>
     </div>
-  `).join('');
-}
+  </footer>
 
-function renderLatestNotes() {
-  const grid = document.getElementById('latestNotes');
-  if (!grid) return;
-  const subjects = ['📐 Mathematics', '📜 History', '🌍 Geography', '💹 Economics', '📝 English', '🧪 Chemistry', '⚛️ Physics', '🧬 Biology'];
-  const exams = ['Class 12', 'Class 11', 'UPSC', 'JEE', 'NEET', 'SSC', 'GATE', 'CAT'];
-  grid.innerHTML = subjects.slice(0,8).map((s, i) => `
-    <div class="resource-card" data-animate>
-      <div class="resource-card__thumb" style="background:var(--surface-2);display:flex;align-items:center;justify-content:center;font-size:40px;padding:20px">${s.split(' ')[0]}</div>
-      <div class="resource-card__body">
-        <span class="resource-card__category">Notes</span>
-        <h3 class="resource-card__title">${exams[i]} ${s.split(' ').slice(1).join(' ')} Notes PDF</h3>
-        <div class="resource-card__meta">
-          <span>📚 ${s.split(' ').slice(1).join(' ')}</span>
-          <span>🎯 ${exams[i]}</span>
-        </div>
-        <div class="resource-card__footer">
-          <a href="/${exams[i].toLowerCase().replace(/\s+/g,'-')}-${s.split(' ').slice(1).join('-').toLowerCase()}-notes/" class="btn btn-primary btn-sm">View</a>
-          <button class="btn btn-secondary btn-sm" onclick="AH.handleDownload('#','Notes')">⬇ PDF</button>
-        </div>
-      </div>
-    </div>
-  `).join('');
-}
-
-function renderBlog() {
-  const grid = document.getElementById('latestBlog');
-  if (!grid) return;
-  const colors = ['#2563eb', '#7c3aed', '#059669'];
-  grid.innerHTML = blogData.map((b, i) => `
-    <div class="blog-card" data-animate>
-      <div class="blog-card__thumb" style="background:linear-gradient(135deg,${colors[i]},${colors[(i+1)%3]});height:180px;display:flex;align-items:center;justify-content:center;font-size:48px">
-        ${['📚', '⚛️', '🧬'][i]}
-      </div>
-      <div class="blog-card__body">
-        <div class="blog-card__category">${b.category}</div>
-        <h3 class="blog-card__title"><a href="/blog/${b.title.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'')}/" style="color:inherit;text-decoration:none">${b.title}</a></h3>
-        <p class="blog-card__excerpt">${b.excerpt}</p>
-        <div class="blog-card__footer">
-          <div class="blog-card__author">
-            <div class="author-avatar">AH</div>
-            <span>Academic Halt</span>
-          </div>
-          <span>${b.date} • ${b.readTime} read</span>
-        </div>
-      </div>
-    </div>
-  `).join('');
-}
-
-// Exam countdown
-function updateCountdown() {
-  const target = new Date('2025-06-01');
-  const now = new Date();
-  const diff = target - now;
-  if (diff > 0) {
-    const days = Math.floor(diff / (1000*60*60*24));
-    const hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
-    const el1 = document.getElementById('cdDays');
-    const el2 = document.getElementById('cdHours');
-    if (el1) el1.textContent = days;
-    if (el2) el2.textContent = hours;
-  }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  renderTrending();
-  renderLatestNotes();
-  renderBlog();
-  updateCountdown();
-  document.getElementById('footerYear').textContent = new Date().getFullYear();
-});
-</script>
+  <script>document.getElementById('footer-year').textContent = new Date().getFullYear();</script>
+  <script src="/js/books-data.js"></script>
+  <script src="/js/search.js"></script>
+  <script src="/js/script.js"></script>
 </body>
 </html>

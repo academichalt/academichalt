@@ -1,46 +1,17 @@
-# Academic Halt - Cloudflare Pages Redirects
-# Format: /old-url /new-url [status-code]
+# Academic Halt — Redirects
+# For Cloudflare Pages / Netlify
 
-# ── Trailing slash normalization ──────────────────────────────
-# Ensure canonical trailing-slash URLs (already handled by Cloudflare by default)
-# Add explicit redirects for any non-slash variants if needed
+# Redirect www to non-www (optional — configure in your DNS)
+# https://www.academichalt.com/* https://academichalt.com/:splat 301
 
-# ── Legacy URL redirects ──────────────────────────────────────
-# If you rename pages, add 301 redirects here to preserve SEO equity
-
-# Example: if you rename a page
-# /old-page-name/ /new-page-name/ 301
-
-# ── Common misspellings ───────────────────────────────────────
-/upsc-note/            /upsc-notes/            301
-/jee-note/             /jee-notes/             301
-/neet-note/            /neet-notes/            301
-/ssc-note/             /ssc-notes/             301
-/gate-note/            /gate-notes/            301
-/banking-note/         /banking-notes/         301
-/class12-notes/        /class-12-notes/        301
-/class10-notes/        /class-10-notes/        301
-
-# ── Moved pages ───────────────────────────────────────────────
-/study-materials/      /study-material/        301
-/question-paper/       /question-papers/       301
-/mock-test/            /mock-tests/            301
-/video/                /videos/                301
-/tool/                 /tools/                 301
-
-# ── Old blog paths ────────────────────────────────────────────
-/articles/             /blog/                  301
-/post/                 /blog/                  301
-/posts/                /blog/                  301
-
-# ── Contact/Info pages ────────────────────────────────────────
-/contact/              /contact.html           301
-/about/                /about.html             301
-/privacy/              /privacy-policy.html    301
-/terms-of-service/     /terms.html             301
-/tos/                  /terms.html             301
-
-# ── Catch-all 404 handler ─────────────────────────────────────
-# Cloudflare Pages serves a default 404. 
-# To customize, create a /404.html file in the root.
-# /404               /404.html               404
+# Clean URLs — redirect trailing slashes
+/class-9   /class-9/   301
+/class-10  /class-10/  301
+/class-11  /class-11/  301
+/class-12  /class-12/  301
+/jee-main  /jee-main/  301
+/jee-advanced /jee-advanced/ 301
+/neet      /neet/      301
+/upsc      /upsc/      301
+/blog      /blog/      301
+/admin     /admin/     301

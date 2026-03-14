@@ -1,12 +1,8 @@
-<svg viewBox="0 0 180 40" xmlns="http://www.w3.org/2000/svg" width="180" height="40">
-  <!-- Icon -->
-  <rect width="36" height="36" rx="8" fill="#2563eb" y="2"/>
-  <path d="M18 9L26 13.5V22.5L18 27L10 22.5V13.5L18 9Z" fill="white" fill-opacity="0.2"/>
-  <path d="M18 9L26 13.5M18 9L10 13.5M18 9V18M26 13.5V22.5L18 27M10 13.5V22.5L18 27M18 18L26 13.5M18 18L10 13.5M18 18V27" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-
-  <!-- Text: Academic -->
-  <text x="46" y="17" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="800" fill="#0f172a" letter-spacing="-0.3">Academic</text>
-
-  <!-- Text: Halt -->
-  <text x="46" y="32" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="800" fill="#2563eb" letter-spacing="-0.3">Halt</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 48" fill="none">
+  <!-- Logo mark -->
+  <rect x="0" y="4" width="40" height="40" rx="8" fill="#2563eb"/>
+  <text x="20" y="30" font-family="Georgia, serif" font-size="22" font-weight="700" fill="white" text-anchor="middle">A</text>
+  <!-- Logo text -->
+  <text x="52" y="22" font-family="'Sora', 'Segoe UI', sans-serif" font-size="16" font-weight="800" fill="#1e293b">Academic</text>
+  <text x="52" y="40" font-family="'Sora', 'Segoe UI', sans-serif" font-size="16" font-weight="800" fill="#2563eb">Halt</text>
 </svg>
