@@ -2,174 +2,57 @@ backend:
   name: github
   repo: academichalt/academichalt
   branch: main
-  base_url: https://www.academichalt.com
-  auth_endpoint: api/auth
+  base_url: https://sveltia-cms-auth.pages.dev
 
-media_folder: "assets/book-covers"
-public_folder: "/assets/book-covers"
+site_url: https://www.academichalt.com
+display_url: https://www.academichalt.com
+logo_url: https://www.academichalt.com/assets/logo.svg
+
+media_folder: assets/book-covers
+public_folder: /assets/book-covers
 
 collections:
-
-  - name: "books"
-    label: "Books"
-    label_singular: "Book"
-    folder: "content/books"
+  - name: books
+    label: Books
+    label_singular: Book
+    folder: content/books
     create: true
     delete: true
     slug: "{{slug}}"
-    identifier_field: "title"
-    summary: "{{title}} — {{category}}"
-    sortable_fields: ["title", "category", "subject"]
-    view_filters:
-      - label: "Class 9"
-        field: category
-        pattern: "class-9"
-      - label: "Class 10"
-        field: category
-        pattern: "class-10"
-      - label: "Class 11"
-        field: category
-        pattern: "class-11"
-      - label: "Class 12"
-        field: category
-        pattern: "class-12"
-      - label: "JEE Main"
-        field: category
-        pattern: "jee-main"
-      - label: "JEE Advanced"
-        field: category
-        pattern: "jee-advanced"
-      - label: "NEET"
-        field: category
-        pattern: "neet"
-      - label: "UPSC"
-        field: category
-        pattern: "upsc"
     fields:
-      - label: "Title"
-        name: "title"
-        widget: "string"
-
-      - label: "Slug"
-        name: "slug"
-        widget: "string"
-        hint: "Lowercase, hyphens only. e.g. ncert-maths-class-10"
-        pattern: ['^[a-z0-9-]+$', "Lowercase letters, numbers and hyphens only"]
-
-      - label: "Category"
-        name: "category"
-        widget: "select"
+      - { label: Title, name: title, widget: string }
+      - { label: Slug, name: slug, widget: string }
+      - label: Category
+        name: category
+        widget: select
         options:
-          - { label: "Class 9",       value: "class-9" }
-          - { label: "Class 10",      value: "class-10" }
-          - { label: "Class 11",      value: "class-11" }
-          - { label: "Class 12",      value: "class-12" }
-          - { label: "JEE Main",      value: "jee-main" }
-          - { label: "JEE Advanced",  value: "jee-advanced" }
-          - { label: "NEET",          value: "neet" }
-          - { label: "UPSC",          value: "upsc" }
+          - { label: Class 9, value: class-9 }
+          - { label: Class 10, value: class-10 }
+          - { label: Class 11, value: class-11 }
+          - { label: Class 12, value: class-12 }
+          - { label: JEE Main, value: jee-main }
+          - { label: JEE Advanced, value: jee-advanced }
+          - { label: NEET, value: neet }
+          - { label: UPSC, value: upsc }
+      - { label: Subject, name: subject, widget: string }
+      - { label: Description, name: description, widget: text }
+      - { label: PDF Link, name: pdf_link, widget: string }
+      - { label: Cover Image, name: cover_image, widget: image, required: false }
+      - { label: Featured, name: featured, widget: boolean, default: false }
+      - { label: Publish Date, name: date, widget: datetime }
 
-      - label: "Subject"
-        name: "subject"
-        widget: "select"
-        options:
-          - "Mathematics"
-          - "Physics"
-          - "Chemistry"
-          - "Biology"
-          - "Science"
-          - "Social Science"
-          - "English"
-          - "Hindi"
-          - "History"
-          - "Geography"
-          - "Political Science / Polity"
-          - "Economics"
-          - "Accountancy"
-          - "Business Studies"
-          - "General Studies"
-          - "Other"
-
-      - label: "Description"
-        name: "description"
-        widget: "text"
-        hint: "Short description shown on book cards (2-3 sentences)"
-
-      - label: "PDF Link"
-        name: "pdf_link"
-        widget: "string"
-        hint: "Direct URL to the PDF file"
-
-      - label: "Cover Image"
-        name: "cover_image"
-        widget: "image"
-        required: false
-        hint: "Book cover (JPG/PNG, 3:4 ratio recommended)"
-
-      - label: "Featured"
-        name: "featured"
-        widget: "boolean"
-        default: false
-        hint: "Show in Popular Books on homepage"
-
-      - label: "Emoji"
-        name: "emoji"
-        widget: "string"
-        default: "📚"
-        required: false
-        hint: "Emoji shown when no cover image"
-
-      - label: "Full Description"
-        name: "body"
-        widget: "markdown"
-        required: false
-
-  - name: "blog"
-    label: "Blog Posts"
-    label_singular: "Blog Post"
-    folder: "content/blog"
+  - name: blog
+    label: Blog Posts
+    label_singular: Blog Post
+    folder: content/blog
     create: true
     delete: true
     slug: "{{slug}}"
-    identifier_field: "title"
     fields:
-      - label: "Title"
-        name: "title"
-        widget: "string"
-
-      - label: "Slug"
-        name: "slug"
-        widget: "string"
-        pattern: ['^[a-z0-9-]+$', "Lowercase, hyphens only"]
-
-      - label: "Meta Description"
-        name: "description"
-        widget: "text"
-        hint: "SEO description (140-160 characters)"
-
-      - label: "Author"
-        name: "author"
-        widget: "string"
-        default: "Academic Halt Editorial Team"
-
-      - label: "Publish Date"
-        name: "date"
-        widget: "datetime"
-        date_format: "YYYY-MM-DD"
-        time_format: false
-
-      - label: "Category Tag"
-        name: "tag"
-        widget: "select"
-        options:
-          - "JEE Main"
-          - "JEE Advanced"
-          - "NEET"
-          - "UPSC"
-          - "Board Exams"
-          - "Study Tips"
-          - "Book Reviews"
-
-      - label: "Content"
-        name: "body"
-        widget: "markdown"
+      - { label: Title, name: title, widget: string }
+      - { label: Slug, name: slug, widget: string }
+      - { label: Author, name: author, widget: string, default: Academic Halt Team }
+      - { label: Publish Date, name: date, widget: datetime }
+      - { label: Meta Description, name: description, widget: text }
+      - { label: Cover Image, name: cover_image, widget: image, required: false }
+      - { label: Body, name: body, widget: markdown }

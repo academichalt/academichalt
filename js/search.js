@@ -1,91 +1,85 @@
-// Academic Halt — Search System v2
+// ── ACADEMIC HALT SEARCH SYSTEM ──
+// Books data is loaded from content/books/*.md at build time or via this static array.
+// For GitHub Pages (no build step), add books here manually or generate via CMS commit hook.
 
-document.addEventListener('DOMContentLoaded', function () {
-  var searchInput   = document.getElementById('search-input');
-  var searchResults = document.getElementById('search-results');
+let BOOKS_DATA = [];
 
-  if (!searchInput || !searchResults) return;
-  if (typeof BOOKS_DATA === 'undefined') return;
+async function loadBooks() {
+  try {
+    const res = await fetch('/content/books/index.json');
+    if (res.ok) BOOKS_DATA = await res.json();
+  } catch {
+    // fallback to inline data if JSON not available
+    BOOKS_DATA = window.STATIC_BOOKS || [];
+  }
+}
 
-  var debounceTimer = null;
+function searchBooks(query) {
+  const q = query.trim().toLowerCase();
+  if (!q) return [];
+  return BOOKS_DATA.filter(book =>
+    book.title.toLowerCase().includes(q) ||
+    book.subject.toLowerCase().includes(q) ||
+    book.category.toLowerCase().includes(q)
+  ).slice(0, 8);
+}
 
-  searchInput.addEventListener('input', function () {
+function renderResults(results, container) {
+  if (!results.length) {
+    container.innerHTML = '<div class="no-results">No books found. Try a different search.</div>';
+    return;
+  }
+  container.innerHTML = results.map(book => `
+    <div class="result-item">
+      <div>
+        <a href="/${book.category}/${book.slug}.html">${book.title}</a>
+        <br><span>${book.subject} · ${categoryLabel(book.category)}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function categoryLabel(slug) {
+  const map = {
+    'class-9': 'Class 9', 'class-10': 'Class 10',
+    'class-11': 'Class 11', 'class-12': 'Class 12',
+    'jee-main': 'JEE Main', 'jee-advanced': 'JEE Advanced',
+    'neet': 'NEET', 'upsc': 'UPSC'
+  };
+  return map[slug] || slug;
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  await loadBooks();
+
+  const input = document.getElementById('search-input');
+  const resultsBox = document.getElementById('search-results');
+  if (!input || !resultsBox) return;
+
+  let debounceTimer;
+  input.addEventListener('input', () => {
     clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(function () {
-      var query = searchInput.value.trim().toLowerCase();
-      if (query.length < 2) {
-        closeResults();
-        return;
-      }
-      performSearch(query);
-    }, 160);
+    debounceTimer = setTimeout(() => {
+      const q = input.value.trim();
+      if (q.length < 2) { resultsBox.classList.remove('visible'); return; }
+      const results = searchBooks(q);
+      renderResults(results, resultsBox);
+      resultsBox.classList.add('visible');
+    }, 200);
   });
 
-  searchInput.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') closeResults();
-    if (e.key === 'Enter') {
-      var first = searchResults.querySelector('.search-result-item');
-      if (first) { first.click(); }
+  document.addEventListener('click', (e) => {
+    if (!input.contains(e.target) && !resultsBox.contains(e.target)) {
+      resultsBox.classList.remove('visible');
     }
   });
 
-  // Close when clicking outside
-  document.addEventListener('click', function (e) {
-    if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
-      closeResults();
-    }
-  });
-
-  function closeResults() {
-    searchResults.classList.remove('show');
-    searchResults.innerHTML = '';
-  }
-
-  function performSearch(query) {
-    var results = BOOKS_DATA.filter(function (book) {
-      return (
-        book.title.toLowerCase().indexOf(query) > -1 ||
-        book.subject.toLowerCase().indexOf(query) > -1 ||
-        book.categoryLabel.toLowerCase().indexOf(query) > -1 ||
-        (book.description && book.description.toLowerCase().indexOf(query) > -1)
-      );
-    }).slice(0, 8);
-
-    if (results.length === 0) {
-      searchResults.innerHTML =
-        '<div style="padding:20px;text-align:center;color:var(--text-muted);font-family:var(--font-display);font-size:14px;">'
-        + 'No books found for "<strong>' + esc(query) + '</strong>"'
-        + '</div>';
-    } else {
-      searchResults.innerHTML = results.map(function (book) {
-        var coverHTML = book.coverImage
-          ? '<img src="' + book.coverImage + '" alt="' + esc(book.title) + '" style="width:36px;height:48px;object-fit:cover;border-radius:4px;flex-shrink:0;">'
-          : '<div style="width:36px;height:48px;background:linear-gradient(135deg,#dbeafe,#eff6ff);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">' + (book.emoji || '📚') + '</div>';
-        return '<a href="/' + book.category + '/' + book.slug + '.html" class="search-result-item">'
-          + coverHTML
-          + '<div>'
-          + '<div class="search-result-title">' + highlight(book.title, query) + '</div>'
-          + '<div class="search-result-cat">' + book.categoryLabel + ' · ' + book.subject + '</div>'
-          + '</div>'
-          + '</a>';
-      }).join('');
-    }
-
-    searchResults.classList.add('show');
-  }
-
-  function highlight(text, query) {
-    // Escape regex chars in query
-    var escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    return text.replace(
-      new RegExp('(' + escaped + ')', 'gi'),
-      '<mark style="background:#dbeafe;border-radius:2px;padding:0 2px;color:var(--primary);">$1</mark>'
-    );
-  }
-
-  function esc(str) {
-    var d = document.createElement('div');
-    d.appendChild(document.createTextNode(str));
-    return d.innerHTML;
+  const searchForm = document.getElementById('search-form');
+  if (searchForm) {
+    searchForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const q = input.value.trim();
+      if (q) window.location.href = `/search.html?q=${encodeURIComponent(q)}`;
+    });
   }
 });
