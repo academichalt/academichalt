@@ -1,6 +1,7 @@
 User-agent: *
 Allow: /
 
-Disallow: /404.html
+# Disallow admin panel from indexing
+Disallow: /admin/
 
-Sitemap: https://jeebookspdf.com/sitemap.xml
+Sitemap: https://www.academichalt.com/sitemap.xml
