@@ -1,0 +1,36 @@
+repo: your-github-username/jeehalt
+branch: main
+media_folder: public/uploads
+public_folder: /uploads
+
+collections:
+  - name: books
+    label: Books
+    folder: src/content/books
+    create: true
+    slug: "{{fields.title | slugify}}"
+    extension: md
+    format: yaml-frontmatter
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Description, name: description, widget: text }
+      - { label: Author, name: author, widget: string }
+      - { label: Publisher, name: publisher, widget: string }
+      - label: Category
+        name: category
+        widget: select
+        options: [Physics, Chemistry, Mathematics, Biology, "JEE Main", "JEE Advanced", NEET, "Previous Year Papers", NCERT]
+      - { label: Tags, name: tags, widget: list }
+      - { label: Language, name: language, widget: string, default: English }
+      - { label: Pages, name: pages, widget: number, required: false }
+      - { label: "File Size", name: fileSize, widget: string, required: false }
+      - { label: Format, name: format, widget: string, default: PDF }
+      - { label: "Download Link", name: downloadLink, widget: string }
+      - { label: "Mirror Link", name: mirrorLink, widget: string, required: false }
+      - label: FAQs
+        name: faqs
+        widget: list
+        required: false
+        fields:
+          - { label: Question, name: question, widget: string }
+          - { label: Answer, name: answer, widget: text }

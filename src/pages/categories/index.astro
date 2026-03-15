@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const allResources = await getCollection('resources');
+const categoryMap: Record<string, number> = {};
+allResources.forEach(r => { categoryMap[r.data.category] = (categoryMap[r.data.category] || 0) + 1; });
+const categories = Object.entries(categoryMap).sort((a, b) => b[1] - a[1]);
+
+const categoryMeta: Record<string, { color: string; icon: string; desc: string }> = {
+  "Physics": { color: "from-blue-500 to-blue-600", icon: "⚡", desc: "Notes, PYQs, and solutions for Mechanics, Electrostatics, Optics and more" },
+  "Chemistry": { color: "from-green-500 to-green-600", icon: "🧪", desc: "Organic, Inorganic, and Physical Chemistry notes and solutions" },
+  "Mathematics": { color: "from-purple-500 to-purple-600", icon: "📐", desc: "Calculus, Algebra, Coordinate Geometry, Vectors notes and PYQs" },
+  "Biology": { color: "from-emerald-500 to-emerald-600", icon: "🧬", desc: "Botany, Zoology, Genetics, and Human Physiology notes" },
+  "General Studies": { color: "from-yellow-500 to-yellow-600", icon: "🌏", desc: "History, Geography, Polity, Economy notes for competitive exams" },
+  "Computer Science": { color: "from-cyan-500 to-cyan-600", icon: "💻", desc: "Algorithms, OS, DBMS, Networks notes and GATE papers" },
+  "English": { color: "from-pink-500 to-pink-600", icon: "✍️", desc: "Grammar, comprehension, and writing notes" },
+  "History": { color: "from-amber-500 to-amber-600", icon: "🏛️", desc: "Ancient, Medieval, and Modern History notes" },
+};
+---
+<BaseLayout title="Browse by Subject" description="Find free notes, solutions and papers organized by subject — Physics, Chemistry, Mathematics, Biology, General Studies and more.">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <nav class="text-sm text-gray-500 mb-6"><a href="/" class="hover:text-primary-600">Home</a> › <span class="text-gray-900">Subjects</span></nav>
+    <h1 class="font-display font-bold text-3xl text-gray-900 mb-2">Browse by Subject</h1>
+    <p class="text-gray-500 mb-10">{categories.length} subjects · Find resources organized by what you study</p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {categories.map(([cat, count]) => {
+        const meta = categoryMeta[cat] || { color: "from-gray-500 to-gray-600", icon: "📚", desc: "Study notes and resources" };
+        return (
+          <a href={`/category/${cat.toLowerCase().replace(/ /g, '-')}`} class="group bg-white rounded-2xl border border-gray-200 hover:border-primary-300 hover:shadow-lg transition-all duration-200 overflow-hidden">
+            <div class={`h-2 bg-gradient-to-r ${meta.color}`}></div>
+            <div class="p-6">
+              <div class="flex items-center gap-4 mb-3">
+                <div class={`w-12 h-12 bg-gradient-to-br ${meta.color} rounded-xl flex items-center justify-center text-2xl`}>{meta.icon}</div>
+                <div>
+                  <h2 class="font-display font-bold text-lg text-gray-900 group-hover:text-primary-700 transition-colors">{cat}</h2>
+                  <p class="text-sm text-primary-600 font-medium">{count} resources</p>
+                </div>
+              </div>
+              <p class="text-sm text-gray-500">{meta.desc}</p>
+            </div>
+          </a>
+        );
+      })}
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,205 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ResourceCard from '../../components/ResourceCard.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const allResources = await getCollection('resources');
+  return allResources.map(r => ({
+    params: { slug: r.id },
+    props: {
+      resource: { ...r.data, slug: r.id },
+      allResources: allResources.map(x => ({ ...x.data, slug: x.id })),
+    },
+  }));
+}
+
+const { resource, allResources } = Astro.props;
+
+const related = allResources
+  .filter((r: any) => r.slug !== resource.slug && (r.category === resource.category || r.exam === resource.exam || r.tags.some((t: string) => resource.tags.includes(t))))
+  .slice(0, 4);
+
+const pageUrl = `https://www.academichalt.in/resource/${resource.slug}`;
+const shareText = encodeURIComponent(`Download ${resource.title} for free on Academic Halt`);
+const shareUrl = encodeURIComponent(pageUrl);
+
+const typeIcons: Record<string,string> = { "Notes": "📝", "Solutions": "✅", "Previous Year Papers": "📄", "Sample Papers": "📋", "Question Bank": "❓" };
+const typeIcon = typeIcons[resource.resourceType] || '📚';
+
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.academichalt.in" },
+    { "@type": "ListItem", "position": 2, "name": "Resources", "item": "https://www.academichalt.in/resources" },
+    { "@type": "ListItem", "position": 3, "name": resource.title, "item": pageUrl },
+  ]
+};
+---
+<BaseLayout title={resource.title} description={resource.description.substring(0, 160)} canonical={pageUrl} ogType="article">
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumb)} />
+
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <!-- Breadcrumb -->
+    <nav class="text-sm text-gray-500 mb-6 flex flex-wrap gap-1 items-center">
+      <a href="/" class="hover:text-primary-600">Home</a> <span>›</span>
+      <a href="/resources" class="hover:text-primary-600">Resources</a> <span>›</span>
+      <a href={`/category/${resource.category.toLowerCase().replace(/ /g, '-')}`} class="hover:text-primary-600">{resource.category}</a> <span>›</span>
+      <span class="text-gray-900 font-medium truncate max-w-xs">{resource.title}</span>
+    </nav>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- Main -->
+      <div class="lg:col-span-2 space-y-6">
+        <!-- Header Card -->
+        <div class="bg-white rounded-2xl border border-gray-200 p-6 sm:p-8">
+          <div class="flex items-start gap-4 mb-6">
+            <div class="w-20 h-24 bg-gradient-to-br from-primary-600 to-accent-500 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg text-4xl">
+              {typeIcon}
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex flex-wrap gap-2 mb-2">
+                <span class="inline-block text-xs font-semibold px-2.5 py-1 rounded-full bg-primary-100 text-primary-700">{resource.resourceType}</span>
+                <span class="inline-block text-xs font-semibold px-2.5 py-1 rounded-full bg-orange-100 text-orange-700">{resource.exam}</span>
+              </div>
+              <h1 class="font-display font-bold text-xl sm:text-2xl text-gray-900 leading-tight mb-2">{resource.title}</h1>
+              <p class="text-sm text-gray-500">Source: {resource.source}{resource.year ? ` · ${resource.year}` : ''} · {resource.format}</p>
+            </div>
+          </div>
+
+          <!-- Meta grid -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+            <div class="bg-gray-50 rounded-xl p-3 text-center">
+              <div class="text-xs text-gray-500 mb-1">Subject</div>
+              <div class="font-semibold text-sm text-gray-900 truncate">{resource.category}</div>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-3 text-center">
+              <div class="text-xs text-gray-500 mb-1">Exam</div>
+              <div class="font-semibold text-sm text-gray-900 truncate">{resource.exam}</div>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-3 text-center">
+              <div class="text-xs text-gray-500 mb-1">Format</div>
+              <div class="font-semibold text-sm text-gray-900">{resource.format}</div>
+            </div>
+            {resource.fileSize && (
+              <div class="bg-gray-50 rounded-xl p-3 text-center">
+                <div class="text-xs text-gray-500 mb-1">File Size</div>
+                <div class="font-semibold text-sm text-gray-900">{resource.fileSize}</div>
+              </div>
+            )}
+          </div>
+
+          <!-- Download Buttons -->
+          <div class="flex flex-col sm:flex-row gap-3">
+            <a href={resource.downloadLink} target="_blank" rel="nofollow noopener noreferrer"
+              class="flex-1 flex items-center justify-center gap-2 px-6 py-3.5 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-xl transition-colors text-sm shadow-md hover:shadow-lg">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+              Download Free
+            </a>
+            {resource.mirrorLink && (
+              <a href={resource.mirrorLink} target="_blank" rel="nofollow noopener noreferrer"
+                class="flex items-center justify-center gap-2 px-6 py-3.5 bg-white border-2 border-gray-200 hover:border-primary-400 text-gray-700 font-semibold rounded-xl transition-colors text-sm">
+                Mirror Link
+              </a>
+            )}
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div class="bg-white rounded-2xl border border-gray-200 p-6 sm:p-8">
+          <h2 class="font-display font-bold text-lg text-gray-900 mb-4">About This Resource</h2>
+          <p class="text-gray-700 leading-relaxed">{resource.description}</p>
+        </div>
+
+        <!-- Tags -->
+        <div class="bg-white rounded-2xl border border-gray-200 p-6">
+          <h2 class="font-display font-bold text-lg text-gray-900 mb-4">Topics Covered</h2>
+          <div class="flex flex-wrap gap-2">
+            {resource.tags.map((tag: string) => (
+              <a href={`/tag/${tag.toLowerCase().replace(/ /g, '-')}`} class="px-3 py-1.5 bg-primary-50 text-primary-700 border border-primary-200 rounded-lg text-sm font-medium hover:bg-primary-100 transition-colors">
+                #{tag}
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <!-- Share -->
+        <div class="bg-white rounded-2xl border border-gray-200 p-6">
+          <h2 class="font-display font-bold text-lg text-gray-900 mb-4">Share This Resource</h2>
+          <div class="flex flex-wrap gap-3">
+            <a href={`https://wa.me/?text=${shareText}%20${shareUrl}`} target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-4 py-2 bg-green-500 hover:bg-green-600 text-white text-sm font-medium rounded-lg transition-colors">
+              📱 WhatsApp
+            </a>
+            <a href={`https://t.me/share/url?url=${shareUrl}&text=${shareText}`} target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium rounded-lg transition-colors">
+              ✈️ Telegram
+            </a>
+            <a href={`https://twitter.com/intent/tweet?text=${shareText}&url=${shareUrl}`} target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-4 py-2 bg-sky-500 hover:bg-sky-600 text-white text-sm font-medium rounded-lg transition-colors">
+              🐦 Twitter
+            </a>
+          </div>
+        </div>
+
+        <!-- FAQs -->
+        {resource.faqs && resource.faqs.length > 0 && (
+          <div class="bg-white rounded-2xl border border-gray-200 p-6 sm:p-8">
+            <h2 class="font-display font-bold text-lg text-gray-900 mb-6">Frequently Asked Questions</h2>
+            <div class="space-y-4">
+              {resource.faqs.map((faq: any, i: number) => (
+                <details class="group border border-gray-200 rounded-xl overflow-hidden">
+                  <summary class="flex items-center justify-between px-5 py-4 cursor-pointer font-medium text-gray-900 hover:bg-gray-50 transition-colors list-none">
+                    {faq.question}
+                    <svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                  </summary>
+                  <div class="px-5 pb-4 text-sm text-gray-600 leading-relaxed">{faq.answer}</div>
+                </details>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      <!-- Sidebar -->
+      <div class="space-y-6">
+        <!-- Quick Info -->
+        <div class="bg-white rounded-2xl border border-gray-200 p-6 sticky top-20">
+          <h3 class="font-display font-semibold text-gray-900 mb-4">Resource Info</h3>
+          <ul class="space-y-3 text-sm">
+            <li class="flex justify-between"><span class="text-gray-500">Type</span><span class="font-medium text-gray-900">{resource.resourceType}</span></li>
+            <li class="flex justify-between"><span class="text-gray-500">Subject</span><span class="font-medium text-gray-900">{resource.category}</span></li>
+            <li class="flex justify-between"><span class="text-gray-500">Exam</span><span class="font-medium text-gray-900">{resource.exam}</span></li>
+            <li class="flex justify-between"><span class="text-gray-500">Source</span><span class="font-medium text-gray-900">{resource.source}</span></li>
+            <li class="flex justify-between"><span class="text-gray-500">Language</span><span class="font-medium text-gray-900">{resource.language}</span></li>
+            {resource.year && <li class="flex justify-between"><span class="text-gray-500">Year</span><span class="font-medium text-gray-900">{resource.year}</span></li>}
+            {resource.fileSize && <li class="flex justify-between"><span class="text-gray-500">File Size</span><span class="font-medium text-gray-900">{resource.fileSize}</span></li>}
+            <li class="flex justify-between"><span class="text-gray-500">Format</span><span class="font-medium text-gray-900">{resource.format}</span></li>
+          </ul>
+          <div class="mt-5 pt-5 border-t border-gray-100">
+            <a href={resource.downloadLink} target="_blank" rel="nofollow noopener noreferrer"
+              class="w-full flex items-center justify-center gap-2 px-4 py-3 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-xl transition-colors text-sm">
+              ⬇️ Download Free
+            </a>
+          </div>
+        </div>
+
+        <!-- More in same exam -->
+        <div class="bg-white rounded-2xl border border-gray-200 p-6">
+          <h3 class="font-display font-semibold text-gray-900 mb-2">More for {resource.exam}</h3>
+          <a href={`/exam/${resource.exam.toLowerCase().replace(/ /g, '-')}`} class="text-sm text-primary-600 hover:underline">View all {resource.exam} resources →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Related Resources -->
+    {related.length > 0 && (
+      <section class="mt-12">
+        <h2 class="font-display font-bold text-2xl text-gray-900 mb-6">Related Resources</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {related.map((r: any) => (
+            <ResourceCard title={r.title} slug={r.slug} description={r.description} category={r.category} exam={r.exam} resourceType={r.resourceType} tags={r.tags} source={r.source} year={r.year} />
+          ))}
+        </div>
+      </section>
+    )}
+  </div>
+</BaseLayout>

@@ -1,31 +1,18 @@
-# JEE Halt – Free JEE, NEET & CBSE Study Material
+# JEE Halt — Free JEE Books & Study Material
 
-[![Deploy to Cloudflare Pages](https://img.shields.io/badge/Deploy-Cloudflare%20Pages-F38020?style=flat&logo=cloudflare)](https://pages.cloudflare.com/)
-[![Built with Astro](https://img.shields.io/badge/Built%20with-Astro-FF5D01?style=flat&logo=astro)](https://astro.build/)
-[![TailwindCSS](https://img.shields.io/badge/Styled%20with-TailwindCSS-38B2AC?style=flat&logo=tailwind-css)](https://tailwindcss.com/)
+A fully static, SEO-optimized website for free JEE Main, JEE Advanced & NEET study materials.
 
-> India's trusted platform for free JEE, NEET & CBSE books and study material.
-
-## 🚀 Live Site
-
-[https://www.jeehalt.in](https://www.jeehalt.in)
+**Live site:** https://www.jeehalt.in
 
 ---
 
-## ⚡ Quick Start
+## 🚀 Quick Start
 
 ```bash
-# Install dependencies
 npm install
-
-# Start development server
-npm run dev
-
-# Build for production
-npm run build
-
-# Preview production build
-npm run preview
+npm run dev      # http://localhost:4321
+npm run build    # output in /dist
+npm run preview  # preview production build
 ```
 
 ---
@@ -35,43 +22,34 @@ npm run preview
 ```
 jeehalt/
 ├── public/
+│   ├── admin/config.yml     ← Pages CMS config (edit GitHub username here)
+│   ├── uploads/             ← Media uploads
 │   ├── robots.txt
-│   ├── _headers          # Cloudflare security headers
-│   └── _redirects        # Cloudflare redirects
+│   └── favicon.svg
 ├── src/
 │   ├── components/
 │   │   ├── Header.astro
 │   │   ├── Footer.astro
 │   │   ├── BookCard.astro
-│   │   └── Breadcrumb.astro
+│   │   └── SearchBar.astro
 │   ├── layouts/
 │   │   └── BaseLayout.astro
 │   ├── pages/
-│   │   ├── index.astro        # Homepage
-│   │   ├── books.astro        # All books listing
-│   │   ├── categories.astro   # Categories index
-│   │   ├── tags.astro         # Tags index
-│   │   ├── about.astro
-│   │   ├── contact.astro
-│   │   ├── 404.astro
-│   │   ├── sitemap.xml.astro  # Auto-generated sitemap
-│   │   ├── sitemap-page.astro
-│   │   ├── privacy-policy.astro
-│   │   ├── terms.astro
-│   │   ├── disclaimer.astro
-│   │   ├── dmca.astro
-│   │   ├── book/
-│   │   │   └── [slug].astro   # Individual book pages
-│   │   ├── category/
-│   │   │   └── [category].astro
-│   │   └── tag/
-│   │       └── [tag].astro
+│   │   ├── index.astro
+│   │   ├── book/[slug].astro
+│   │   ├── books/index.astro + [page].astro
+│   │   ├── category/[slug].astro
+│   │   ├── tag/[slug].astro
+│   │   ├── brand/[slug].astro
+│   │   ├── categories/index.astro
+│   │   ├── tags/index.astro
+│   │   ├── about.astro, contact.astro
+│   │   ├── disclaimer.astro, privacy-policy.astro
+│   │   ├── terms.astro, dmca.astro, 404.astro
+│   │   └── sitemap.xml.ts
 │   └── content/
-│       ├── config.ts
-│       └── books/             # 📚 Add new books here!
-│           ├── hc-verma-concepts-physics-vol-1.md
-│           ├── dc-pandey-mechanics-part-1.md
-│           └── ... (53 books total)
+│       ├── config.ts        ← Content schema (NO slug field)
+│       └── books/           ← 54 book markdown files
 ├── astro.config.mjs
 ├── tailwind.config.js
 └── package.json
@@ -79,83 +57,31 @@ jeehalt/
 
 ---
 
-## ➕ Adding a New Book
-
-Create a new `.md` file in `src/content/books/`:
-
-```markdown
----
-title: "Book Title Here"
-description: "80-120 word SEO-friendly description of the book."
-author: "Author Name"
-publisher: "Publisher Name"
-category: "Physics"
-tags: ["Mechanics", "JEE Main", "JEE Advanced"]
-language: "English"
-pages: 450
-fileSize: "18 MB"
-format: "PDF"
-downloadLink: "https://your-download-link.com/file.pdf"
-mirrorLinks:
-  - "https://mirror1.com/file.pdf"
-  - "https://mirror2.com/file.pdf"
-faqs:
-  - q: "Who should read this book?"
-    a: "JEE aspirants and Class 11-12 students."
-  - q: "Is it good for JEE Advanced?"
-    a: "Yes, it is highly recommended for JEE Advanced."
----
-```
-
-The book will **automatically appear** on:
-- ✅ Homepage book grid
-- ✅ `/books` page
-- ✅ Category page (`/category/Physics`)
-- ✅ Tag pages for each tag
-- ✅ Related books section
-- ✅ XML sitemap
-
----
-
 ## 🌐 Deploy to Cloudflare Pages
 
-1. Push this repo to GitHub
-2. Go to [Cloudflare Pages](https://pages.cloudflare.com/)
-3. Click **Create a project** → **Connect to Git**
-4. Select your repository
-5. Configure build:
-   - **Build command:** `npm run build`
-   - **Build output directory:** `dist`
-   - **Node.js version:** `18` or higher
-6. Click **Save and Deploy**
+| Setting | Value |
+|---------|-------|
+| Build command | `npm run build` |
+| Output directory | `dist` |
+| Node version env var | `NODE_VERSION = 18` |
 
 ---
 
-## 🔍 SEO Features
+## 📝 Pages CMS Setup
 
-- Meta title, description, canonical URL per page
-- Open Graph & Twitter Card tags
-- Structured data: Book, Article, FAQ, Breadcrumb schemas
-- Auto-generated XML sitemap at `/sitemap.xml`
-- Clean URLs (`/book/hc-verma-vol-1`, `/category/physics`)
-- `robots.txt`
-- Cloudflare security headers
+1. Edit `public/admin/config.yml`
+2. Replace `your-github-username/jeehalt` with your GitHub username
+3. Push to GitHub
+4. Login at https://app.pagescms.org with GitHub
 
 ---
 
-## 📊 Performance
+## ✅ Key Fix Applied
 
-- Static Site Generation (SSG) – zero runtime cost
-- No heavy JavaScript frameworks
-- Google Fonts with `display=swap`
-- Lazy loading images
-- Minimal JS – only where needed
-- Tailwind CSS with content purging
+Astro reserves the `slug` field in content collections.
+This project uses `book.id` (filename without `.md`) as the slug.
+The `config.ts` schema does NOT contain a `slug` field.
 
 ---
-
-## 📄 License
-
-This project is for educational purposes. All books belong to their respective copyright holders.
 
 © 2026 JEE Halt. All rights reserved.

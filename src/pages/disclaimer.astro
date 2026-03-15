@@ -1,38 +1,19 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Breadcrumb from '../components/Breadcrumb.astro';
 ---
-
-<BaseLayout title="Disclaimer – JEE Halt" canonical="/disclaimer">
-  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <Breadcrumb crumbs={[{ label: 'Home', href: '/' }, { label: 'Disclaimer' }]} />
-    <div class="mt-6 card p-8 prose-section">
-      <h1>Disclaimer</h1>
-      <p class="text-slate-500 text-sm">Last updated: January 2026</p>
-
-      <h2>Educational Purpose</h2>
-      <p>JEE Halt is an educational resource platform created to help students access study material for JEE Main, JEE Advanced, NEET, and CBSE examinations. All content is shared for educational purposes only.</p>
-
-      <h2>No Copyright Infringement Intended</h2>
-      <p>JEE Halt does not host any copyrighted files on its servers. We provide links to files already available on the internet. If you believe any content on our site violates your copyright, please contact us via our <a href="/dmca" class="text-orange-400 hover:underline">DMCA page</a> and we will remove the relevant links promptly.</p>
-
-      <h2>Accuracy of Information</h2>
-      <p>While we strive to provide accurate and up-to-date information about books and study material, we make no warranties about the completeness or accuracy of the content on this site. Use the information at your own discretion.</p>
-
-      <h2>External Links</h2>
-      <p>JEE Halt contains links to external websites. We are not responsible for the content, privacy policies, or practices of any third-party sites.</p>
-
-      <h2>No Affiliation</h2>
-      <p>JEE Halt is not affiliated with any publisher, educational institution, coaching center, or government examination board including NTA, CBSE, or IITs.</p>
-
-      <h2>Contact</h2>
-      <p>For any concerns related to content on this site, please <a href="/contact" class="text-orange-400 hover:underline">contact us</a>.</p>
+<BaseLayout title="Disclaimer" description="Academic Halt disclaimer — we do not host copyrighted files. All content is for educational purposes only.">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <nav class="text-sm text-gray-500 mb-6"><a href="/" class="hover:text-primary-600">Home</a> › <span class="text-gray-900">Disclaimer</span></nav>
+    <div class="bg-white rounded-2xl border border-gray-200 p-8 sm:p-12">
+      <h1 class="font-display font-bold text-3xl text-gray-900 mb-6">Disclaimer</h1>
+      <div class="space-y-4 text-gray-700">
+        <p>Academic Halt (academichalt.in) is an educational resource website. We do not host, upload, or store any copyrighted PDF files on our servers.</p>
+        <h2 class="font-display font-bold text-xl text-gray-900 pt-2">External Links</h2>
+        <p>All download links on Academic Halt point to third-party file hosting services. We are not responsible for the content hosted on external servers. If you find any copyrighted material linked from our website, please <a href="/contact" class="text-primary-600 hover:underline">contact us</a> immediately.</p>
+        <h2 class="font-display font-bold text-xl text-gray-900 pt-2">Educational Purpose</h2>
+        <p>All content on this website is provided for educational and informational purposes only. We encourage students to purchase original books and support authors and publishers.</p>
+        <p class="text-sm text-gray-400 pt-4">Last updated: January 2026</p>
+      </div>
     </div>
   </div>
 </BaseLayout>
-
-<style>
-  .prose-section :global(h1) { font-family: 'Syne', sans-serif; font-size: 1.75rem; font-weight: 800; color: #f8fafc; margin-bottom: 0.5rem; }
-  .prose-section :global(h2) { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; color: #e2e8f0; margin: 1.75rem 0 0.6rem; }
-  .prose-section :global(p) { color: #94a3b8; font-size: 0.875rem; line-height: 1.8; margin-bottom: 0.75rem; }
-</style>

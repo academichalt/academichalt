@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ResourceCard from '../../components/ResourceCard.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const allResources = await getCollection('resources');
+  const tagMap: Record<string, { label: string; resources: any[] }> = {};
+  allResources.forEach(r => {
+    r.data.tags.forEach((tag: string) => {
+      const key = tag.toLowerCase().replace(/ /g, '-');
+      if (!tagMap[key]) tagMap[key] = { label: tag, resources: [] };
+      tagMap[key].resources.push({ ...r.data, slug: r.id });
+    });
+  });
+  return Object.entries(tagMap).map(([slug, { label, resources }]) => ({
+    params: { slug },
+    props: { tagLabel: label, resources },
+  }));
+}
+
+const { tagLabel, resources } = Astro.props;
+---
+<BaseLayout title={`${tagLabel} Resources`} description={`Free ${tagLabel} notes, solutions and papers. ${resources.length} resources on Academic Halt.`}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <nav class="text-sm text-gray-500 mb-6"><a href="/" class="hover:text-primary-600">Home</a> › <a href="/tags" class="hover:text-primary-600 mx-1">Topics</a> › <span class="text-gray-900">{tagLabel}</span></nav>
+    <div class="mb-8">
+      <h1 class="font-display font-bold text-3xl text-gray-900 mb-2">#{tagLabel}</h1>
+      <p class="text-gray-500">{resources.length} resources tagged with "{tagLabel}"</p>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+      {resources.map((r: any) => (
+        <ResourceCard title={r.title} slug={r.slug} description={r.description} category={r.category} exam={r.exam} resourceType={r.resourceType} tags={r.tags} source={r.source} year={r.year} />
+      ))}
+    </div>
+  </div>
+</BaseLayout>

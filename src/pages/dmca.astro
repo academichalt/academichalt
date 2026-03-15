@@ -1,43 +1,26 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Breadcrumb from '../components/Breadcrumb.astro';
 ---
-
-<BaseLayout title="DMCA Policy – JEE Halt" canonical="/dmca">
-  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <Breadcrumb crumbs={[{ label: 'Home', href: '/' }, { label: 'DMCA' }]} />
-    <div class="mt-6 card p-8 prose-section">
-      <h1>DMCA Policy</h1>
-      <p class="text-slate-500 text-sm">Last updated: January 2026</p>
-
-      <h2>Copyright Notice</h2>
-      <p>JEE Halt respects the intellectual property rights of others. We do not host any files on our own servers. We only provide links to publicly available educational material on the internet.</p>
-
-      <h2>DMCA Takedown Request</h2>
-      <p>If you believe that any content linked on JEE Halt infringes your copyright, please submit a DMCA takedown notice with the following information:</p>
-      <ul>
-        <li>Your full name and contact information</li>
-        <li>The copyrighted work you claim has been infringed</li>
-        <li>The specific URL(s) on jeehalt.in linking to the content</li>
-        <li>A statement that you have a good faith belief that the use is not authorized</li>
-        <li>A statement that the information in the notice is accurate and that you are the copyright owner or authorized to act on their behalf</li>
-        <li>Your digital or physical signature</li>
-      </ul>
-
-      <h2>How to Submit</h2>
-      <p>Send your DMCA notice to: <a href="mailto:dmca@jeehalt.in" class="text-orange-400 hover:underline">dmca@jeehalt.in</a></p>
-      <p>Or use our <a href="/contact" class="text-orange-400 hover:underline">contact form</a> with the subject "DMCA / Copyright".</p>
-
-      <h2>Response Time</h2>
-      <p>We will review and process valid DMCA requests within 48 hours and remove the relevant links promptly upon verification.</p>
+<BaseLayout title="DMCA" description="Academic Halt DMCA Policy — report copyright infringement.">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <nav class="text-sm text-gray-500 mb-6"><a href="/" class="hover:text-primary-600">Home</a> › <span class="text-gray-900">DMCA</span></nav>
+    <div class="bg-white rounded-2xl border border-gray-200 p-8 sm:p-12">
+      <h1 class="font-display font-bold text-3xl text-gray-900 mb-6">DMCA Policy</h1>
+      <div class="space-y-4 text-gray-700">
+        <p>Academic Halt respects intellectual property rights and complies with the Digital Millennium Copyright Act (DMCA).</p>
+        <h2 class="font-display font-bold text-xl text-gray-900 pt-2">Copyright Notice</h2>
+        <p>We do not host any copyrighted PDF files on our servers. All download links point to third-party hosting services.</p>
+        <h2 class="font-display font-bold text-xl text-gray-900 pt-2">Filing a DMCA Complaint</h2>
+        <p>If you are a copyright owner and believe that content on our website infringes your copyright, please send a notice to <a href="mailto:dmca@academichalt.in" class="text-primary-600 hover:underline">dmca@academichalt.in</a> with:</p>
+        <ul class="list-disc pl-6 space-y-1">
+          <li>Your contact information</li>
+          <li>Description of the copyrighted work</li>
+          <li>URL of the infringing content</li>
+          <li>A statement that you are the copyright owner</li>
+        </ul>
+        <p>We will respond within 48 hours and remove the relevant links if necessary.</p>
+        <p class="text-sm text-gray-400 pt-4">Last updated: January 2026</p>
+      </div>
     </div>
   </div>
 </BaseLayout>
-
-<style>
-  .prose-section :global(h1) { font-family: 'Syne', sans-serif; font-size: 1.75rem; font-weight: 800; color: #f8fafc; margin-bottom: 0.5rem; }
-  .prose-section :global(h2) { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; color: #e2e8f0; margin: 1.75rem 0 0.6rem; }
-  .prose-section :global(p) { color: #94a3b8; font-size: 0.875rem; line-height: 1.8; margin-bottom: 0.75rem; }
-  .prose-section :global(ul) { list-style: disc; padding-left: 1.5rem; color: #94a3b8; font-size: 0.875rem; line-height: 1.8; margin-bottom: 0.75rem; }
-  .prose-section :global(li) { margin-bottom: 0.35rem; }
-</style>

@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const allResources = await getCollection('resources');
+const examMap: Record<string, number> = {};
+allResources.forEach(r => { examMap[r.data.exam] = (examMap[r.data.exam] || 0) + 1; });
+const exams = Object.entries(examMap).sort((a, b) => b[1] - a[1]);
+
+const examMeta: Record<string, { color: string; icon: string; desc: string }> = {
+  "JEE Main": { color: "from-orange-500 to-orange-600", icon: "🎯", desc: "Notes, PYQs, and sample papers for JEE Main preparation" },
+  "JEE Advanced": { color: "from-red-500 to-red-600", icon: "🏆", desc: "Advanced notes, IIT PYQs, and high-level problems" },
+  "NEET": { color: "from-teal-500 to-teal-600", icon: "🩺", desc: "Biology, Physics, Chemistry notes and NEET PYQs" },
+  "CBSE Class 12": { color: "from-indigo-500 to-indigo-600", icon: "📗", desc: "NCERT solutions, sample papers, and board notes for Class 12" },
+  "CBSE Class 10": { color: "from-blue-400 to-blue-500", icon: "📘", desc: "NCERT solutions, sample papers, and board notes for Class 10" },
+  "UPSC CSE": { color: "from-yellow-600 to-amber-600", icon: "🏛️", desc: "GS notes, PYQs, and current affairs for civil services" },
+  "GATE": { color: "from-cyan-500 to-cyan-600", icon: "⚙️", desc: "Subject-wise notes and previous year papers for GATE" },
+  "Class 11": { color: "from-violet-500 to-violet-600", icon: "📙", desc: "Class 11 notes and study material for all subjects" },
+};
+---
+<BaseLayout title="Browse by Exam" description="Find free study resources organized by exam — JEE Main, JEE Advanced, NEET, CBSE, UPSC, GATE and more.">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <nav class="text-sm text-gray-500 mb-6"><a href="/" class="hover:text-primary-600">Home</a> › <span class="text-gray-900">Exams</span></nav>
+    <h1 class="font-display font-bold text-3xl text-gray-900 mb-2">Browse by Exam</h1>
+    <p class="text-gray-500 mb-10">{exams.length} exams · Find resources for your target exam</p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {exams.map(([exam, count]) => {
+        const meta = examMeta[exam] || { color: "from-gray-500 to-gray-600", icon: "📚", desc: "Study resources and papers" };
+        return (
+          <a href={`/exam/${exam.toLowerCase().replace(/ /g, '-')}`} class="group bg-white rounded-2xl border border-gray-200 hover:border-primary-300 hover:shadow-lg transition-all duration-200 overflow-hidden">
+            <div class={`h-2 bg-gradient-to-r ${meta.color}`}></div>
+            <div class="p-6">
+              <div class="flex items-center gap-4 mb-3">
+                <div class={`w-12 h-12 bg-gradient-to-br ${meta.color} rounded-xl flex items-center justify-center text-2xl`}>{meta.icon}</div>
+                <div>
+                  <h2 class="font-display font-bold text-lg text-gray-900 group-hover:text-primary-700 transition-colors">{exam}</h2>
+                  <p class="text-sm text-primary-600 font-medium">{count} resources</p>
+                </div>
+              </div>
+              <p class="text-sm text-gray-500">{meta.desc}</p>
+            </div>
+          </a>
+        );
+      })}
+    </div>
+  </div>
+</BaseLayout>

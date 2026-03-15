@@ -1,0 +1,55 @@
+---
+interface Props {
+  resources: Array<{ title: string; slug: string; category: string; exam: string; resourceType: string; tags: string[]; source: string; }>;
+}
+const { resources } = Astro.props;
+---
+<div class="relative max-w-2xl mx-auto">
+  <div class="relative">
+    <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+    </svg>
+    <input id="search-input" type="text" placeholder="Search notes, solutions, papers by subject, exam..." class="w-full pl-12 pr-10 py-4 text-base rounded-xl border border-gray-200 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all" autocomplete="off" />
+    <button id="clear-search" class="hidden absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+    </button>
+  </div>
+  <div id="search-results" class="hidden absolute left-0 right-0 top-full mt-2 bg-white border border-gray-200 rounded-xl shadow-xl z-50 max-h-80 overflow-y-auto"></div>
+</div>
+<script define:vars={{ resources }}>
+  const typeIcons = { "Notes": "📝", "Solutions": "✅", "Previous Year Papers": "📄", "Sample Papers": "📋", "Question Bank": "❓" };
+  const input = document.getElementById('search-input');
+  const resultsDiv = document.getElementById('search-results');
+  const clearBtn = document.getElementById('clear-search');
+  function search(query) {
+    if (!query || query.length < 2) { resultsDiv.classList.add('hidden'); clearBtn.classList.add('hidden'); return; }
+    clearBtn.classList.remove('hidden');
+    const q = query.toLowerCase();
+    const matches = resources.filter(r =>
+      r.title.toLowerCase().includes(q) ||
+      r.category.toLowerCase().includes(q) ||
+      r.exam.toLowerCase().includes(q) ||
+      r.resourceType.toLowerCase().includes(q) ||
+      r.source.toLowerCase().includes(q) ||
+      r.tags.some(t => t.toLowerCase().includes(q))
+    ).slice(0, 8);
+    if (matches.length === 0) {
+      resultsDiv.innerHTML = `<div class="p-4 text-sm text-gray-500 text-center">No results found for "${query}"</div>`;
+    } else {
+      resultsDiv.innerHTML = matches.map(r => `
+        <a href="/resource/${r.slug}" class="flex items-center gap-3 px-4 py-3 hover:bg-primary-50 transition-colors border-b border-gray-50 last:border-0">
+          <div class="w-8 h-8 bg-primary-100 rounded-lg flex items-center justify-center flex-shrink-0 text-base">
+            ${typeIcons[r.resourceType] || '📚'}
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium text-gray-900 truncate">${r.title}</p>
+            <p class="text-xs text-gray-500">${r.resourceType} · ${r.exam} · ${r.source}</p>
+          </div>
+        </a>`).join('');
+    }
+    resultsDiv.classList.remove('hidden');
+  }
+  input?.addEventListener('input', (e) => search(e.target.value));
+  clearBtn?.addEventListener('click', () => { input.value = ''; resultsDiv.classList.add('hidden'); clearBtn.classList.add('hidden'); input.focus(); });
+  document.addEventListener('click', (e) => { if (!e.target.closest('#search-input') && !e.target.closest('#search-results')) resultsDiv.classList.add('hidden'); });
+</script>

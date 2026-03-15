@@ -1,44 +1,21 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Breadcrumb from '../components/Breadcrumb.astro';
 ---
-
-<BaseLayout title="Terms & Conditions – JEE Halt" canonical="/terms">
-  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <Breadcrumb crumbs={[{ label: 'Home', href: '/' }, { label: 'Terms & Conditions' }]} />
-    <div class="mt-6 card p-8 prose-section">
-      <h1>Terms & Conditions</h1>
-      <p class="text-slate-500 text-sm">Last updated: January 2026</p>
-
-      <h2>1. Acceptance of Terms</h2>
-      <p>By accessing and using JEE Halt (jeehalt.in), you agree to be bound by these Terms and Conditions. If you do not agree, please discontinue use of the site.</p>
-
-      <h2>2. Educational Use Only</h2>
-      <p>All content provided on JEE Halt is for personal, non-commercial, educational use only. You may not redistribute, sell, or use any content from this site for commercial purposes.</p>
-
-      <h2>3. Content and Copyright</h2>
-      <p>JEE Halt does not claim ownership of any books or study material linked on this site. All books belong to their respective authors and publishers. If you are a copyright owner and wish to have content removed, please submit a <a href="/dmca" class="text-orange-400 hover:underline">DMCA notice</a>.</p>
-
-      <h2>4. No Warranty</h2>
-      <p>JEE Halt provides the site "as is" without any warranty of any kind. We do not guarantee the accuracy, completeness, or availability of any content at all times.</p>
-
-      <h2>5. Limitation of Liability</h2>
-      <p>JEE Halt shall not be liable for any direct, indirect, incidental, or consequential damages arising from the use or inability to use this site or its content.</p>
-
-      <h2>6. Modifications</h2>
-      <p>We reserve the right to modify these terms at any time. Continued use of the site after modifications constitutes your acceptance of the revised terms.</p>
-
-      <h2>7. Governing Law</h2>
-      <p>These terms shall be governed by the laws of India. Any disputes shall be subject to the exclusive jurisdiction of courts in India.</p>
-
-      <h2>8. Contact</h2>
-      <p>For questions about these terms, please <a href="/contact" class="text-orange-400 hover:underline">contact us</a>.</p>
+<BaseLayout title="Terms & Conditions" description="Academic Halt Terms and Conditions of use.">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <nav class="text-sm text-gray-500 mb-6"><a href="/" class="hover:text-primary-600">Home</a> › <span class="text-gray-900">Terms & Conditions</span></nav>
+    <div class="bg-white rounded-2xl border border-gray-200 p-8 sm:p-12">
+      <h1 class="font-display font-bold text-3xl text-gray-900 mb-6">Terms & Conditions</h1>
+      <div class="space-y-4 text-gray-700">
+        <p>By accessing Academic Halt at academichalt.in, you agree to be bound by these terms and conditions.</p>
+        <h2 class="font-display font-bold text-xl text-gray-900 pt-2">Use of Website</h2>
+        <p>This website is provided for educational purposes only. You agree not to misuse this website or use it for any illegal purpose.</p>
+        <h2 class="font-display font-bold text-xl text-gray-900 pt-2">Intellectual Property</h2>
+        <p>The content on this website, including text, graphics, and design, is the property of Academic Halt. Book PDFs linked from this site remain the property of their respective authors and publishers.</p>
+        <h2 class="font-display font-bold text-xl text-gray-900 pt-2">Limitation of Liability</h2>
+        <p>Academic Halt shall not be liable for any damages arising from the use or inability to use this website or its resources.</p>
+        <p class="text-sm text-gray-400 pt-4">Last updated: January 2026</p>
+      </div>
     </div>
   </div>
 </BaseLayout>
-
-<style>
-  .prose-section :global(h1) { font-family: 'Syne', sans-serif; font-size: 1.75rem; font-weight: 800; color: #f8fafc; margin-bottom: 0.5rem; }
-  .prose-section :global(h2) { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; color: #e2e8f0; margin: 1.75rem 0 0.6rem; }
-  .prose-section :global(p) { color: #94a3b8; font-size: 0.875rem; line-height: 1.8; margin-bottom: 0.75rem; }
-</style>

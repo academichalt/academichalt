@@ -6,238 +6,46 @@ interface Props {
   title: string;
   description?: string;
   canonical?: string;
-  ogTitle?: string;
-  ogDescription?: string;
-  ogImage?: string;
-  structuredData?: object;
+  ogType?: string;
+  schema?: object;
 }
 
 const {
   title,
-  description = 'JEE Halt – Best place to find JEE, NEET & CBSE books, notes, and study material for free. Download PDFs of Physics, Chemistry, Mathematics books.',
+  description = "Academic Halt - Free Notes, Solutions, Papers & Study Material for JEE, NEET, CBSE, UPSC, GATE and all major exams.",
   canonical,
-  ogTitle,
-  ogDescription,
-  structuredData,
+  ogType = "website",
+  schema
 } = Astro.props;
 
-const siteUrl = 'https://www.jeehalt.in';
-const canonicalUrl = canonical || `${siteUrl}${Astro.url.pathname}`;
-const finalOgTitle = ogTitle || title;
-const finalOgDesc = ogDescription || description;
+const siteUrl = "https://www.academichalt.in";
+const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
 ---
-
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#0f172a" />
-  <title>{title} | JEE Halt</title>
+  <title>{title} | Academic Halt</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={canonicalUrl} />
-
-  <!-- Open Graph -->
-  <meta property="og:title" content={finalOgTitle} />
-  <meta property="og:description" content={finalOgDesc} />
+  <meta property="og:title" content={`${title} | Academic Halt`} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content={ogType} />
   <meta property="og:url" content={canonicalUrl} />
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="JEE Halt" />
-  <meta property="og:image" content={`${siteUrl}/og-image.png`} />
-
-  <!-- Twitter Card -->
+  <meta property="og:site_name" content="Academic Halt" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content={finalOgTitle} />
-  <meta name="twitter:description" content={finalOgDesc} />
-  <meta name="twitter:image" content={`${siteUrl}/og-image.png`} />
-
-  <!-- Fonts -->
+  <meta name="twitter:title" content={`${title} | Academic Halt`} />
+  <meta name="twitter:description" content={description} />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-
-  <!-- Structured Data -->
-  {structuredData && (
-    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
-  )}
-
-  <!-- Website Schema -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "JEE Halt",
-    "url": "https://www.jeehalt.in",
-    "description": "Find JEE, NEET & CBSE books, notes, and study material",
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": "https://www.jeehalt.in/?q={search_term_string}",
-      "query-input": "required name=search_term_string"
-    }
-  }
-  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
 </head>
-<body class="bg-dark-950 text-slate-100 font-body antialiased min-h-screen flex flex-col">
+<body class="bg-gray-50 text-gray-900 font-sans min-h-screen flex flex-col">
   <Header />
-  <main class="flex-1">
-    <slot />
-  </main>
+  <main class="flex-1"><slot /></main>
   <Footer />
-
-  <!-- Dark mode persistence -->
-  <script>
-    const theme = localStorage.getItem('theme') || 'dark';
-    document.documentElement.classList.toggle('dark', theme === 'dark');
-  </script>
 </body>
 </html>
-
-<style is:global>
-  :root {
-    --brand: #f97316;
-    --brand-dark: #ea580c;
-    --bg: #080d18;
-    --bg-card: #111827;
-    --bg-card-hover: #1a2540;
-    --border: rgba(255,255,255,0.07);
-    --text-muted: #94a3b8;
-  }
-
-  * { box-sizing: border-box; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg);
-    background-image:
-      radial-gradient(ellipse 80% 60% at 50% -20%, rgba(249,115,22,0.08) 0%, transparent 60%);
-  }
-
-  ::selection { background: rgba(249,115,22,0.3); color: #fff; }
-
-  .card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    transition: all 0.25s ease;
-  }
-
-  .card:hover {
-    background: var(--bg-card-hover);
-    border-color: rgba(249,115,22,0.3);
-    transform: translateY(-2px);
-    box-shadow: 0 12px 40px rgba(0,0,0,0.4);
-  }
-
-  .btn-primary {
-    background: linear-gradient(135deg, #f97316, #ea580c);
-    color: white;
-    font-weight: 600;
-    border-radius: 8px;
-    padding: 0.6rem 1.4rem;
-    font-size: 0.9rem;
-    border: none;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    text-decoration: none;
-    font-family: 'DM Sans', sans-serif;
-  }
-
-  .btn-primary:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(249,115,22,0.4);
-  }
-
-  .btn-secondary {
-    background: transparent;
-    color: #f97316;
-    border: 1px solid rgba(249,115,22,0.4);
-    border-radius: 8px;
-    padding: 0.55rem 1.3rem;
-    font-size: 0.88rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    text-decoration: none;
-    font-family: 'DM Sans', sans-serif;
-  }
-
-  .btn-secondary:hover {
-    background: rgba(249,115,22,0.1);
-    border-color: #f97316;
-  }
-
-  .tag-chip {
-    display: inline-block;
-    background: rgba(249,115,22,0.1);
-    color: #fb923c;
-    border: 1px solid rgba(249,115,22,0.2);
-    border-radius: 20px;
-    padding: 0.25rem 0.75rem;
-    font-size: 0.75rem;
-    font-weight: 500;
-    text-decoration: none;
-    transition: all 0.2s ease;
-    white-space: nowrap;
-  }
-
-  .tag-chip:hover {
-    background: rgba(249,115,22,0.2);
-    border-color: rgba(249,115,22,0.5);
-    color: #fdba74;
-  }
-
-  .section-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: clamp(1.5rem, 3vw, 2rem);
-    color: #fff;
-    letter-spacing: -0.02em;
-  }
-
-  .category-badge {
-    display: inline-block;
-    background: rgba(99,102,241,0.15);
-    color: #a5b4fc;
-    border: 1px solid rgba(99,102,241,0.25);
-    border-radius: 6px;
-    padding: 0.2rem 0.6rem;
-    font-size: 0.72rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    text-decoration: none;
-    transition: all 0.2s ease;
-  }
-
-  .category-badge:hover {
-    background: rgba(99,102,241,0.25);
-  }
-
-  /* Scrollbar */
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: #0f172a; }
-  ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
-  ::-webkit-scrollbar-thumb:hover { background: #f97316; }
-
-  /* Animations */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .animate-fade-up {
-    animation: fadeUp 0.5s ease forwards;
-  }
-
-  [data-delay="1"] { animation-delay: 0.1s; opacity: 0; }
-  [data-delay="2"] { animation-delay: 0.2s; opacity: 0; }
-  [data-delay="3"] { animation-delay: 0.3s; opacity: 0; }
-  [data-delay="4"] { animation-delay: 0.4s; opacity: 0; }
-</style>

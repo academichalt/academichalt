@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ResourceCard from '../../components/ResourceCard.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const allResources = await getCollection('resources');
+  const types = [...new Set(allResources.map(r => r.data.resourceType))];
+  return types.map(type => ({
+    params: { slug: type.toLowerCase().replace(/ /g, '-') },
+    props: { resourceType: type, resources: allResources.filter(r => r.data.resourceType === type).map(r => ({ ...r.data, slug: r.id })) },
+  }));
+}
+
+const { resourceType, resources } = Astro.props;
+const typeIcons: Record<string,string> = { "Notes": "📝", "Solutions": "✅", "Previous Year Papers": "📄", "Sample Papers": "📋", "Question Bank": "❓" };
+---
+<BaseLayout title={`${resourceType} – Free Download`} description={`Free ${resourceType} for all exams. ${resources.length} ${resourceType.toLowerCase()} available on Academic Halt.`}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <nav class="text-sm text-gray-500 mb-6"><a href="/" class="hover:text-primary-600">Home</a> › <span class="text-gray-900">{resourceType}</span></nav>
+    <h1 class="font-display font-bold text-3xl text-gray-900 mb-2">{typeIcons[resourceType] || '📚'} {resourceType}</h1>
+    <p class="text-gray-500 mb-8">{resources.length} free {resourceType.toLowerCase()} for all exams and subjects</p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+      {resources.map((r: any) => (
+        <ResourceCard title={r.title} slug={r.slug} description={r.description} category={r.category} exam={r.exam} resourceType={r.resourceType} tags={r.tags} source={r.source} year={r.year} />
+      ))}
+    </div>
+  </div>
+</BaseLayout>

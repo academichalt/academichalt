@@ -1,15 +1,17 @@
 {
-  "name": "jeehalt",
+  "name": "academichalt",
   "type": "module",
   "version": "1.0.0",
   "scripts": {
     "dev": "astro dev",
+    "start": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "astro": "astro"
   },
   "dependencies": {
+    "astro": "^4.4.0",
     "@astrojs/tailwind": "^5.1.0",
-    "astro": "^6.0.4",
     "tailwindcss": "^3.4.1"
   }
 }

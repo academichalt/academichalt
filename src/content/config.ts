@@ -1,22 +1,26 @@
 import { defineCollection, z } from 'astro:content';
 
-const books = defineCollection({
+const resources = defineCollection({
   type: 'content',
   schema: z.object({
     title: z.string(),
     description: z.string(),
-    author: z.string(),
-    publisher: z.string(),
+    source: z.string(),
     category: z.string(),
+    exam: z.string(),
+    resourceType: z.string(),
     tags: z.array(z.string()),
-    language: z.string(),
-    pages: z.number(),
-    fileSize: z.string(),
-    format: z.string(),
+    language: z.string().default('English'),
+    fileSize: z.string().optional(),
+    format: z.string().default('PDF'),
+    year: z.number().optional(),
     downloadLink: z.string(),
-    mirrorLinks: z.array(z.string()).optional(),
-    faqs: z.array(z.object({ q: z.string(), a: z.string() })).optional(),
+    mirrorLink: z.string().optional(),
+    faqs: z.array(z.object({
+      question: z.string(),
+      answer: z.string(),
+    })).optional(),
   }),
 });
 
-export const collections = { books };
+export const collections = { resources };

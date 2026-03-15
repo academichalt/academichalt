@@ -1,637 +1,221 @@
 ---
-import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import BookCard from '../components/BookCard.astro';
+import ResourceCard from '../components/ResourceCard.astro';
+import SearchBar from '../components/SearchBar.astro';
+import { getCollection } from 'astro:content';
 
-const allBooks = await getCollection('books');
-const sortedBooks = allBooks.sort((a, b) => a.data.title.localeCompare(b.data.title));
+const allResources = await getCollection('resources');
+const resources = allResources.map(r => ({ ...r.data, slug: r.id }));
 
-// Get unique categories and tags
-const allCategories = [...new Set(allBooks.map(b => b.data.category))].sort();
-const allTagsRaw = allBooks.flatMap(b => b.data.tags);
-const tagCounts: Record<string, number> = {};
-allTagsRaw.forEach(t => { tagCounts[t] = (tagCounts[t] || 0) + 1; });
-const topTags = Object.entries(tagCounts).sort((a,b) => b[1] - a[1]).slice(0, 20).map(e => e[0]);
+const categoryMap: Record<string, number> = {};
+resources.forEach(r => { categoryMap[r.category] = (categoryMap[r.category] || 0) + 1; });
+const categories = Object.entries(categoryMap).sort((a, b) => b[1] - a[1]);
 
-// Stats
-const totalBooks = allBooks.length;
-const totalCategories = allCategories.length;
-const totalTags = Object.keys(tagCounts).length;
+const examMap: Record<string, number> = {};
+resources.forEach(r => { examMap[r.exam] = (examMap[r.exam] || 0) + 1; });
+const exams = Object.entries(examMap).sort((a, b) => b[1] - a[1]);
+
+const typeMap: Record<string, number> = {};
+resources.forEach(r => { typeMap[r.resourceType] = (typeMap[r.resourceType] || 0) + 1; });
+const resourceTypes = Object.entries(typeMap).sort((a, b) => b[1] - a[1]);
+
+const tagMap: Record<string, number> = {};
+resources.forEach(r => { r.tags.forEach((t: string) => { tagMap[t] = (tagMap[t] || 0) + 1; }); });
+const tags = Object.entries(tagMap).sort((a, b) => b[1] - a[1]).slice(0, 32);
+
+const searchResources = resources.map(r => ({ title: r.title, slug: r.slug, category: r.category, exam: r.exam, resourceType: r.resourceType, tags: r.tags, source: r.source }));
+
+const categoryMeta: Record<string, { color: string; icon: string }> = {
+  "Physics": { color: "from-blue-500 to-blue-600", icon: "⚡" },
+  "Chemistry": { color: "from-green-500 to-green-600", icon: "🧪" },
+  "Mathematics": { color: "from-purple-500 to-purple-600", icon: "📐" },
+  "Biology": { color: "from-emerald-500 to-emerald-600", icon: "🧬" },
+  "General Studies": { color: "from-yellow-500 to-yellow-600", icon: "🌏" },
+  "Computer Science": { color: "from-cyan-500 to-cyan-600", icon: "💻" },
+  "English": { color: "from-pink-500 to-pink-600", icon: "✍️" },
+  "History": { color: "from-amber-500 to-amber-600", icon: "🏛️" },
+};
+
+const examMeta: Record<string, { color: string; icon: string }> = {
+  "JEE Main": { color: "from-orange-500 to-orange-600", icon: "🎯" },
+  "JEE Advanced": { color: "from-red-500 to-red-600", icon: "🏆" },
+  "NEET": { color: "from-teal-500 to-teal-600", icon: "🩺" },
+  "CBSE Class 12": { color: "from-indigo-500 to-indigo-600", icon: "📗" },
+  "CBSE Class 10": { color: "from-blue-400 to-blue-500", icon: "📘" },
+  "UPSC CSE": { color: "from-yellow-600 to-amber-600", icon: "🏛️" },
+  "GATE": { color: "from-cyan-500 to-cyan-600", icon: "⚙️" },
+  "Class 11": { color: "from-violet-500 to-violet-600", icon: "📙" },
+};
 ---
+<BaseLayout title="Free Notes, Solutions & Papers for JEE, NEET, CBSE & More" description="Download free notes, solutions, previous year papers and sample papers for JEE Main, JEE Advanced, NEET, CBSE, UPSC, GATE and all major exams. Academic Halt.">
 
-<BaseLayout title="Find JEE Books, Notes & Study Material" description="JEE Halt – Free JEE, NEET & CBSE books, PDFs, and study material. Find Physics, Chemistry, Maths books for JEE Main, JEE Advanced, and NEET preparation.">
-  
-  <!-- HERO -->
-  <section class="hero-section relative overflow-hidden">
-    <div class="hero-bg-effects" aria-hidden="true">
-      <div class="blob blob-1"></div>
-      <div class="blob blob-2"></div>
-      <div class="grid-overlay"></div>
+  <!-- Hero -->
+  <section class="bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 text-white py-16 sm:py-20 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10">
+      <div class="absolute top-10 left-10 w-32 h-32 bg-white rounded-full blur-3xl"></div>
+      <div class="absolute bottom-10 right-10 w-48 h-48 bg-accent-400 rounded-full blur-3xl"></div>
     </div>
-    
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
-      <!-- Badge -->
-      <div class="flex justify-center mb-6 animate-fade-up">
-        <span class="hero-badge">
-          <span class="badge-dot"></span>
-          {totalBooks}+ Books Available Free
-        </span>
-      </div>
-
-      <!-- Heading -->
-      <h1 class="hero-heading text-center animate-fade-up" data-delay="1">
-        Find JEE Books,<br />
-        <span class="text-gradient">Notes & Study Material</span>
-      </h1>
-
-      <p class="hero-subtitle text-center animate-fade-up" data-delay="2">
-        The most comprehensive collection of JEE Main, JEE Advanced, NEET & CBSE<br class="hidden sm:block" />
-        study resources — Physics, Chemistry, Mathematics & more. All free.
-      </p>
-
-      <!-- Search Box -->
-      <div class="search-wrapper animate-fade-up" data-delay="3">
-        <div class="search-box">
-          <div class="search-icon">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-            </svg>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <div class="text-center max-w-3xl mx-auto">
+        <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur border border-white/20 rounded-full px-4 py-1.5 text-sm font-medium mb-6">
+          <span class="w-2 h-2 bg-accent-400 rounded-full animate-pulse"></span>
+          {resources.length}+ Resources Available Free
+        </div>
+        <h1 class="font-display font-bold text-4xl sm:text-5xl lg:text-6xl leading-tight mb-6">
+          Notes, Solutions &<br class="hidden sm:block" />
+          <span class="text-accent-400">Papers for Every Exam</span>
+        </h1>
+        <p class="text-lg sm:text-xl text-primary-200 mb-10 leading-relaxed">
+          Free study material for JEE, NEET, CBSE, UPSC, GATE and more. Handwritten notes, NCERT solutions, previous year papers, and sample papers — all in one place.
+        </p>
+        <SearchBar resources={searchResources} />
+        <div class="grid grid-cols-3 gap-6 mt-12 max-w-lg mx-auto">
+          <div class="text-center">
+            <div class="font-display font-bold text-3xl text-white">{resources.length}+</div>
+            <div class="text-primary-300 text-sm">Resources</div>
           </div>
-          <input
-            id="search-input"
-            type="search"
-            placeholder="Search books by title, author, category, or tag…"
-            class="search-input"
-            autocomplete="off"
-            spellcheck="false"
-          />
-          <button id="search-btn" class="search-submit">
-            Search
-          </button>
-        </div>
-        <!-- Search suggestions -->
-        <div id="search-suggestions" class="search-suggestions hidden"></div>
-      </div>
-
-      <!-- Stats Row -->
-      <div class="stats-row animate-fade-up" data-delay="4">
-        <div class="stat-item">
-          <span class="stat-num">{totalBooks}+</span>
-          <span class="stat-label">Books</span>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat-item">
-          <span class="stat-num">{totalCategories}</span>
-          <span class="stat-label">Categories</span>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat-item">
-          <span class="stat-num">{totalTags}+</span>
-          <span class="stat-label">Tags</span>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat-item">
-          <span class="stat-num">Free</span>
-          <span class="stat-label">Always</span>
+          <div class="text-center border-x border-white/20">
+            <div class="font-display font-bold text-3xl text-white">{exams.length}</div>
+            <div class="text-primary-300 text-sm">Exams</div>
+          </div>
+          <div class="text-center">
+            <div class="font-display font-bold text-3xl text-white">{categories.length}</div>
+            <div class="text-primary-300 text-sm">Subjects</div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- SEARCH RESULTS (hidden by default) -->
-  <div id="search-results-section" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-    <div class="flex items-center justify-between mb-5">
-      <h2 id="search-results-title" class="section-title text-lg"></h2>
-      <button id="clear-search" class="btn-secondary text-xs py-1.5 px-3">Clear Search</button>
-    </div>
-    <div id="search-results-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"></div>
-    <div id="no-results" class="hidden text-center py-16 text-slate-400">
-      <div class="text-5xl mb-4">📚</div>
-      <p class="text-lg font-medium mb-2 text-slate-300">No books found</p>
-      <p class="text-sm">Try different keywords or browse categories below</p>
-    </div>
-  </div>
-
-  <!-- MAIN CONTENT -->
-  <div id="main-content" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-    
-    <!-- ALL BOOKS -->
-    <section class="mb-16">
-      <div class="section-header">
-        <div>
-          <h2 class="section-title">All Books</h2>
-          <p class="text-slate-400 text-sm mt-1">{totalBooks} books available for free download</p>
-        </div>
-        <a href="/books" class="btn-secondary">
-          View All
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-          </svg>
-        </a>
-      </div>
-
-      <!-- Books Grid with Pagination -->
-      <div id="books-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-        {sortedBooks.slice(0, 20).map(book => (
-          <BookCard
-            slug={book.slug}
-            title={book.data.title}
-            description={book.data.description}
-            category={book.data.category}
-            tags={book.data.tags}
-            author={book.data.author}
-            publisher={book.data.publisher}
-            pages={book.data.pages}
-            format={book.data.format}
-          />
-        ))}
-      </div>
-
-      <!-- Pagination -->
-      {totalBooks > 20 && (
-        <div id="pagination" class="flex justify-center mt-8 gap-2 flex-wrap">
-          <button class="page-btn active" data-page="1">1</button>
-          {Array.from({ length: Math.ceil(totalBooks / 20) - 1 }, (_, i) => (
-            <button class="page-btn" data-page={i + 2}>{i + 2}</button>
-          ))}
-        </div>
-      )}
-    </section>
-
-    <!-- CATEGORIES -->
-    <section class="mb-16">
-      <div class="section-header">
-        <div>
-          <h2 class="section-title">Browse by Category</h2>
-          <p class="text-slate-400 text-sm mt-1">Find books organized by subject</p>
-        </div>
-        <a href="/categories" class="btn-secondary">
-          All Categories
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-          </svg>
-        </a>
-      </div>
-
-      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3">
-        {allCategories.map(cat => {
-          const count = allBooks.filter(b => b.data.category === cat).length;
-          const icons: Record<string, string> = {
-            'Physics': '⚡',
-            'Chemistry': '⚗️',
-            'Mathematics': '📐',
-            'Biology': '🧬',
-            'Previous Year Papers': '📋',
-            'CBSE': '📚',
-          };
+  <!-- Resource Type Pills -->
+  <section class="bg-white border-b border-gray-100 py-4">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-wrap gap-2 justify-center">
+        {resourceTypes.map(([type, count]) => {
+          const icons: Record<string,string> = { "Notes": "📝", "Solutions": "✅", "Previous Year Papers": "📄", "Sample Papers": "📋", "Question Bank": "❓" };
           return (
-            <a href={`/category/${encodeURIComponent(cat)}`} class="category-card card p-4 text-center group">
-              <div class="text-2xl mb-2">{icons[cat] || '📖'}</div>
-              <div class="font-semibold text-sm text-slate-200 group-hover:text-orange-400 transition-colors font-display mb-1">{cat}</div>
-              <div class="text-xs text-slate-500">{count} books</div>
+            <a href={`/type/${type.toLowerCase().replace(/ /g, '-')}`} class="inline-flex items-center gap-1.5 px-4 py-2 bg-gray-50 hover:bg-primary-50 border border-gray-200 hover:border-primary-300 rounded-full text-sm font-medium text-gray-700 hover:text-primary-700 transition-all">
+              <span>{icons[type] || '📚'}</span> {type} <span class="text-gray-400 text-xs">({count})</span>
             </a>
           );
         })}
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- POPULAR TAGS -->
-    <section class="mb-16">
-      <div class="section-header">
-        <div>
-          <h2 class="section-title">Popular Tags</h2>
-          <p class="text-slate-400 text-sm mt-1">Browse by topic or subject tag</p>
-        </div>
-        <a href="/tags" class="btn-secondary">
-          All Tags
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-          </svg>
-        </a>
+  <!-- Resources Grid -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16" id="resources">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h2 class="font-display font-bold text-2xl sm:text-3xl text-gray-900">All Resources</h2>
+        <p class="text-gray-500 mt-1">{resources.length} resources available</p>
       </div>
-      <div class="flex flex-wrap gap-2">
-        {topTags.map(tag => (
-          <a href={`/tag/${encodeURIComponent(tag)}`} class="tag-pill">
-            {tag}
-            <span class="tag-count">{tagCounts[tag]}</span>
+      <a href="/resources" class="text-primary-600 hover:text-primary-700 font-semibold text-sm">View All →</a>
+    </div>
+    <div class="flex flex-wrap gap-2 mb-8" id="filter-bar">
+      <button class="filter-btn px-4 py-2 rounded-lg text-sm font-medium bg-primary-600 text-white" data-cat="all">All</button>
+      {categories.map(([cat]) => (
+        <button class="filter-btn px-4 py-2 rounded-lg text-sm font-medium bg-white text-gray-600 border border-gray-200 hover:border-primary-300 hover:text-primary-700 transition-colors" data-cat={cat}>{cat}</button>
+      ))}
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5" id="resources-grid">
+      {resources.map(r => (
+        <div class="resource-item" data-cat={r.category}>
+          <ResourceCard title={r.title} slug={r.slug} description={r.description} category={r.category} exam={r.exam} resourceType={r.resourceType} tags={r.tags} source={r.source} year={r.year} />
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Browse by Exam -->
+  <section class="bg-gray-100 py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-10">
+        <h2 class="font-display font-bold text-2xl sm:text-3xl text-gray-900 mb-2">Browse by Exam</h2>
+        <p class="text-gray-500">Find resources organized by your target exam</p>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+        {exams.map(([exam, count]) => {
+          const meta = examMeta[exam] || { color: "from-gray-500 to-gray-600", icon: "📚" };
+          return (
+            <a href={`/exam/${exam.toLowerCase().replace(/ /g, '-')}`} class="group bg-white rounded-xl p-5 text-center border border-gray-200 hover:border-primary-300 hover:shadow-md transition-all duration-200">
+              <div class={`w-12 h-12 bg-gradient-to-br ${meta.color} rounded-xl flex items-center justify-center text-2xl mx-auto mb-3 group-hover:scale-110 transition-transform`}>{meta.icon}</div>
+              <h3 class="font-display font-semibold text-sm text-gray-900 mb-1">{exam}</h3>
+              <p class="text-xs text-gray-500">{count} resources</p>
+            </a>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- Browse by Subject -->
+  <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-10">
+      <h2 class="font-display font-bold text-2xl sm:text-3xl text-gray-900 mb-2">Browse by Subject</h2>
+      <p class="text-gray-500">Find notes and papers organized by subject</p>
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+      {categories.map(([cat, count]) => {
+        const meta = categoryMeta[cat] || { color: "from-gray-500 to-gray-600", icon: "📚" };
+        return (
+          <a href={`/category/${cat.toLowerCase().replace(/ /g, '-')}`} class="group bg-white rounded-xl p-5 text-center border border-gray-200 hover:border-primary-300 hover:shadow-md transition-all duration-200">
+            <div class={`w-12 h-12 bg-gradient-to-br ${meta.color} rounded-xl flex items-center justify-center text-2xl mx-auto mb-3 group-hover:scale-110 transition-transform`}>{meta.icon}</div>
+            <h3 class="font-display font-semibold text-sm text-gray-900 mb-1">{cat}</h3>
+            <p class="text-xs text-gray-500">{count} resources</p>
+          </a>
+        );
+      })}
+    </div>
+  </section>
+
+  <!-- Tags -->
+  <section class="bg-gray-50 py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-10">
+        <h2 class="font-display font-bold text-2xl sm:text-3xl text-gray-900 mb-2">Browse by Topic</h2>
+        <p class="text-gray-500">Find resources for specific topics you want to study</p>
+      </div>
+      <div class="flex flex-wrap gap-3 justify-center">
+        {tags.map(([tag, count]) => (
+          <a href={`/tag/${tag.toLowerCase().replace(/ /g, '-')}`} class="px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-full text-sm font-medium hover:border-primary-400 hover:text-primary-700 hover:bg-primary-50 transition-all duration-150">
+            {tag} <span class="text-gray-400 text-xs ml-1">({count})</span>
           </a>
         ))}
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- WHY JEE HALT -->
-    <section class="why-section">
+  <!-- Sources/Institutes -->
+  <section class="bg-gray-900 py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-10">
-        <h2 class="section-title mb-2">Why JEE Halt?</h2>
-        <p class="text-slate-400 text-sm">Everything you need for your competitive exam preparation</p>
+        <h2 class="font-display font-bold text-2xl sm:text-3xl text-white mb-2">Top Sources</h2>
+        <p class="text-gray-400">Material from India's best coaching institutes and official boards</p>
       </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        {[
-          { icon: '🆓', title: 'Completely Free', desc: 'All books and study material available at zero cost. No subscriptions, no hidden fees.' },
-          { icon: '📱', title: 'Mobile Friendly', desc: 'Optimized for all devices. Study on your phone, tablet, or desktop.' },
-          { icon: '🎯', title: 'JEE Focused', desc: 'Curated specifically for JEE Main, JEE Advanced, NEET, and CBSE preparation.' },
-          { icon: '⚡', title: 'Instant Access', desc: 'Direct download links. No sign-up required. Start studying immediately.' },
-        ].map(feature => (
-          <div class="feature-card card p-6 text-center">
-            <div class="text-3xl mb-3">{feature.icon}</div>
-            <h3 class="font-display font-semibold text-white mb-2">{feature.title}</h3>
-            <p class="text-slate-400 text-sm leading-relaxed">{feature.desc}</p>
-          </div>
+      <div class="flex flex-wrap gap-4 justify-center">
+        {[...new Set(resources.map(r => r.source))].map(src => (
+          <span class="flex items-center gap-2 px-5 py-3 bg-white/5 border border-white/10 rounded-xl text-white font-medium text-sm">
+            📄 {src}
+          </span>
         ))}
       </div>
-    </section>
-  </div>
-
+    </div>
+  </section>
 </BaseLayout>
 
-<!-- Pass books data to JS -->
-<script define:vars={{ booksData: sortedBooks.map(b => ({ slug: b.slug, title: b.data.title, description: b.data.description, category: b.data.category, tags: b.data.tags, author: b.data.author, publisher: b.data.publisher, pages: b.data.pages, format: b.data.format })) }}>
-  
-  const searchInput = document.getElementById('search-input');
-  const searchResultsSection = document.getElementById('search-results-section');
-  const searchResultsGrid = document.getElementById('search-results-grid');
-  const searchResultsTitle = document.getElementById('search-results-title');
-  const noResults = document.getElementById('no-results');
-  const mainContent = document.getElementById('main-content');
-  const clearSearch = document.getElementById('clear-search');
-
-  function createBookCardHTML(book) {
-    const shortDesc = book.description.length > 130 ? book.description.slice(0, 130) + '…' : book.description;
-    const visibleTags = book.tags.slice(0, 4);
-    const extraTags = book.tags.length > 4 ? `<span class="tag-chip opacity-60">+${book.tags.length - 4}</span>` : '';
-    
-    return `
-      <article class="book-card card h-full flex flex-col">
-        <div class="p-5 flex flex-col flex-1">
-          <div class="flex items-center justify-between mb-3">
-            <a href="/category/${encodeURIComponent(book.category)}" class="category-badge">${book.category}</a>
-            <span class="text-xs text-slate-500 font-mono bg-slate-800/60 px-2 py-1 rounded">${book.format}</span>
-          </div>
-          <h3 class="book-title mb-2">
-            <a href="/book/${book.slug}" class="hover:text-orange-400 transition-colors duration-200">${book.title}</a>
-          </h3>
-          <p class="text-xs text-slate-500 mb-3">${book.author} · ${book.publisher}</p>
-          <p class="text-slate-400 text-sm leading-relaxed mb-4 flex-1">${shortDesc}</p>
-          <div class="flex flex-wrap gap-1.5 mb-4">
-            ${visibleTags.map(t => `<a href="/tag/${encodeURIComponent(t)}" class="tag-chip">${t}</a>`).join('')}
-            ${extraTags}
-          </div>
-          <div class="flex items-center justify-between pt-4 border-t border-white/5">
-            <span class="text-xs text-slate-500">${book.pages} pages</span>
-            <a href="/book/${book.slug}" class="btn-primary text-xs py-1.5 px-3">View Details →</a>
-          </div>
-        </div>
-      </article>
-    `;
-  }
-
-  function performSearch(query) {
-    const q = query.trim().toLowerCase();
-    if (!q) {
-      resetSearch();
-      return;
-    }
-
-    const results = booksData.filter(book =>
-      book.title.toLowerCase().includes(q) ||
-      book.description.toLowerCase().includes(q) ||
-      book.category.toLowerCase().includes(q) ||
-      book.author.toLowerCase().includes(q) ||
-      book.publisher.toLowerCase().includes(q) ||
-      book.tags.some(t => t.toLowerCase().includes(q))
-    );
-
-    searchResultsSection.classList.remove('hidden');
-    mainContent.classList.add('hidden');
-    searchResultsTitle.textContent = `Found ${results.length} result${results.length !== 1 ? 's' : ''} for "${query}"`;
-
-    if (results.length === 0) {
-      searchResultsGrid.innerHTML = '';
-      noResults.classList.remove('hidden');
-    } else {
-      noResults.classList.add('hidden');
-      searchResultsGrid.innerHTML = results.map(createBookCardHTML).join('');
-    }
-  }
-
-  function resetSearch() {
-    searchResultsSection.classList.add('hidden');
-    mainContent.classList.remove('hidden');
-    searchInput.value = '';
-  }
-
-  let searchTimer;
-  searchInput?.addEventListener('input', e => {
-    clearTimeout(searchTimer);
-    searchTimer = setTimeout(() => performSearch(e.target.value), 250);
-  });
-
-  document.getElementById('search-btn')?.addEventListener('click', () => {
-    performSearch(searchInput.value);
-  });
-
-  searchInput?.addEventListener('keydown', e => {
-    if (e.key === 'Enter') performSearch(searchInput.value);
-  });
-
-  clearSearch?.addEventListener('click', resetSearch);
-
-  // URL search param
-  const urlParams = new URLSearchParams(window.location.search);
-  const qParam = urlParams.get('q');
-  if (qParam) {
-    searchInput.value = qParam;
-    performSearch(qParam);
-  }
-
-  // --- Pagination ---
-  const pageBtns = document.querySelectorAll('.page-btn');
-  const booksGrid = document.getElementById('books-grid');
-  const BOOKS_PER_PAGE = 20;
-
-  pageBtns.forEach(btn => {
+<script>
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const resourceItems = document.querySelectorAll('.resource-item');
+  filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      const page = parseInt(btn.dataset.page);
-      const start = (page - 1) * BOOKS_PER_PAGE;
-      const end = start + BOOKS_PER_PAGE;
-      const paginated = booksData.slice(start, end);
-
-      booksGrid.innerHTML = paginated.map(createBookCardHTML).join('');
-      pageBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      booksGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const cat = btn.getAttribute('data-cat');
+      filterBtns.forEach(b => { b.classList.remove('bg-primary-600','text-white'); b.classList.add('bg-white','text-gray-600','border','border-gray-200'); });
+      btn.classList.add('bg-primary-600','text-white');
+      btn.classList.remove('bg-white','text-gray-600','border','border-gray-200');
+      resourceItems.forEach(item => {
+        (item as HTMLElement).style.display = (cat === 'all' || item.getAttribute('data-cat') === cat) ? '' : 'none';
+      });
     });
   });
 </script>
-
-<style>
-  /* Hero */
-  .hero-section {
-    min-height: 580px;
-    display: flex;
-    align-items: center;
-    padding-top: 2rem;
-  }
-
-  .hero-bg-effects { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-
-  .blob {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.3;
-  }
-
-  .blob-1 {
-    width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(249,115,22,0.4), transparent);
-    top: -200px; left: 50%;
-    transform: translateX(-50%);
-    animation: blobMove 8s ease-in-out infinite alternate;
-  }
-
-  .blob-2 {
-    width: 400px; height: 400px;
-    background: radial-gradient(circle, rgba(99,102,241,0.3), transparent);
-    top: 100px; right: -100px;
-    animation: blobMove 10s ease-in-out infinite alternate-reverse;
-  }
-
-  @keyframes blobMove {
-    from { transform: translate(-50%, 0) scale(1); }
-    to { transform: translate(-50%, 20px) scale(1.05); }
-  }
-
-  .grid-overlay {
-    position: absolute; inset: 0;
-    background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
-    background-size: 40px 40px;
-    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
-  }
-
-  .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(249,115,22,0.1);
-    border: 1px solid rgba(249,115,22,0.3);
-    color: #fdba74;
-    border-radius: 100px;
-    padding: 0.35rem 1rem;
-    font-size: 0.8rem;
-    font-weight: 500;
-  }
-
-  .badge-dot {
-    width: 6px; height: 6px;
-    background: #f97316;
-    border-radius: 50%;
-    animation: pulse 2s ease infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(0.8); }
-  }
-
-  .hero-heading {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: clamp(2rem, 6vw, 3.5rem);
-    line-height: 1.15;
-    color: #f8fafc;
-    letter-spacing: -0.03em;
-    margin-bottom: 1.25rem;
-  }
-
-  .text-gradient {
-    background: linear-gradient(135deg, #f97316, #fbbf24, #ef4444);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .hero-subtitle {
-    font-size: clamp(0.9rem, 2vw, 1.05rem);
-    color: #94a3b8;
-    line-height: 1.7;
-    max-width: 620px;
-    margin: 0 auto 2.5rem;
-  }
-
-  /* Search */
-  .search-wrapper {
-    max-width: 680px;
-    margin: 0 auto 2rem;
-    position: relative;
-  }
-
-  .search-box {
-    display: flex;
-    align-items: center;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 14px;
-    overflow: hidden;
-    transition: all 0.25s ease;
-    backdrop-filter: blur(8px);
-  }
-
-  .search-box:focus-within {
-    border-color: rgba(249,115,22,0.5);
-    background: rgba(255,255,255,0.08);
-    box-shadow: 0 0 0 3px rgba(249,115,22,0.1);
-  }
-
-  .search-icon {
-    padding: 0 0.75rem 0 1.25rem;
-    color: #64748b;
-    flex-shrink: 0;
-  }
-
-  .search-input {
-    flex: 1;
-    background: transparent;
-    border: none;
-    outline: none;
-    padding: 0.875rem 0.5rem;
-    color: #e2e8f0;
-    font-size: 0.95rem;
-    font-family: 'DM Sans', sans-serif;
-  }
-
-  .search-input::placeholder { color: #475569; }
-
-  .search-submit {
-    background: linear-gradient(135deg, #f97316, #ea580c);
-    color: white;
-    border: none;
-    padding: 0.875rem 1.5rem;
-    font-weight: 600;
-    font-size: 0.875rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    white-space: nowrap;
-    font-family: 'DM Sans', sans-serif;
-  }
-
-  .search-submit:hover { background: linear-gradient(135deg, #ea580c, #c2410c); }
-
-  /* Stats */
-  .stats-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0;
-    max-width: 500px;
-    margin: 0 auto;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.07);
-    border-radius: 14px;
-    overflow: hidden;
-  }
-
-  .stat-item {
-    flex: 1;
-    text-align: center;
-    padding: 0.9rem 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-
-  .stat-num {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 1.15rem;
-    color: #f97316;
-  }
-
-  .stat-label {
-    font-size: 0.72rem;
-    color: #64748b;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .stat-divider {
-    width: 1px;
-    height: 30px;
-    background: rgba(255,255,255,0.07);
-    flex-shrink: 0;
-  }
-
-  /* Section header */
-  .section-header {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    margin-bottom: 1.5rem;
-    gap: 1rem;
-  }
-
-  /* Category card */
-  .category-card {
-    transition: all 0.25s ease;
-    text-decoration: none;
-  }
-
-  /* Tag pill */
-  .tag-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.07);
-    color: #94a3b8;
-    border-radius: 20px;
-    padding: 0.35rem 0.9rem;
-    font-size: 0.8rem;
-    text-decoration: none;
-    transition: all 0.2s ease;
-  }
-
-  .tag-pill:hover {
-    background: rgba(249,115,22,0.1);
-    border-color: rgba(249,115,22,0.3);
-    color: #fb923c;
-  }
-
-  .tag-count {
-    background: rgba(255,255,255,0.08);
-    border-radius: 10px;
-    padding: 1px 6px;
-    font-size: 0.7rem;
-    color: #64748b;
-  }
-
-  /* Book title in dynamic cards */
-  .book-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 600;
-    font-size: 0.95rem;
-    line-height: 1.4;
-    color: #e2e8f0;
-  }
-
-  /* Pagination */
-  .page-btn {
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    border: 1px solid rgba(255,255,255,0.07);
-    background: rgba(255,255,255,0.04);
-    color: #94a3b8;
-    font-size: 0.875rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    font-family: 'DM Sans', sans-serif;
-  }
-
-  .page-btn:hover, .page-btn.active {
-    background: rgba(249,115,22,0.15);
-    border-color: rgba(249,115,22,0.4);
-    color: #fb923c;
-  }
-</style>

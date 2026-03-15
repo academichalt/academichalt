@@ -1,64 +1,40 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Breadcrumb from '../components/Breadcrumb.astro';
+import { getCollection } from 'astro:content';
+const allResources = await getCollection('resources');
 ---
-
-<BaseLayout
-  title="About Us – JEE Halt"
-  description="Learn about JEE Halt – India's trusted platform for free JEE, NEET and CBSE study material."
-  canonical="/about"
->
-  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <Breadcrumb crumbs={[{ label: 'Home', href: '/' }, { label: 'About Us' }]} />
-
-    <div class="mt-6 space-y-8">
-      <div>
-        <h1 class="section-title mb-3">About JEE Halt</h1>
-        <p class="text-slate-400 leading-relaxed">
-          JEE Halt is India's dedicated platform for free JEE, NEET, and CBSE study material. 
-          We believe every student deserves access to quality educational resources regardless of their financial background.
-        </p>
-      </div>
-
-      <div class="card p-6 space-y-4">
-        <h2 class="font-display font-bold text-white text-lg">🎯 Our Mission</h2>
-        <p class="text-slate-400 text-sm leading-relaxed">
-          To democratize access to quality education by providing free, high-quality study material for competitive examinations including JEE Main, JEE Advanced, NEET, and CBSE board exams. We curate the best books, notes, and resources so students can focus on learning.
-        </p>
-      </div>
-
-      <div class="card p-6 space-y-4">
-        <h2 class="font-display font-bold text-white text-lg">📚 What We Offer</h2>
-        <ul class="space-y-2 text-slate-400 text-sm">
-          {[
-            'Free PDF downloads of standard JEE & NEET books',
-            'Comprehensive coverage of Physics, Chemistry, and Mathematics',
-            'Previous Year Papers for JEE Main, JEE Advanced, NEET & CBSE',
-            'Books organized by category, tags, and publishers',
-            'SEO-optimized book pages with detailed descriptions',
-            'Mobile-friendly interface for studying on the go',
-          ].map(item => (
-            <li class="flex items-start gap-2">
-              <span class="text-orange-400 mt-0.5 flex-shrink-0">✓</span>
-              {item}
-            </li>
-          ))}
+<BaseLayout title="About Us" description="Academic Halt is your free destination for notes, solutions, papers and study material for every exam in India.">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <nav class="text-sm text-gray-500 mb-6"><a href="/" class="hover:text-primary-600">Home</a> › <span class="text-gray-900">About Us</span></nav>
+    <div class="bg-white rounded-2xl border border-gray-200 p-8 sm:p-12">
+      <h1 class="font-display font-bold text-3xl sm:text-4xl text-gray-900 mb-6">About Academic Halt</h1>
+      <div class="space-y-5 text-gray-700">
+        <p class="text-lg leading-relaxed"><strong>Academic Halt</strong> is a free educational resource platform dedicated to helping students across India access quality study material — notes, solutions, previous year papers, and sample papers — without any financial barrier.</p>
+        <h2 class="font-display font-bold text-xl text-gray-900 pt-2">Our Mission</h2>
+        <p>We believe every student in India — whether from a metro city or a small town — deserves access to the same quality study resources. Our mission is to build a centralized, freely accessible repository of the best notes, solutions, and papers for every major exam.</p>
+        <h2 class="font-display font-bold text-xl text-gray-900 pt-2">What We Offer</h2>
+        <ul class="list-disc pl-6 space-y-2">
+          <li>{allResources.length}+ free resources including notes, solutions, PYQs, and sample papers</li>
+          <li>Material for JEE Main, JEE Advanced, NEET, CBSE (Class 10 & 12), UPSC, GATE and more</li>
+          <li>Resources organized by subject, exam, type, and topic for easy discovery</li>
+          <li>Content sourced from top institutes: NCERT, Allen, FIITJEE, Vision IAS, Made Easy and more</li>
+          <li>Regular updates with new resources and papers as exams happen</li>
+          <li>Active community on Telegram, Instagram, and YouTube</li>
         </ul>
-      </div>
-
-      <div class="card p-6 space-y-4">
-        <h2 class="font-display font-bold text-white text-lg">⚠️ Disclaimer</h2>
-        <p class="text-slate-400 text-sm leading-relaxed">
-          JEE Halt provides links to publicly available educational content. We do not host copyrighted files on our servers. All content is shared for educational purposes only. If you are a copyright holder and wish to have your content removed, please <a href="/contact" class="text-orange-400 hover:underline">contact us</a>.
-        </p>
-      </div>
-
-      <div class="card p-6 space-y-4">
-        <h2 class="font-display font-bold text-white text-lg">📬 Get In Touch</h2>
-        <p class="text-slate-400 text-sm leading-relaxed">
-          Have suggestions, book requests, or want to report a broken link? We'd love to hear from you.
-        </p>
-        <a href="/contact" class="btn-primary inline-flex">Contact Us →</a>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
+          <div class="bg-primary-50 rounded-xl p-5 text-center">
+            <div class="font-display font-bold text-3xl text-primary-700">{allResources.length}+</div>
+            <div class="text-sm text-gray-600 mt-1">Resources Available</div>
+          </div>
+          <div class="bg-orange-50 rounded-xl p-5 text-center">
+            <div class="font-display font-bold text-3xl text-orange-600">10K+</div>
+            <div class="text-sm text-gray-600 mt-1">Students Helped</div>
+          </div>
+          <div class="bg-green-50 rounded-xl p-5 text-center">
+            <div class="font-display font-bold text-3xl text-green-700">Free</div>
+            <div class="text-sm text-gray-600 mt-1">Always & Forever</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
