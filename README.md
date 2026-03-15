@@ -1,9 +1,33 @@
-# Academic Halt
+# Academic Halt — Complete Setup & Deployment Guide
 
-> **Free Books & Study Materials for Students**  
+> **Free Books & Study Materials for Students**
 > https://www.academichalt.com
 
-Academic Halt is a free educational platform providing PDF books and study materials for students preparing for Class 9–12 board exams, JEE Main, JEE Advanced, NEET, and UPSC.
+---
+
+## ⚡ Quick Start (5 minutes)
+
+```bash
+git clone https://github.com/YOUR-USERNAME/academic-halt.git
+cd academic-halt
+# Open index.html in browser — works immediately, no build step
+```
+
+---
+
+## 🐛 Known Issues Fixed (v2)
+
+| # | Bug | Fix Applied |
+|---|-----|-------------|
+| 1 | Google Fonts loaded via CSS `@import` (slow, blocks render) | Moved to `<link>` in `<head>` with `preconnect` |
+| 2 | Font `<link>` placed after CSS `<link>` (wrong order) | Fonts now load before stylesheet |
+| 3 | Scroll animation set `opacity:0` before IntersectionObserver fired | Cards in viewport stay visible; only off-screen cards animate |
+| 4 | Blog sidebar used inline `grid-template-columns` with no mobile breakpoint | Replaced with `.article-layout` / `.article-sidebar` CSS classes |
+| 5 | Contact page 2-col grid had no mobile breakpoint | Uses `.grid-2` class (responsive) |
+| 6 | Mobile nav didn't change hamburger icon to ✕ when open | JS now swaps SVG icon on toggle |
+| 7 | Clicking outside mobile nav didn't close it | Outside-click handler added |
+| 8 | `data-book-title` attribute on download buttons missing | Replaced `download-trigger` class with `data-book-title` attribute |
+| 9 | Bad directory `{css,js,assets` created by shell glob | Removed |
 
 ---
 
@@ -12,307 +36,419 @@ Academic Halt is a free educational platform providing PDF books and study mater
 ```
 academic-halt/
 │
-├── index.html                    # Homepage
-├── about.html                    # About page
-├── contact.html                  # Contact page
-├── privacy-policy.html           # Privacy policy
-├── terms.html                    # Terms of use
-├── robots.txt                    # SEO robots file
-├── sitemap.xml                   # XML sitemap
-├── _redirects                    # Cloudflare/Netlify redirects
+├── index.html                 ← Homepage
+├── about.html
+├── contact.html
+├── privacy-policy.html
+├── terms.html
+├── robots.txt
+├── sitemap.xml
+├── _redirects                 ← Cloudflare / Netlify redirect rules
 │
-├── /class-9/                     # Class 9 category page
-│   └── index.html
-├── /class-10/
-│   └── index.html
-├── /class-11/
-│   └── index.html
-├── /class-12/
-│   └── index.html
-├── /jee-main/
-│   └── index.html
-├── /jee-advanced/
+├── class-9/
+│   ├── index.html             ← Category page (books rendered by JS)
+│   ├── ncert-mathematics-class-9.html
+│   ├── ncert-science-class-9.html
+│   └── ncert-beehive-english-class-9.html
+│
+├── class-10/  (same structure)
+├── class-11/  (same structure)
+├── class-12/  (same structure)
+├── jee-main/  (same structure)
+├── jee-advanced/
 │   ├── index.html
-│   └── hc-verma-concepts-of-physics.html  # Sample book page
-├── /neet/
-│   └── index.html
-├── /upsc/
-│   └── index.html
+│   ├── hc-verma-concepts-of-physics.html  ← Full detail page
+│   ├── jd-lee-inorganic-chemistry-jee-advanced.html
+│   └── sl-loney-plane-trigonometry.html
+├── neet/   (same structure)
+├── upsc/   (same structure)
 │
-├── /blog/
+├── blog/
 │   ├── index.html
 │   ├── best-books-for-jee-main.html
+│   ├── best-books-for-jee-advanced.html
 │   ├── best-books-for-neet.html
 │   ├── best-books-for-upsc.html
-│   └── study-tips-for-board-exams.html
+│   ├── study-tips-for-board-exams.html
+│   └── how-to-study-ncert-for-competitive-exams.html
 │
-├── /admin/
-│   ├── index.html                # Decap CMS admin panel
-│   └── config.yml                # CMS configuration
+├── admin/
+│   ├── index.html             ← Decap CMS panel (visit /admin/)
+│   └── config.yml             ← CMS configuration (edit this first)
 │
-├── /content/
-│   ├── /books/                   # Book markdown files (managed by CMS)
-│   │   ├── ncert-mathematics-class-10.md
-│   │   └── hc-verma-concepts-of-physics.md
-│   └── /blog/                    # Blog post markdown files
-│       └── best-books-for-jee-main.md
+├── content/
+│   ├── books/                 ← Markdown files managed by CMS
+│   └── blog/
 │
-├── /assets/
+├── assets/
 │   ├── logo.svg
-│   └── /book-covers/             # Uploaded book cover images
+│   └── book-covers/           ← Upload cover images here
 │
-├── /css/
-│   └── style.css                 # Complete stylesheet
+├── css/
+│   └── style.css              ← All styles (single file, no build needed)
 │
-├── /js/
-│   ├── books-data.js             # Static books database
-│   ├── script.js                 # Main JavaScript
-│   └── search.js                 # Live search system
+├── js/
+│   ├── books-data.js          ← All books database (edit to add books)
+│   ├── script.js              ← Navigation, FAQ, card rendering
+│   └── search.js              ← Live search
 │
-└── /components/
-    ├── header.html               # Reusable header snippet
-    └── footer.html               # Reusable footer snippet
+└── components/
+    ├── header.html            ← Reference snippet
+    └── footer.html            ← Reference snippet
 ```
 
 ---
 
-## 🚀 Deployment
+## 🚀 Deployment — Step by Step
 
-### Option 1 — GitHub Pages
+### Step 1 — Upload to GitHub
 
-1. **Fork or push this repository to GitHub**
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial commit — Academic Halt"
-   git remote add origin https://github.com/YOUR-USERNAME/academic-halt.git
-   git push -u origin main
+```bash
+# 1. Create a new repository on github.com named: academic-halt
+
+# 2. In your terminal:
+git init
+git add .
+git commit -m "Initial commit — Academic Halt v2"
+git branch -M main
+git remote add origin https://github.com/YOUR-USERNAME/academic-halt.git
+git push -u origin main
+```
+
+---
+
+### Step 2A — Deploy on Cloudflare Pages (Recommended — Fastest)
+
+Cloudflare Pages is the best option for this site. Free, fast global CDN, custom domains.
+
+1. Go to [dash.cloudflare.com](https://dash.cloudflare.com) → **Workers & Pages** → **Create application** → **Pages** → **Connect to Git**
+
+2. Select your `academic-halt` repository
+
+3. Set build settings:
+   ```
+   Framework preset:    None
+   Build command:       (leave completely empty)
+   Build output dir:    /
    ```
 
-2. **Enable GitHub Pages**
-   - Go to your repository → **Settings** → **Pages**
-   - Source: **Deploy from a branch**
-   - Branch: `main` → Folder: `/ (root)`
-   - Click **Save**
+4. Click **Save and Deploy**. Your site will be live in ~30 seconds at:
+   ```
+   https://academic-halt-xxx.pages.dev
+   ```
 
-3. **Your site will be live at:**
+5. **Add custom domain** (optional):
+   - In your Pages project → **Custom domains** → **Set up a custom domain**
+   - Enter: `www.academichalt.com`
+   - If your domain is on Cloudflare, DNS is configured automatically
+   - If not on Cloudflare, add a CNAME: `www` → `academic-halt-xxx.pages.dev`
+
+---
+
+### Step 2B — Deploy on GitHub Pages
+
+1. Go to your repository on GitHub
+
+2. Click **Settings** → **Pages** (in left sidebar)
+
+3. Under **Source**, select:
+   - Source: **Deploy from a branch**
+   - Branch: `main`
+   - Folder: `/ (root)`
+
+4. Click **Save**
+
+5. Wait 1–2 minutes, then visit:
    ```
    https://YOUR-USERNAME.github.io/academic-halt/
    ```
 
-4. **Custom Domain (optional)**
-   - Add `CNAME` file with your domain: `www.academichalt.com`
-   - Configure DNS: Add a CNAME record pointing `www` to `YOUR-USERNAME.github.io`
+> ⚠️ **Important for GitHub Pages:** The site is deployed at `/academic-halt/` not `/`. All internal links use root-absolute paths (`/css/style.css`, `/js/books-data.js`). These work correctly when your site is at a root domain, but if you're using the free `github.io/academic-halt/` subdirectory URL, the CSS and JS may not load.
+>
+> **Fix for GitHub Pages subdirectory:** Add this line to the `<head>` of `index.html`:
+> ```html
+> <base href="/academic-halt/">
+> ```
+> Or better — add a custom domain so the site serves from `/`.
+
+6. **Add custom domain for GitHub Pages:**
+   - In repository Settings → Pages → Custom domain → enter `www.academichalt.com`
+   - Create a file named `CNAME` in the repo root containing just: `www.academichalt.com`
+   - At your domain registrar, add a CNAME record: `www` → `YOUR-USERNAME.github.io`
 
 ---
 
-### Option 2 — Cloudflare Pages (Recommended)
+## 🔑 CMS Setup — Step by Step
 
-Cloudflare Pages is faster than GitHub Pages and offers better edge caching.
+The CMS admin panel is at `/admin/`. It uses [Decap CMS](https://decapcms.org/) with GitHub as the backend.
 
-1. **Push your repository to GitHub** (see step 1 above)
+### Step 1 — Edit config.yml
 
-2. **Connect to Cloudflare Pages**
-   - Go to [Cloudflare Dashboard](https://dash.cloudflare.com)
-   - Navigate to **Pages** → **Create a project** → **Connect to Git**
-   - Select your repository
-
-3. **Build Settings**
-   ```
-   Framework preset:   None
-   Build command:      (leave empty)
-   Build output dir:   /
-   Root directory:     /
-   ```
-
-4. **Deploy** — Cloudflare will deploy your site automatically.
-
-5. **Custom Domain**
-   - In Cloudflare Pages project → **Custom domains** → Add `www.academichalt.com`
-   - Cloudflare handles DNS automatically if your domain is on Cloudflare
-
----
-
-## 🔑 CMS Setup (Decap CMS)
-
-The admin dashboard is available at `/admin/` after deployment.
-
-### Step 1 — Configure the Backend
-
-Open `admin/config.yml` and replace the placeholder with your details:
+Open `admin/config.yml` and update line 6:
 
 ```yaml
 backend:
   name: github
-  repo: YOUR-GITHUB-USERNAME/academic-halt   # ← Replace this
+  repo: YOUR-GITHUB-USERNAME/academic-halt   # ← Change this
   branch: main
 ```
 
-### Step 2 — Enable GitHub OAuth
+Push the change to GitHub.
 
-Decap CMS requires GitHub OAuth to authenticate. You have two options:
+### Step 2 — Create a GitHub OAuth App
 
-#### Option A — Netlify Identity (Easiest)
-If you deploy via Netlify:
-1. Enable **Netlify Identity** in your site settings
-2. Enable **Git Gateway** under Identity settings
-3. Change the backend in `config.yml`:
+1. Go to: [github.com/settings/developers](https://github.com/settings/developers)
+2. Click **OAuth Apps** → **New OAuth App**
+3. Fill in:
+   ```
+   Application name:             Academic Halt CMS
+   Homepage URL:                 https://www.academichalt.com
+   Authorization callback URL:   https://www.academichalt.com/api/auth
+   ```
+4. Click **Register application**
+5. Note your **Client ID** (shown immediately)
+6. Click **Generate a new client secret** and note the secret
+
+### Step 3 — Set up OAuth Proxy (for Cloudflare Pages)
+
+Cloudflare Pages has a built-in way to handle this:
+
+1. In Cloudflare Pages project → **Settings** → **Environment variables** → Add:
+   ```
+   GITHUB_CLIENT_ID     = your_client_id
+   GITHUB_CLIENT_SECRET = your_client_secret
+   ```
+
+2. Create file `functions/api/auth.js` in your repo:
+   ```javascript
+   export async function onRequest(context) {
+     // Cloudflare Pages OAuth proxy for Decap CMS
+     const url = new URL(context.request.url);
+     const code = url.searchParams.get('code');
+     if (!code) {
+       return Response.redirect(
+         `https://github.com/login/oauth/authorize?client_id=${context.env.GITHUB_CLIENT_ID}&scope=repo`
+       );
+     }
+     const resp = await fetch('https://github.com/login/oauth/access_token', {
+       method: 'POST',
+       headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+       body: JSON.stringify({
+         client_id: context.env.GITHUB_CLIENT_ID,
+         client_secret: context.env.GITHUB_CLIENT_SECRET,
+         code
+       })
+     });
+     const data = await resp.json();
+     const token = data.access_token;
+     return new Response(
+       `<script>window.opener.postMessage('authorization:github:success:${JSON.stringify({token,provider:"github"})}','*');window.close();</script>`,
+       { headers: { 'Content-Type': 'text/html' } }
+     );
+   }
+   ```
+
+3. Update `admin/config.yml` to use `base_url`:
+   ```yaml
+   backend:
+     name: github
+     repo: YOUR-USERNAME/academic-halt
+     branch: main
+     base_url: https://www.academichalt.com
+   ```
+
+### Step 3 (Alternative) — Use Netlify for OAuth (Easier)
+
+If the Cloudflare function above feels complex, the simplest OAuth solution:
+
+1. Deploy a copy on [Netlify](https://netlify.com) (free tier, same repo)
+2. Enable **Netlify Identity** → **Enable Git Gateway**
+3. Change `admin/config.yml`:
    ```yaml
    backend:
      name: git-gateway
      branch: main
    ```
+4. Your CMS at `/admin/` will now use Netlify Identity for login
 
-#### Option B — GitHub OAuth App (For GitHub Pages / Cloudflare)
-
-1. Go to [GitHub Developer Settings](https://github.com/settings/developers) → **OAuth Apps** → **New OAuth App**
-2. Fill in:
-   ```
-   Application name:     Academic Halt CMS
-   Homepage URL:         https://www.academichalt.com
-   Authorization callback URL: https://api.netlify.com/auth/done
-   ```
-3. Note your **Client ID** and generate a **Client Secret**
-4. Use a proxy authentication server (e.g. `netlify/netlify-cms-oauth-provider-node`) or use [Decap CMS's external OAuth guide](https://decapcms.org/docs/external-oauth-clients/)
-
-### Step 3 — Access the CMS
+### Step 4 — Access the CMS
 
 Navigate to: `https://www.academichalt.com/admin/`
 
-Log in with your GitHub account. The CMS will let you:
-- ✅ Add new books
-- ✅ Edit existing books
-- ✅ Delete books
-- ✅ Upload PDF links
-- ✅ Upload cover images
-- ✅ Set category (Class 9–12, JEE, NEET, UPSC)
-- ✅ Mark books as Featured
-- ✅ Write and manage blog posts
+You'll see the Decap CMS login screen. Click **Login with GitHub**.
 
-Every save in the CMS automatically commits to your GitHub repository.
-
-### Local Development (CMS)
-
-For local testing of the CMS without authentication:
-
-1. Enable local backend in `admin/config.yml`:
-   ```yaml
-   local_backend: true
-   ```
-
-2. Run the local proxy server:
-   ```bash
-   npx decap-server
-   ```
-
-3. Open `http://localhost:8080/admin/` in your browser
+Once logged in you can:
+- ✅ **Add a new book** → Collections → Books → New Book
+- ✅ **Edit** any book's title, PDF link, cover image, category
+- ✅ **Delete** a book
+- ✅ **Write blog posts** → Collections → Blog Posts → New Blog Post
+- ✅ Every save **auto-commits** to your GitHub repo
 
 ---
 
-## ✏️ Adding Books Manually
+### Local Development (Test CMS without GitHub)
 
-If you prefer not to use the CMS, you can add books directly to `js/books-data.js`:
+```bash
+# Terminal 1 — start local CMS proxy
+npx decap-server
+
+# Terminal 2 — serve the site
+npx serve .
+# OR
+python3 -m http.server 8080
+```
+
+Enable local backend in `admin/config.yml`:
+```yaml
+local_backend: true
+```
+
+Visit `http://localhost:8080/admin/` — no login required locally.
+
+> **Remember:** Disable `local_backend: true` before pushing to production.
+
+---
+
+## ✏️ Adding Books Manually (Without CMS)
+
+### Method 1 — Edit books-data.js
+
+Open `js/books-data.js` and add a new entry to the `BOOKS_DATA` array:
 
 ```javascript
 {
-  id: "unique-id",
-  title: "Book Title",
-  slug: "book-slug",
-  category: "class-10",           // class-9, class-10, class-11, class-12,
-                                   // jee-main, jee-advanced, neet, upsc
-  categoryLabel: "Class 10",
+  id: "unique-id-here",            // Must be unique across all books
+  title: "Book Title Here",
+  slug: "book-title-here",         // URL slug — must match your HTML filename
+  category: "class-10",           // One of: class-9, class-10, class-11, class-12,
+                                   //         jee-main, jee-advanced, neet, upsc
+  categoryLabel: "Class 10",       // Human-readable label
   subject: "Mathematics",
-  description: "Short description of the book.",
-  pdfLink: "https://example.com/book.pdf",
-  coverImage: "",                  // URL to cover image, or leave empty
-  emoji: "📐",                    // shown when no cover image
-  featured: true                   // show in homepage "Popular Books"
+  description: "Short description shown on book card (2-3 sentences).",
+  pdfLink: "https://direct-link-to-pdf.com/file.pdf",
+  coverImage: "",                  // URL to cover image or leave ""
+  emoji: "📐",                    // Shown as placeholder when no cover image
+  featured: false                  // Set true to show in homepage Popular Books
 }
 ```
 
-Then create a corresponding book detail HTML page in the relevant category folder (use `jee-advanced/hc-verma-concepts-of-physics.html` as a template).
+### Method 2 — Create the Book Detail Page
+
+After adding to `books-data.js`, create the individual book page.
+
+1. Copy an existing page as template:
+   ```bash
+   cp class-10/ncert-mathematics-class-10.html class-10/your-new-book.html
+   ```
+
+2. Edit the copy — update: `<title>`, `<meta name="description">`, `<h1>`, description text, FAQ answers, download button `href`
+
+3. The file name **must exactly match** the `slug` in `books-data.js`:
+   - slug: `"ncert-mathematics-class-10"` → file: `class-10/ncert-mathematics-class-10.html`
+
+### Method 3 — Update Sitemap
+
+After adding new pages, add them to `sitemap.xml`:
+
+```xml
+<url>
+  <loc>https://www.academichalt.com/class-10/your-new-book.html</loc>
+  <changefreq>monthly</changefreq>
+  <priority>0.8</priority>
+</url>
+```
 
 ---
 
-## 🔍 Search System
+## 🔍 How Search Works
 
-The search system (`js/search.js`) works automatically — it searches all books in `js/books-data.js` by:
-- Book title
-- Subject
-- Category
-- Description
+The search bar on the homepage searches all books in `books-data.js` instantly:
 
-The search appears in the homepage hero section and shows instant results as you type.
+- Searches: title, subject, category, description
+- Shows results as you type (after 2 characters)
+- Press `Escape` to close results
+- Press `Enter` to go to the first result
+- Click any result to navigate to the book page
 
----
-
-## 📊 SEO
-
-Each page includes:
-- Meta title and description
-- Canonical URL
-- Open Graph tags
-- Schema.org structured data (Organization, BreadcrumbList, Article, Book)
-- Proper H1/H2/H3 heading hierarchy
-- Internal linking between pages
-- `robots.txt` allowing all crawlers
-- `sitemap.xml` listing all pages
-
-After deployment, submit your sitemap to:
-- [Google Search Console](https://search.google.com/search-console)
-- [Bing Webmaster Tools](https://www.bing.com/webmasters)
+No server required — pure JavaScript, works offline.
 
 ---
 
-## 🎨 Design System
+## 📊 SEO Checklist
 
-| Token | Value |
-|-------|-------|
-| Primary Color | `#2563eb` |
-| Secondary Color | `#1e293b` |
-| Accent Color | `#22c55e` |
-| Background | `#ffffff` |
-| Surface | `#f8fafc` |
-| Border | `#e2e8f0` |
-| Text | `#0f172a` |
-| Font (Headings) | Sora |
-| Font (Body) | Lora |
-| Border Radius | `8px` |
+After deploying, complete these SEO steps:
+
+1. **Submit sitemap** to Google:
+   - Go to [search.google.com/search-console](https://search.google.com/search-console)
+   - Add your property → Submit `https://www.academichalt.com/sitemap.xml`
+
+2. **Submit to Bing**:
+   - Go to [bing.com/webmasters](https://www.bing.com/webmasters)
+   - Submit the same sitemap URL
+
+3. **Verify meta tags** are correct on all pages (use browser DevTools → Elements → `<head>`)
+
+4. **Check mobile rendering**:
+   - Open browser DevTools → Toggle device toolbar (`Ctrl+Shift+M`)
+   - Test at 375px (iPhone), 768px (iPad), 1280px (desktop)
+
+5. **Test page speed**:
+   - Visit [pagespeed.web.dev](https://pagespeed.web.dev)
+   - Enter your homepage URL — aim for 90+ on both Mobile and Desktop
 
 ---
 
-## 📱 Responsive Breakpoints
+## 🎨 Customisation
 
-| Screen | Grid |
-|--------|------|
-| Desktop (> 1024px) | 3–4 columns |
-| Tablet (768–1024px) | 2 columns |
-| Mobile (< 768px) | 1 column |
+### Change Colors
+Edit the CSS variables at the top of `css/style.css`:
+```css
+:root {
+  --primary:  #2563eb;   /* Main blue — change to your brand color */
+  --accent:   #22c55e;   /* Green — used for download buttons */
+  --secondary: #1e293b;  /* Dark — used for headings and footer */
+}
+```
+
+### Add a New Category
+1. Add category to `CATEGORIES` object in `js/books-data.js`
+2. Create folder: `mkdir your-category`
+3. Create `your-category/index.html` (copy from `class-9/index.html`, change `data-category`)
+4. Add nav link to every page's header (find all `<li><a href="/upsc/">` lines)
+5. Add to `admin/config.yml` category select options
+6. Add to sitemap
+
+### Change Fonts
+Replace the Google Fonts URL in every HTML `<head>` and update the CSS variables:
+```css
+--font-display: 'YourFont', sans-serif;
+--font-body:    'YourBodyFont', serif;
+```
 
 ---
 
 ## 🛠️ Technology Stack
 
-- **HTML5** — Semantic markup
-- **CSS3** — Custom properties, Grid, Flexbox, animations
-- **Vanilla JavaScript** — No frameworks or build tools required
-- **Decap CMS** — Git-based headless CMS
-- **Google Fonts** — Sora + Lora typography
+| Layer | Technology |
+|-------|-----------|
+| Markup | HTML5 (semantic) |
+| Styles | CSS3 (Grid, Flexbox, custom properties) |
+| Scripts | Vanilla JavaScript (ES5 compatible) |
+| Fonts | Google Fonts (Sora + Lora) |
+| CMS | Decap CMS v3 (Git-based, no server) |
+| Hosting | Cloudflare Pages or GitHub Pages |
+| Build | None required — static files only |
 
 ---
 
-## 📄 License
+## 📱 Responsive Breakpoints
 
-The website code is open source for educational use. All book PDFs remain the intellectual property of their respective authors and publishers.
-
----
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Add new books to `js/books-data.js`
-3. Add corresponding book detail pages
-4. Submit a pull request
+| Breakpoint | Grid Layout |
+|-----------|-------------|
+| > 1024px (Desktop) | 3–4 columns |
+| 768–1024px (Tablet) | 2 columns |
+| 480–768px (Mobile) | 1–2 columns |
+| < 480px (Small mobile) | 1 column |
 
 ---
 

@@ -1,29 +1,15 @@
-# Academic Halt — Decap CMS Configuration
-# Docs: https://decapcms.org/docs/configuration-options/
-
 backend:
   name: github
-  repo: YOUR-GITHUB-USERNAME/academic-halt   # ← Replace with your GitHub username/repo
+  repo: academichalt/academichalt
   branch: main
-  commit_messages:
-    create: "Add book: {{slug}}"
-    update: "Update book: {{slug}}"
-    delete: "Delete book: {{slug}}"
-    uploadMedia: "Upload media: {{path}}"
-    deleteMedia: "Delete media: {{path}}"
-
-# Enable local backend for development (run: npx decap-server)
-# local_backend: true
+  base_url: https://www.academichalt.com
+  auth_endpoint: api/auth
 
 media_folder: "assets/book-covers"
 public_folder: "/assets/book-covers"
 
-# ──────────────────────────────────────────────────────────────
-# COLLECTIONS
-# ──────────────────────────────────────────────────────────────
 collections:
 
-  # ── BOOKS ────────────────────────────────────────────────────
   - name: "books"
     label: "Books"
     label_singular: "Book"
@@ -63,13 +49,12 @@ collections:
       - label: "Title"
         name: "title"
         widget: "string"
-        hint: "Full book title e.g. NCERT Mathematics Class 10"
 
       - label: "Slug"
         name: "slug"
         widget: "string"
-        hint: "URL-friendly version e.g. ncert-mathematics-class-10 (no spaces, lowercase)"
-        pattern: ['^[a-z0-9-]+$', "Must be lowercase letters, numbers, and hyphens only"]
+        hint: "Lowercase, hyphens only. e.g. ncert-maths-class-10"
+        pattern: ['^[a-z0-9-]+$', "Lowercase letters, numbers and hyphens only"]
 
       - label: "Category"
         name: "category"
@@ -83,7 +68,6 @@ collections:
           - { label: "JEE Advanced",  value: "jee-advanced" }
           - { label: "NEET",          value: "neet" }
           - { label: "UPSC",          value: "upsc" }
-        hint: "Select the exam/class category for this book"
 
       - label: "Subject"
         name: "subject"
@@ -103,55 +87,43 @@ collections:
           - "Economics"
           - "Accountancy"
           - "Business Studies"
-          - "Physics + Chemistry + Maths"
-          - "Biology + Physics + Chemistry"
           - "General Studies"
-          - "Current Affairs"
-          - "Art and Culture"
           - "Other"
-        hint: "Primary subject of the book"
 
       - label: "Description"
         name: "description"
         widget: "text"
-        hint: "Short description (2-3 sentences) shown on book cards. Max 300 characters."
+        hint: "Short description shown on book cards (2-3 sentences)"
 
       - label: "PDF Link"
         name: "pdf_link"
         widget: "string"
-        hint: "Direct URL to the PDF file or download page"
-        required: true
+        hint: "Direct URL to the PDF file"
 
       - label: "Cover Image"
         name: "cover_image"
         widget: "image"
         required: false
-        allow_multiple: false
-        hint: "Upload a book cover image (JPG or PNG, recommended 3:4 aspect ratio)"
-        media_library:
-          config:
-            multiple: false
+        hint: "Book cover (JPG/PNG, 3:4 ratio recommended)"
 
-      - label: "Featured Book"
+      - label: "Featured"
         name: "featured"
         widget: "boolean"
         default: false
-        hint: "Show this book in the 'Popular Books' section on the homepage"
+        hint: "Show in Popular Books on homepage"
 
-      - label: "Emoji Icon"
+      - label: "Emoji"
         name: "emoji"
         widget: "string"
-        required: false
         default: "📚"
-        hint: "Emoji shown when no cover image is available (e.g. 📐 for Maths, ⚛️ for Physics)"
+        required: false
+        hint: "Emoji shown when no cover image"
 
-      - label: "Full Book Description (for book detail page)"
+      - label: "Full Description"
         name: "body"
         widget: "markdown"
         required: false
-        hint: "Optional longer description shown on the individual book page"
 
-  # ── BLOG POSTS ───────────────────────────────────────────────
   - name: "blog"
     label: "Blog Posts"
     label_singular: "Blog Post"
@@ -160,8 +132,6 @@ collections:
     delete: true
     slug: "{{slug}}"
     identifier_field: "title"
-    summary: "{{title}} — {{date}}"
-    sortable_fields: ["title", "date"]
     fields:
       - label: "Title"
         name: "title"
@@ -170,13 +140,12 @@ collections:
       - label: "Slug"
         name: "slug"
         widget: "string"
-        hint: "URL slug e.g. best-books-for-jee-main"
-        pattern: ['^[a-z0-9-]+$', "Lowercase, numbers and hyphens only"]
+        pattern: ['^[a-z0-9-]+$', "Lowercase, hyphens only"]
 
       - label: "Meta Description"
         name: "description"
         widget: "text"
-        hint: "SEO meta description (140-160 characters)"
+        hint: "SEO description (140-160 characters)"
 
       - label: "Author"
         name: "author"
@@ -198,14 +167,9 @@ collections:
           - "NEET"
           - "UPSC"
           - "Board Exams"
-          - "Class 9"
-          - "Class 10"
-          - "Class 11"
-          - "Class 12"
           - "Study Tips"
           - "Book Reviews"
 
       - label: "Content"
         name: "body"
         widget: "markdown"
-        hint: "Write the full article content here (minimum 1000 words recommended)"

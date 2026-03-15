@@ -6,6 +6,9 @@
   <title>Contact Academic Halt — Get in Touch</title>
   <meta name="description" content="Contact Academic Halt for book suggestions, broken links, DMCA notices, or any other queries. We typically respond within 24 hours.">
   <link rel="canonical" href="https://www.academichalt.com/contact.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
@@ -28,7 +31,7 @@
     </div></div>
 
     <section class="section"><div class="container">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;max-width:900px;">
+      <div class="grid-2" style="max-width:900px;">
         <!-- Contact Form -->
         <div>
           <h2 style="margin-bottom:24px;">Send us a Message</h2>
@@ -70,7 +73,7 @@
         <div>
           <h2 style="margin-bottom:24px;">Get in Touch</h2>
           <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:32px;">
-            <div class="info-card" style="display:flex;align-items:flex-start;gap:16px;">
+            <div class="info-card" style="display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap;">
               <div style="font-size:28px;flex-shrink:0;">📧</div>
               <div>
                 <div style="font-family:var(--font-display);font-weight:700;margin-bottom:4px;">Email</div>
@@ -78,7 +81,7 @@
                 <div style="font-size:13px;color:var(--text-muted);margin-top:4px;">We respond within 24 hours</div>
               </div>
             </div>
-            <div class="info-card" style="display:flex;align-items:flex-start;gap:16px;">
+            <div class="info-card" style="display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap;">
               <div style="font-size:28px;flex-shrink:0;">⚖️</div>
               <div>
                 <div style="font-family:var(--font-display);font-weight:700;margin-bottom:4px;">DMCA / Copyright Notices</div>
@@ -86,7 +89,7 @@
                 <div style="font-size:13px;color:var(--text-muted);margin-top:4px;">Reviewed within 48 hours</div>
               </div>
             </div>
-            <div class="info-card" style="display:flex;align-items:flex-start;gap:16px;">
+            <div class="info-card" style="display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap;">
               <div style="font-size:28px;flex-shrink:0;">💡</div>
               <div>
                 <div style="font-family:var(--font-display);font-weight:700;margin-bottom:4px;">Suggest a Book</div>
@@ -135,6 +138,7 @@
     setTimeout(function() { document.getElementById('form-success').style.display = 'none'; }, 5000);
   }
   </script>
+  <script src="/js/books-data.js"></script>
   <script src="/js/script.js"></script>
 </body>
 </html>
