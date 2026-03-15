@@ -1,0 +1,74 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+
+const allBooks = await getCollection('books');
+const tagMap: Record<string, number> = {};
+allBooks.forEach(b => {
+  b.data.tags.forEach(t => { tagMap[t] = (tagMap[t] || 0) + 1; });
+});
+
+const tags = Object.entries(tagMap).sort((a, b) => b[1] - a[1]);
+---
+
+<BaseLayout
+  title="All Tags – JEE Halt"
+  description="Browse JEE books by topic tags – Mechanics, Organic Chemistry, Calculus, Electromagnetism and 50+ more subject tags."
+  canonical="/tags"
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <Breadcrumb crumbs={[{ label: 'Home', href: '/' }, { label: 'Tags' }]} />
+
+    <div class="mt-4 mb-8 text-center">
+      <h1 class="section-title mb-2">All Tags</h1>
+      <p class="text-slate-400 text-sm">{tags.length} tags across {allBooks.length} books</p>
+    </div>
+
+    <div class="flex flex-wrap gap-3 justify-center">
+      {tags.map(([tag, count]) => (
+        <a href={`/tag/${encodeURIComponent(tag)}`} class="tag-page-pill group">
+          <span class="tag-name">{tag}</span>
+          <span class="tag-count-badge">{count}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .tag-page-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 100px;
+    padding: 0.45rem 1rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .tag-page-pill:hover {
+    background: rgba(249,115,22,0.1);
+    border-color: rgba(249,115,22,0.35);
+  }
+
+  .tag-name {
+    color: #94a3b8;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .tag-page-pill:hover .tag-name { color: #fb923c; }
+
+  .tag-count-badge {
+    background: rgba(255,255,255,0.07);
+    color: #64748b;
+    border-radius: 20px;
+    padding: 1px 7px;
+    font-size: 0.7rem;
+    font-family: 'JetBrains Mono', monospace;
+  }
+</style>

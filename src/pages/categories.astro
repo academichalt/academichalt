@@ -1,0 +1,67 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+
+const allBooks = await getCollection('books');
+const categoryMap: Record<string, number> = {};
+allBooks.forEach(b => {
+  categoryMap[b.data.category] = (categoryMap[b.data.category] || 0) + 1;
+});
+
+const categories = Object.entries(categoryMap).sort((a, b) => b[1] - a[1]);
+
+const icons: Record<string, string> = {
+  'Physics': '⚡',
+  'Chemistry': '⚗️',
+  'Mathematics': '📐',
+  'Biology': '🧬',
+  'Previous Year Papers': '📋',
+  'CBSE': '📚',
+};
+---
+
+<BaseLayout
+  title="Book Categories – JEE Halt"
+  description="Browse JEE, NEET & CBSE books by category. Physics, Chemistry, Mathematics, Biology, Previous Year Papers and more."
+  canonical="/categories"
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <Breadcrumb crumbs={[{ label: 'Home', href: '/' }, { label: 'Categories' }]} />
+
+    <div class="mt-4 mb-8 text-center">
+      <h1 class="section-title mb-2">Book Categories</h1>
+      <p class="text-slate-400 text-sm">Browse books organized by subject</p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      {categories.map(([cat, count]) => (
+        <a href={`/category/${encodeURIComponent(cat)}`} class="cat-page-card card p-6 flex items-center gap-5 group">
+          <div class="cat-icon">{icons[cat] || '📖'}</div>
+          <div class="flex-1">
+            <h2 class="font-display font-semibold text-white group-hover:text-orange-400 transition-colors mb-1">{cat}</h2>
+            <p class="text-slate-500 text-sm">{count} book{count !== 1 ? 's' : ''} available</p>
+          </div>
+          <svg class="w-5 h-5 text-slate-600 group-hover:text-orange-400 group-hover:translate-x-1 transition-all flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </a>
+      ))}
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .cat-page-card { text-decoration: none; }
+  .cat-icon {
+    font-size: 2.25rem;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(249,115,22,0.08);
+    border-radius: 12px;
+    flex-shrink: 0;
+  }
+</style>

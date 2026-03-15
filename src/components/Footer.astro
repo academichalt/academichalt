@@ -1,0 +1,185 @@
+---
+---
+
+<footer class="footer-wrapper mt-20">
+  <!-- Top Wave -->
+  <div class="footer-top">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+        
+        <!-- Brand -->
+        <div class="lg:col-span-1">
+          <a href="/" class="flex items-center gap-2 mb-4">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: linear-gradient(135deg, #f97316, #dc2626)">
+              <span class="text-white font-bold text-sm font-display">JH</span>
+            </div>
+            <span class="font-display font-bold text-lg text-white">JEE <span class="text-orange-400">Halt</span></span>
+          </a>
+          <p class="text-slate-400 text-sm leading-relaxed mb-5">
+            India's trusted platform for JEE, NEET & CBSE study material. Find books, notes, and PDFs to ace your exams.
+          </p>
+          <!-- Social Links -->
+          <div class="flex items-center gap-3">
+            <a href="https://t.me/jeehalt" target="_blank" rel="noopener" class="social-btn telegram" aria-label="Telegram">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.941z"/>
+              </svg>
+            </a>
+            <a href="https://instagram.com/jeehalt" target="_blank" rel="noopener" class="social-btn instagram" aria-label="Instagram">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+              </svg>
+            </a>
+            <a href="https://youtube.com/@jeehalt" target="_blank" rel="noopener" class="social-btn youtube" aria-label="YouTube">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div>
+          <h3 class="footer-heading">Quick Links</h3>
+          <ul class="space-y-2">
+            {[
+              { label: 'Home', href: '/' },
+              { label: 'All Books', href: '/books' },
+              { label: 'Categories', href: '/categories' },
+              { label: 'Tags', href: '/tags' },
+              { label: 'About Us', href: '/about' },
+              { label: 'Contact Us', href: '/contact' },
+            ].map(link => (
+              <li>
+                <a href={link.href} class="footer-link">{link.label}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <!-- Categories -->
+        <div>
+          <h3 class="footer-heading">Categories</h3>
+          <ul class="space-y-2">
+            {[
+              { label: 'Physics Books', href: '/category/Physics' },
+              { label: 'Chemistry Books', href: '/category/Chemistry' },
+              { label: 'Mathematics Books', href: '/category/Mathematics' },
+              { label: 'Previous Year Papers', href: '/category/Previous Year Papers' },
+              { label: 'NEET Books', href: '/category/Biology' },
+              { label: 'CBSE Books', href: '/category/CBSE' },
+            ].map(link => (
+              <li>
+                <a href={link.href} class="footer-link">{link.label}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <!-- Legal & Info -->
+        <div>
+          <h3 class="footer-heading">Legal & Info</h3>
+          <ul class="space-y-2">
+            {[
+              { label: 'Privacy Policy', href: '/privacy-policy' },
+              { label: 'Terms & Conditions', href: '/terms' },
+              { label: 'Disclaimer', href: '/disclaimer' },
+              { label: 'DMCA', href: '/dmca' },
+              { label: 'Sitemap', href: '/sitemap-page' },
+            ].map(link => (
+              <li>
+                <a href={link.href} class="footer-link">{link.label}</a>
+              </li>
+            ))}
+          </ul>
+          <div class="mt-5 p-3 rounded-lg bg-orange-500/10 border border-orange-500/20">
+            <p class="text-xs text-orange-300 leading-relaxed">
+              📚 JEE Halt is an educational resource platform for students preparing for competitive exams.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Bar -->
+  <div class="footer-bottom">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-3 text-sm text-slate-500">
+        <p>© 2026 JEE Halt. All rights reserved.</p>
+        <p class="flex items-center gap-1.5">
+          Made with <span class="text-red-400">♥</span> for JEE Aspirants across India
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer-wrapper {
+    background: linear-gradient(180deg, transparent 0%, rgba(15,23,42,0.5) 20%, #080d18 100%);
+  }
+
+  .footer-top {
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.04);
+    background: rgba(0,0,0,0.3);
+  }
+
+  .footer-heading {
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #cbd5e1;
+    margin-bottom: 0.75rem;
+  }
+
+  .footer-link {
+    color: #64748b;
+    font-size: 0.875rem;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .footer-link:hover {
+    color: #fb923c;
+  }
+
+  .footer-link::before {
+    content: '›';
+    opacity: 0;
+    transform: translateX(-4px);
+    transition: all 0.2s ease;
+  }
+
+  .footer-link:hover::before {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .social-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    color: white;
+  }
+
+  .social-btn.telegram { background: rgba(0,136,204,0.2); border: 1px solid rgba(0,136,204,0.3); }
+  .social-btn.telegram:hover { background: #0088cc; }
+  .social-btn.instagram { background: rgba(225,48,108,0.2); border: 1px solid rgba(225,48,108,0.3); }
+  .social-btn.instagram:hover { background: #e1306c; }
+  .social-btn.youtube { background: rgba(255,0,0,0.2); border: 1px solid rgba(255,0,0,0.3); }
+  .social-btn.youtube:hover { background: #ff0000; }
+</style>

@@ -1,0 +1,60 @@
+---
+import { getCollection } from 'astro:content';
+
+const allBooks = await getCollection('books');
+const categories = [...new Set(allBooks.map(b => b.data.category))];
+const allTags = [...new Set(allBooks.flatMap(b => b.data.tags))];
+
+const siteUrl = 'https://www.jeehalt.in';
+
+const staticUrls = [
+  { loc: '/', priority: '1.0', changefreq: 'daily' },
+  { loc: '/books', priority: '0.9', changefreq: 'daily' },
+  { loc: '/categories', priority: '0.8', changefreq: 'weekly' },
+  { loc: '/tags', priority: '0.8', changefreq: 'weekly' },
+  { loc: '/about', priority: '0.5', changefreq: 'monthly' },
+  { loc: '/contact', priority: '0.5', changefreq: 'monthly' },
+  { loc: '/disclaimer', priority: '0.3', changefreq: 'monthly' },
+  { loc: '/privacy-policy', priority: '0.3', changefreq: 'monthly' },
+  { loc: '/terms', priority: '0.3', changefreq: 'monthly' },
+  { loc: '/dmca', priority: '0.3', changefreq: 'monthly' },
+];
+
+const today = new Date().toISOString().slice(0, 10);
+---
+
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  {staticUrls.map(u => (
+    <url>
+      <loc>{siteUrl}{u.loc}</loc>
+      <lastmod>{today}</lastmod>
+      <changefreq>{u.changefreq}</changefreq>
+      <priority>{u.priority}</priority>
+    </url>
+  ))}
+  {allBooks.map(book => (
+    <url>
+      <loc>{siteUrl}/book/{book.slug}</loc>
+      <lastmod>{today}</lastmod>
+      <changefreq>monthly</changefreq>
+      <priority>0.8</priority>
+    </url>
+  ))}
+  {categories.map(cat => (
+    <url>
+      <loc>{siteUrl}/category/{encodeURIComponent(cat)}</loc>
+      <lastmod>{today}</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.7</priority>
+    </url>
+  ))}
+  {allTags.map(tag => (
+    <url>
+      <loc>{siteUrl}/tag/{encodeURIComponent(tag)}</loc>
+      <lastmod>{today}</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.6</priority>
+    </url>
+  ))}
+</urlset>

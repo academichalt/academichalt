@@ -1,0 +1,445 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BookCard from '../../components/BookCard.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+export async function getStaticPaths() {
+  const books = await getCollection('books');
+  return books.map(book => ({
+    params: { slug: book.slug },
+    props: { book },
+  }));
+}
+
+const { book } = Astro.props;
+const { data } = book;
+const { Content } = await book.render();
+
+// Related books
+const allBooks = await getCollection('books');
+const related = allBooks
+  .filter(b => b.slug !== book.slug && (
+    b.data.category === data.category ||
+    b.data.tags.some(t => data.tags.includes(t))
+  ))
+  .slice(0, 4);
+
+const bookSchema = {
+  "@context": "https://schema.org",
+  "@type": "Book",
+  "name": data.title,
+  "author": { "@type": "Person", "name": data.author },
+  "publisher": { "@type": "Organization", "name": data.publisher },
+  "description": data.description,
+  "inLanguage": data.language,
+  "numberOfPages": data.pages,
+};
+
+const faqSchema = data.faqs && data.faqs.length > 0 ? {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": data.faqs.map(f => ({
+    "@type": "Question",
+    "name": f.q,
+    "acceptedAnswer": { "@type": "Answer", "text": f.a }
+  }))
+} : null;
+
+const siteUrl = 'https://www.jeehalt.in';
+const shareUrl = `${siteUrl}/book/${book.slug}`;
+const shareTitle = encodeURIComponent(data.title + ' – Free PDF Download | JEE Halt');
+---
+
+<BaseLayout
+  title={data.title}
+  description={data.description}
+  canonical={`/book/${book.slug}`}
+  structuredData={bookSchema}
+>
+  {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} slot="head" />}
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+    <!-- Breadcrumb -->
+    <Breadcrumb crumbs={[
+      { label: 'Home', href: '/' },
+      { label: 'Books', href: '/books' },
+      { label: data.category, href: `/category/${encodeURIComponent(data.category)}` },
+      { label: data.title },
+    ]} />
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-4">
+
+      <!-- Main Content -->
+      <div class="lg:col-span-2 space-y-7">
+
+        <!-- Book Header -->
+        <div class="card p-6 sm:p-8">
+          <!-- Category + Tags row -->
+          <div class="flex flex-wrap items-center gap-2 mb-4">
+            <a href={`/category/${encodeURIComponent(data.category)}`} class="category-badge">{data.category}</a>
+            {data.tags.slice(0, 5).map(tag => (
+              <a href={`/tag/${encodeURIComponent(tag)}`} class="tag-chip">{tag}</a>
+            ))}
+          </div>
+
+          <h1 class="book-page-title mb-3">{data.title}</h1>
+
+          <div class="flex flex-wrap items-center gap-4 text-sm text-slate-400 mb-5">
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+              </svg>
+              {data.author}
+            </span>
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+              </svg>
+              {data.publisher}
+            </span>
+          </div>
+
+          <p class="text-slate-300 leading-relaxed text-sm">{data.description}</p>
+        </div>
+
+        <!-- Book Details Table -->
+        <div class="card p-6">
+          <h2 class="section-title text-base mb-4">📋 Book Information</h2>
+          <div class="book-table">
+            {[
+              { label: 'Book Name', value: data.title },
+              { label: 'Author', value: data.author },
+              { label: 'Publisher', value: data.publisher },
+              { label: 'Category', value: data.category },
+              { label: 'Language', value: data.language },
+              { label: 'Format', value: data.format },
+              { label: 'Pages', value: `${data.pages} pages` },
+              { label: 'File Size', value: data.fileSize },
+            ].map(row => (
+              <div class="table-row">
+                <span class="table-label">{row.label}</span>
+                <span class="table-value">{row.value}</span>
+              </div>
+            ))}
+            <div class="table-row">
+              <span class="table-label">Tags</span>
+              <span class="table-value">
+                <div class="flex flex-wrap gap-1">
+                  {data.tags.map(tag => (
+                    <a href={`/tag/${encodeURIComponent(tag)}`} class="tag-chip">{tag}</a>
+                  ))}
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Book Content -->
+        <div class="card p-6 prose-section">
+          <Content />
+        </div>
+
+        <!-- FAQ Section -->
+        {data.faqs && data.faqs.length > 0 && (
+          <div class="card p-6">
+            <h2 class="section-title text-base mb-5">❓ Frequently Asked Questions</h2>
+            <div class="space-y-3" id="faq-list">
+              {data.faqs.map((faq, i) => (
+                <div class="faq-item" data-idx={i}>
+                  <button class="faq-question w-full text-left flex items-center justify-between gap-3" aria-expanded="false">
+                    <span class="text-slate-200 font-medium text-sm leading-relaxed">{faq.q}</span>
+                    <svg class="faq-chevron w-4 h-4 text-slate-400 flex-shrink-0 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                  </button>
+                  <div class="faq-answer hidden">
+                    <p class="text-slate-400 text-sm leading-relaxed pt-2">{faq.a}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <!-- Share Buttons -->
+        <div class="card p-6">
+          <h2 class="section-title text-base mb-4">🔗 Share This Book</h2>
+          <div class="flex flex-wrap gap-3" id="share-btns">
+            <a href={`https://wa.me/?text=${shareTitle}%20${encodeURIComponent(shareUrl)}`} target="_blank" rel="noopener"
+               class="share-btn whatsapp">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+              </svg>
+              WhatsApp
+            </a>
+            <a href={`https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${shareTitle}`} target="_blank" rel="noopener"
+               class="share-btn telegram">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.941z"/>
+              </svg>
+              Telegram
+            </a>
+            <a href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${shareTitle}`} target="_blank" rel="noopener"
+               class="share-btn twitter">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+              Twitter
+            </a>
+            <a href={`https://facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`} target="_blank" rel="noopener"
+               class="share-btn facebook">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+              </svg>
+              Facebook
+            </a>
+            <button id="copy-link-btn" class="share-btn copy">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+              </svg>
+              <span id="copy-label">Copy Link</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Sidebar -->
+      <div class="lg:col-span-1 space-y-6">
+
+        <!-- Download Card -->
+        <div class="card p-6 download-card">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="text-2xl">📥</span>
+            <h2 class="section-title text-base">Download Book</h2>
+          </div>
+          
+          <div class="file-info mb-5">
+            <div class="info-row">
+              <span class="text-slate-500 text-xs">Format</span>
+              <span class="text-slate-200 text-xs font-medium font-mono">{data.format}</span>
+            </div>
+            <div class="info-row">
+              <span class="text-slate-500 text-xs">Size</span>
+              <span class="text-slate-200 text-xs font-medium">{data.fileSize}</span>
+            </div>
+            <div class="info-row">
+              <span class="text-slate-500 text-xs">Pages</span>
+              <span class="text-slate-200 text-xs font-medium">{data.pages}</span>
+            </div>
+          </div>
+
+          <a href={data.downloadLink} target="_blank" rel="noopener" class="btn-primary w-full justify-center text-center mb-3">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            </svg>
+            Download PDF
+          </a>
+
+          {data.mirrorLinks && data.mirrorLinks.length > 0 && (
+            <div class="space-y-2">
+              <p class="text-xs text-slate-500 text-center mb-2">Mirror Links</p>
+              {data.mirrorLinks.map((link, i) => (
+                <a href={link} target="_blank" rel="noopener" class="btn-secondary w-full justify-center text-xs">
+                  Mirror {i + 1}
+                </a>
+              ))}
+            </div>
+          )}
+
+          <p class="text-xs text-slate-600 text-center mt-4">
+            For educational purposes only.
+          </p>
+        </div>
+
+        <!-- Social Section -->
+        <div class="card p-6">
+          <h2 class="section-title text-sm mb-4">📲 Join Our Community</h2>
+          <div class="space-y-3">
+            <a href="https://t.me/jeehalt" target="_blank" rel="noopener" class="social-community telegram">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.941z"/>
+              </svg>
+              <div>
+                <div class="text-xs font-semibold text-white">Telegram Channel</div>
+                <div class="text-xs text-slate-500">Latest updates & books</div>
+              </div>
+            </a>
+            <a href="https://instagram.com/jeehalt" target="_blank" rel="noopener" class="social-community instagram">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+              </svg>
+              <div>
+                <div class="text-xs font-semibold text-white">Instagram</div>
+                <div class="text-xs text-slate-500">Tips & study motivation</div>
+              </div>
+            </a>
+            <a href="https://youtube.com/@jeehalt" target="_blank" rel="noopener" class="social-community youtube">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/>
+              </svg>
+              <div>
+                <div class="text-xs font-semibold text-white">YouTube</div>
+                <div class="text-xs text-slate-500">Video lectures & guides</div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Related Books -->
+    {related.length > 0 && (
+      <section class="mt-12">
+        <h2 class="section-title mb-6">📚 Related Books</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {related.map(b => (
+            <BookCard
+              slug={b.slug}
+              title={b.data.title}
+              description={b.data.description}
+              category={b.data.category}
+              tags={b.data.tags}
+              author={b.data.author}
+              publisher={b.data.publisher}
+              pages={b.data.pages}
+              format={b.data.format}
+            />
+          ))}
+        </div>
+      </section>
+    )}
+  </div>
+</BaseLayout>
+
+<script>
+  // FAQ accordion
+  document.querySelectorAll('.faq-item').forEach(item => {
+    const btn = item.querySelector('.faq-question');
+    const answer = item.querySelector('.faq-answer');
+    const chevron = item.querySelector('.faq-chevron');
+
+    btn?.addEventListener('click', () => {
+      const isOpen = !answer?.classList.contains('hidden');
+      answer?.classList.toggle('hidden', isOpen);
+      chevron?.classList.toggle('rotate-180', !isOpen);
+      btn?.setAttribute('aria-expanded', String(!isOpen));
+    });
+  });
+
+  // Copy link
+  document.getElementById('copy-link-btn')?.addEventListener('click', async () => {
+    const label = document.getElementById('copy-label');
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      if (label) { label.textContent = 'Copied!'; setTimeout(() => { label.textContent = 'Copy Link'; }, 2000); }
+    } catch {
+      if (label) label.textContent = 'Failed';
+    }
+  });
+</script>
+
+<style>
+  .book-page-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    color: #f8fafc;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+  }
+
+  .prose-section :global(h2) {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #e2e8f0;
+    margin: 1.5rem 0 0.75rem;
+  }
+
+  .prose-section :global(p) {
+    color: #94a3b8;
+    font-size: 0.875rem;
+    line-height: 1.75;
+    margin-bottom: 1rem;
+  }
+
+  /* Book table */
+  .book-table { border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; overflow: hidden; }
+  .table-row {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    align-items: center;
+  }
+  .table-row:last-child { border-bottom: none; }
+  .table-row:nth-child(even) { background: rgba(255,255,255,0.02); }
+  .table-label { font-size: 0.75rem; color: #64748b; font-weight: 500; }
+  .table-value { font-size: 0.8rem; color: #cbd5e1; }
+
+  /* FAQ */
+  .faq-item {
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    background: rgba(255,255,255,0.02);
+    transition: background 0.2s;
+  }
+  .faq-item:hover { background: rgba(255,255,255,0.04); }
+  .faq-chevron.rotate-180 { transform: rotate(180deg); }
+
+  /* Share buttons */
+  .share-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .share-btn.whatsapp { background: rgba(37,211,102,0.15); color: #25D366; border: 1px solid rgba(37,211,102,0.25); }
+  .share-btn.whatsapp:hover { background: #25D366; color: white; }
+  .share-btn.telegram { background: rgba(0,136,204,0.15); color: #0088cc; border: 1px solid rgba(0,136,204,0.25); }
+  .share-btn.telegram:hover { background: #0088cc; color: white; }
+  .share-btn.twitter { background: rgba(29,161,242,0.15); color: #1da1f2; border: 1px solid rgba(29,161,242,0.25); }
+  .share-btn.twitter:hover { background: #1da1f2; color: white; }
+  .share-btn.facebook { background: rgba(24,119,242,0.15); color: #1877f2; border: 1px solid rgba(24,119,242,0.25); }
+  .share-btn.facebook:hover { background: #1877f2; color: white; }
+  .share-btn.copy { background: rgba(255,255,255,0.06); color: #94a3b8; border: 1px solid rgba(255,255,255,0.1); }
+  .share-btn.copy:hover { background: rgba(255,255,255,0.1); color: #e2e8f0; }
+
+  /* Download card */
+  .download-card { background: linear-gradient(135deg, rgba(249,115,22,0.08), rgba(234,88,12,0.05)); border-color: rgba(249,115,22,0.2) !important; }
+  .file-info { display: flex; flex-direction: column; gap: 0.5rem; background: rgba(0,0,0,0.2); border-radius: 8px; padding: 0.75rem; }
+  .info-row { display: flex; justify-content: space-between; align-items: center; }
+
+  /* Social community links */
+  .social-community {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border-radius: 10px;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.06);
+    background: rgba(255,255,255,0.03);
+    transition: all 0.2s ease;
+  }
+  .social-community.telegram:hover { background: rgba(0,136,204,0.15); border-color: rgba(0,136,204,0.3); }
+  .social-community.telegram svg { color: #0088cc; }
+  .social-community.instagram:hover { background: rgba(225,48,108,0.15); border-color: rgba(225,48,108,0.3); }
+  .social-community.instagram svg { color: #e1306c; }
+  .social-community.youtube:hover { background: rgba(255,0,0,0.15); border-color: rgba(255,0,0,0.3); }
+  .social-community.youtube svg { color: #ff0000; }
+</style>

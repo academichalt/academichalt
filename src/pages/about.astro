@@ -1,0 +1,65 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+---
+
+<BaseLayout
+  title="About Us – JEE Halt"
+  description="Learn about JEE Halt – India's trusted platform for free JEE, NEET and CBSE study material."
+  canonical="/about"
+>
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <Breadcrumb crumbs={[{ label: 'Home', href: '/' }, { label: 'About Us' }]} />
+
+    <div class="mt-6 space-y-8">
+      <div>
+        <h1 class="section-title mb-3">About JEE Halt</h1>
+        <p class="text-slate-400 leading-relaxed">
+          JEE Halt is India's dedicated platform for free JEE, NEET, and CBSE study material. 
+          We believe every student deserves access to quality educational resources regardless of their financial background.
+        </p>
+      </div>
+
+      <div class="card p-6 space-y-4">
+        <h2 class="font-display font-bold text-white text-lg">🎯 Our Mission</h2>
+        <p class="text-slate-400 text-sm leading-relaxed">
+          To democratize access to quality education by providing free, high-quality study material for competitive examinations including JEE Main, JEE Advanced, NEET, and CBSE board exams. We curate the best books, notes, and resources so students can focus on learning.
+        </p>
+      </div>
+
+      <div class="card p-6 space-y-4">
+        <h2 class="font-display font-bold text-white text-lg">📚 What We Offer</h2>
+        <ul class="space-y-2 text-slate-400 text-sm">
+          {[
+            'Free PDF downloads of standard JEE & NEET books',
+            'Comprehensive coverage of Physics, Chemistry, and Mathematics',
+            'Previous Year Papers for JEE Main, JEE Advanced, NEET & CBSE',
+            'Books organized by category, tags, and publishers',
+            'SEO-optimized book pages with detailed descriptions',
+            'Mobile-friendly interface for studying on the go',
+          ].map(item => (
+            <li class="flex items-start gap-2">
+              <span class="text-orange-400 mt-0.5 flex-shrink-0">✓</span>
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="card p-6 space-y-4">
+        <h2 class="font-display font-bold text-white text-lg">⚠️ Disclaimer</h2>
+        <p class="text-slate-400 text-sm leading-relaxed">
+          JEE Halt provides links to publicly available educational content. We do not host copyrighted files on our servers. All content is shared for educational purposes only. If you are a copyright holder and wish to have your content removed, please <a href="/contact" class="text-orange-400 hover:underline">contact us</a>.
+        </p>
+      </div>
+
+      <div class="card p-6 space-y-4">
+        <h2 class="font-display font-bold text-white text-lg">📬 Get In Touch</h2>
+        <p class="text-slate-400 text-sm leading-relaxed">
+          Have suggestions, book requests, or want to report a broken link? We'd love to hear from you.
+        </p>
+        <a href="/contact" class="btn-primary inline-flex">Contact Us →</a>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

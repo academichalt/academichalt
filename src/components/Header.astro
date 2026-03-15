@@ -1,0 +1,158 @@
+---
+const navLinks = [
+  { label: 'Home', href: '/' },
+  { label: 'Books', href: '/books' },
+  { label: 'Categories', href: '/categories' },
+  { label: 'Tags', href: '/tags' },
+  { label: 'About Us', href: '/about' },
+  { label: 'Contact', href: '/contact' },
+];
+
+const pathname = Astro.url.pathname;
+---
+
+<header id="site-header" class="sticky top-0 z-50 transition-all duration-300">
+  <div class="header-inner">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <!-- Logo -->
+        <a href="/" class="logo-link flex items-center gap-2">
+          <div class="logo-icon">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+              <rect width="28" height="28" rx="7" fill="url(#logoGrad)"/>
+              <path d="M7 8h6a4 4 0 0 1 0 8H7V8z" fill="white" opacity="0.9"/>
+              <path d="M15 14h4l2 6h-3l-1.5-4H15v-2z" fill="white" opacity="0.7"/>
+              <defs>
+                <linearGradient id="logoGrad" x1="0" y1="0" x2="28" y2="28">
+                  <stop offset="0%" stop-color="#f97316"/>
+                  <stop offset="100%" stop-color="#dc2626"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <span class="logo-text font-display font-bold text-xl text-white">JEE <span class="text-orange-400">Halt</span></span>
+        </a>
+
+        <!-- Desktop Nav -->
+        <nav class="hidden md:flex items-center gap-1">
+          {navLinks.map(link => (
+            <a
+              href={link.href}
+              class={`nav-link px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href))
+                  ? 'active-nav bg-orange-500/10 text-orange-400'
+                  : 'text-slate-300 hover:text-white hover:bg-white/5'
+              }`}
+            >
+              {link.label}
+            </a>
+          ))}
+        </nav>
+
+        <!-- Right Side Actions -->
+        <div class="flex items-center gap-2">
+          <!-- Dark Mode Toggle -->
+          <button id="theme-toggle" class="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-all" aria-label="Toggle theme">
+            <svg id="sun-icon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+            </svg>
+            <svg id="moon-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+            </svg>
+          </button>
+
+          <!-- Mobile menu button -->
+          <button id="menu-toggle" class="md:hidden p-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-all" aria-label="Toggle menu">
+            <svg id="menu-open" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+            <svg id="menu-close" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden md:hidden border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-4 py-3 space-y-1">
+      {navLinks.map(link => (
+        <a
+          href={link.href}
+          class={`block px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
+            pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href))
+              ? 'bg-orange-500/10 text-orange-400'
+              : 'text-slate-300 hover:text-white hover:bg-white/5'
+          }`}
+        >
+          {link.label}
+        </a>
+      ))}
+    </div>
+  </div>
+</header>
+
+<style>
+  .header-inner {
+    background: rgba(8, 13, 24, 0.8);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  #site-header.scrolled .header-inner {
+    background: rgba(8, 13, 24, 0.95);
+    box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+  }
+
+  #mobile-menu {
+    background: rgba(8, 13, 24, 0.98);
+    backdrop-filter: blur(16px);
+  }
+
+  .logo-link:hover .logo-text {
+    opacity: 0.85;
+  }
+</style>
+
+<script>
+  // Sticky scroll behavior
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', () => {
+    header?.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // Mobile menu toggle
+  const menuToggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const menuOpen = document.getElementById('menu-open');
+  const menuClose = document.getElementById('menu-close');
+
+  menuToggle?.addEventListener('click', () => {
+    const isOpen = !mobileMenu?.classList.contains('hidden');
+    mobileMenu?.classList.toggle('hidden', isOpen);
+    menuOpen?.classList.toggle('hidden', !isOpen);
+    menuClose?.classList.toggle('hidden', isOpen);
+  });
+
+  // Theme toggle
+  const themeToggle = document.getElementById('theme-toggle');
+  const sunIcon = document.getElementById('sun-icon');
+  const moonIcon = document.getElementById('moon-icon');
+
+  function updateThemeIcons() {
+    const isDark = document.documentElement.classList.contains('dark');
+    sunIcon?.classList.toggle('hidden', isDark);
+    moonIcon?.classList.toggle('hidden', !isDark);
+  }
+
+  updateThemeIcons();
+
+  themeToggle?.addEventListener('click', () => {
+    const isDark = document.documentElement.classList.toggle('dark');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    updateThemeIcons();
+  });
+</script>
